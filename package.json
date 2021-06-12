@@ -1,7 +1,28 @@
 {
-  "name": "test2",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vue-tiptap-katex",
+  "version": "2.0.0",
+  "description": "tiptap editor with katex in vue",
+  "main": "index.js",
+  "keywords": [
+    "vue",
+    "tiptap",
+    "katex",
+    "vue-tiptap-katex"
+  ],
+  "contributors": [
+    {
+      "name" : "Ali Esmaeeli",
+      "email" : "aliesmaeeli20@gmail.com",
+      "url" : "https://github.com/kerasus/vue-tiptap-katex"
+    },
+    {
+      "name" : "Mostafa Kazemi",
+      "email" : "neo.kazemi168@gmail.com",
+      "url" : "https://github.com/neokazemi/vue-tiptap-katex"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/kerasus/vue-tiptap-katex",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
