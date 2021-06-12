@@ -9,7 +9,7 @@
     git clone https://github.com/kerasus/vue-tiptap-katex
     cd vue-tiptap-katex
     npm install
-    npm run dev
+    npm run serve
 
 Then you should be able to navigate with your browser and see the demo in http://localhost:8080/
 
