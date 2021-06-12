@@ -1,0 +1,88 @@
+@import "~katex/dist/katex.css";
+//https://github.com/sindresorhus/github-markdown-css
+@import "~github-markdown-css/github-markdown.css";
+
+
+.renderedPanel {
+  direction: rtl;
+
+  p:first-child {
+    display: inline-block;
+  }
+
+  &.ltr {
+    direction: ltr;
+  }
+
+  &.choice {
+    display: flex;
+    flex-direction: row;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .katex {
+    direction: ltr;
+    display: inline-block;
+
+    .katex-html {
+      .accent {
+        background-color: unset !important;
+        border-color: unset !important;
+      }
+    }
+  }
+
+  strong > strong > s {
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+
+  .beit {
+    display: inline-block;
+    width: 100%;
+
+    .mesra {
+      width: 50%;
+      float: right;
+      p {
+        position: relative;
+        margin: 0;
+      }
+    }
+
+    .mesra:first-child {
+      margin-left: 20px;
+      width: calc( 50% - 20px );
+    }
+
+  }
+
+  .mesra {
+    width: 50%;
+    float: right;
+  }
+
+  td, th {
+    text-align: center;
+    padding: 10px 20px;
+    border: 1px solid black;
+  }
+
+  th {
+    border-bottom: 2px solid #000;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .mesra {
+      width: 100%;
+      float: none;
+    }
+  }
+}
