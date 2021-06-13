@@ -57,6 +57,7 @@
     "tiptap-extensions": "^1.35.2",
     "turndown": "^7.0.0",
     "vue": "^2.6.11",
+    "vue-drag-resize": "^1.5.4",
     "vue-upload-component": "^2.8.22",
     "vuetify": "^2.5.3",
     "webpack": "<=4"
