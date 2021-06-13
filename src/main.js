@@ -1,11 +1,10 @@
 import Vue from 'vue'
-import VueTiptapKatex from './vue-tiptap-katex'
+import Test from './test'
 import vuetify from './plugins/vuetify' // path to vuetify export
 
-Vue.use(VueTiptapKatex)
 Vue.config.productionTip = false
 
 new Vue({
   vuetify,
-  render: h => h(VueTiptapKatex),
+  render: h => h(Test),
 }).$mount('#app')
