@@ -27,7 +27,7 @@ something like this
 
 In the same template file, at `<script>` part, this will make the component available only to the template in this file
 
-    import VueTiptapKatex from './vue-tiptap-katex'
+    import VueTiptapKatex from 'vue-tiptap-katex'
     ...
     export default {
       ...
@@ -43,7 +43,7 @@ In the same template file, at `<script>` part, this will make the component avai
 At main Vue configuration, this will make the component available to all templates in your app
 
     import Vue from 'vue'
-    import VueTiptapKatex from './vue-tiptap-katex'
+    import VueTiptapKatex from 'vue-tiptap-katex'
     ...
     Vue.component('vue-tiptap-katex', VueTiptapKatex)
 
