@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div dir="rtl" class="tiptap-plus-container">
+    <div dir="rtl" class="tiptap-plus-container mt-10">
       <v-card elevation="3" class="tiptap-plus">
         <v-card-title class="tiptap-header">
           <slot name="toolbar">

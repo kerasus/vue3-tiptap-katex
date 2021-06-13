@@ -375,7 +375,14 @@
 
     <!--        <v-btn small tile icon @click="editor.chain().focus().insertContent('<vue-component></vue-component>').run()">-->
 
-    <v-tooltip top>
+    <v-menu
+            open-on-hover
+            bottom
+            :tile="true"
+            offset-y
+            rounded
+            content-class="formula-menu"
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
                 small
@@ -383,13 +390,24 @@
                 icon
                 v-on="on"
                 v-bind="attrs"
-                @click="editor.chain().focus().insertContent('<tiptap-interactive-katex></tiptap-interactive-katex>').run()"
         >
           <v-icon>mdi-sigma</v-icon>
         </v-btn>
       </template>
-      <span>Formula</span>
-    </v-tooltip>
+
+      <v-list>
+        <v-list-item>
+          <v-btn dense tile elevation="0" color="#fff" block @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline>').run()">
+            Inline
+          </v-btn>
+        </v-list-item>
+        <v-list-item>
+          <v-btn dense tile elevation="0" color="#fff" block @click="editor.chain().focus().insertContent('<tiptap-interactive-katex></tiptap-interactive-katex>').run()">
+            Block
+          </v-btn>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -464,5 +482,14 @@
         border: solid 1px gray;
         padding: 5px;
         margin: 2px;
+    }
+
+    .formula-menu {
+      border-radius: 5px !important;
+    }
+
+    .formula-menu .v-list-item,
+    .formula-menu .v-list {
+      padding: 0;
     }
 </style>
