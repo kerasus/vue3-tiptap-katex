@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <div dir="rtl" class="tiptap-plus-container">
+    <div dir="rtl" class="tiptap-plus-container mt-10">
       <v-card elevation="3" class="tiptap-plus">
         <v-card-title class="tiptap-header">
           <slot name="toolbar">
-            <toolbar :editor="editor" />
+            <toolbar :editor="editor" :access-token="accessToken" />
           </slot>
         </v-card-title>
         <v-card-text class="pa-0">
@@ -36,6 +36,7 @@
   import SlotBubbleMenu from './components/SlotBubbleMenu'
   import SlotFloatingMenu from './components/SlotFloatingMenu'
   import TiptapInteractiveKatex from './components/formula/extention'
+  import TiptapInteractiveKatexInline from './components/formula/entensionInline'
   import TiptapInteractiveImageUpload from './components/ImageUpload/extension';
 
   import StarterKit from '@tiptap/starter-kit'
@@ -71,7 +72,14 @@
       SlotBubbleMenu,
       SlotFloatingMenu
     },
-    props: ['value'],
+    props: {
+      value: {
+        required: false
+      },
+      accessToken: {
+        default: ''
+      }
+    },
     data() {
       return {
         editor: null,
@@ -99,6 +107,7 @@
           TableHeader,
           TableCell,
           TiptapInteractiveKatex,
+          TiptapInteractiveKatexInline,
           TiptapInteractiveImageUpload
         ],
         // triggered on every change

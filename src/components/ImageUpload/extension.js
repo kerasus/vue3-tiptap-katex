@@ -14,6 +14,15 @@ export default Node.create({
             url: {
                 default: '',
             },
+            width: {
+                default: 0
+            },
+            height: {
+                default: 0
+            },
+            token: {
+                default: ''
+            }
         }
     },
 

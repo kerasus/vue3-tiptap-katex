@@ -1,6 +1,196 @@
 <template>
     <node-view-wrapper class="vue-component">
-        <div class="example-full">
+        <div class="example-full" v-if="editMode">
+<!--            <v-menu-->
+<!--                    v-if="false"-->
+<!--                    :close-on-content-click="false"-->
+<!--                    :nudge-width="200"-->
+<!--                    offset-x-->
+<!--            >-->
+<!--                <template v-slot:activator="{ on, attrs }">-->
+<!--                    <v-btn-->
+<!--                            fab-->
+<!--                            dark-->
+<!--                            color="purple"-->
+<!--                            v-bind="attrs"-->
+<!--                            v-on="on"-->
+<!--                    >-->
+<!--                        <v-icon dark>-->
+<!--                            mdi-format-list-bulleted-square-->
+<!--                        </v-icon>-->
+<!--                    </v-btn>-->
+<!--                </template>-->
+
+<!--                <v-card>-->
+<!--                    <div class="option">-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="accept">Accept:</label>-->
+<!--                            <input-->
+<!--                                    id="accept"-->
+<!--                                    v-model="accept"-->
+<!--                                    type="text"-->
+<!--                                    class="form-control"-->
+<!--                            >-->
+<!--                            <small class="form-text text-muted">Allow upload mime type</small>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="extensions">Extensions:</label>-->
+<!--                            <input-->
+<!--                                    id="extensions"-->
+<!--                                    v-model="extensions"-->
+<!--                                    type="text"-->
+<!--                                    class="form-control"-->
+<!--                            >-->
+<!--                            <small class="form-text text-muted">Allow upload file extension</small>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label>PUT Upload:</label>-->
+<!--                            <div class="form-check">-->
+<!--                                <label class="form-check-label">-->
+<!--                                    <input-->
+<!--                                            id="put-action"-->
+<!--                                            v-model="putAction"-->
+<!--                                            class="form-check-input"-->
+<!--                                            type="radio"-->
+<!--                                            name="put-action"-->
+<!--                                            value=""-->
+<!--                                    > Off-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <div class="form-check">-->
+<!--                                <label class="form-check-label">-->
+<!--                                    <input-->
+<!--                                            id="put-action"-->
+<!--                                            v-model="putAction"-->
+<!--                                            class="form-check-input"-->
+<!--                                            type="radio"-->
+<!--                                            name="put-action"-->
+<!--                                            value="/upload/put"-->
+<!--                                    > On-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <small class="form-text text-muted">After the shutdown, use the POST method to upload</small>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="thread">Thread:</label>-->
+<!--                            <input-->
+<!--                                    id="thread"-->
+<!--                                    v-model.number="thread"-->
+<!--                                    type="number"-->
+<!--                                    max="5"-->
+<!--                                    min="1"-->
+<!--                                    class="form-control"-->
+<!--                            >-->
+<!--                            <small class="form-text text-muted">Also upload the number of files at the same time (number of threads)</small>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="size">Max size:</label>-->
+<!--                            <input-->
+<!--                                    id="size"-->
+<!--                                    v-model.number="size"-->
+<!--                                    type="number"-->
+<!--                                    min="0"-->
+<!--                                    class="form-control"-->
+<!--                            >-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="minSize">Min size:</label>-->
+<!--                            <input-->
+<!--                                    id="minSize"-->
+<!--                                    v-model.number="minSize"-->
+<!--                                    type="number"-->
+<!--                                    min="0"-->
+<!--                                    class="form-control"-->
+<!--                            >-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="autoCompress">Automatically compress:</label>-->
+<!--                            <input-->
+<!--                                    id="autoCompress"-->
+<!--                                    v-model.number="autoCompress"-->
+<!--                                    type="number"-->
+<!--                                    min="0"-->
+<!--                                    class="form-control"-->
+<!--                            >-->
+<!--                            <small-->
+<!--                                    v-if="autoCompress > 0"-->
+<!--                                    class="form-text text-muted"-->
+<!--                            >More than {{ formatSize(autoCompress) }} files are automatically compressed</small>-->
+<!--                            <small-->
+<!--                                    v-else-->
+<!--                                    class="form-text text-muted"-->
+<!--                            >Set up automatic compression</small>-->
+<!--                        </div>-->
+
+<!--                        <div class="form-group">-->
+<!--                            <div class="form-check">-->
+<!--                                <label class="form-check-label">-->
+<!--                                    <input-->
+<!--                                            id="add-index"-->
+<!--                                            v-model="addIndex"-->
+<!--                                            type="checkbox"-->
+<!--                                            class="form-check-input"-->
+<!--                                    > Start position to add-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <small class="form-text text-muted">Add a file list to start the location to add</small>-->
+<!--                        </div>-->
+
+<!--                        <div class="form-group">-->
+<!--                            <div class="form-check">-->
+<!--                                <label class="form-check-label">-->
+<!--                                    <input-->
+<!--                                            id="drop"-->
+<!--                                            v-model="drop"-->
+<!--                                            type="checkbox"-->
+<!--                                            class="form-check-input"-->
+<!--                                    > Drop-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <small class="form-text text-muted">Drag and drop upload</small>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <div class="form-check">-->
+<!--                                <label class="form-check-label">-->
+<!--                                    <input-->
+<!--                                            id="drop-directory"-->
+<!--                                            v-model="dropDirectory"-->
+<!--                                            type="checkbox"-->
+<!--                                            class="form-check-input"-->
+<!--                                    > Drop directory-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <small class="form-text text-muted">Not checked, filter the dragged folder</small>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <div class="form-check">-->
+<!--                                <label class="form-check-label">-->
+<!--                                    <input-->
+<!--                                            id="create-directory"-->
+<!--                                            v-model="createDirectory"-->
+<!--                                            type="checkbox"-->
+<!--                                            class="form-check-input"-->
+<!--                                    > Create Directory-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <small class="form-text text-muted">The directory file will send an upload request. The mime type is <code>text/directory</code></small>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <div class="form-check">-->
+<!--                                <label class="form-check-label">-->
+<!--                                    <input-->
+<!--                                            id="upload-auto"-->
+<!--                                            v-model="uploadAuto"-->
+<!--                                            type="checkbox"-->
+<!--                                            class="form-check-input"-->
+<!--                                    > Auto start-->
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                            <small class="form-text text-muted">Automatically activate upload</small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </v-card>-->
+<!--            </v-menu>-->
             <div
                     v-show="$refs.upload && $refs.upload.dropActive"
                     class="drop-active"
@@ -98,6 +288,19 @@
                                 >
                                     <v-icon dark>
                                         mdi-content-copy
+                                    </v-icon>
+                                </v-btn>
+
+                                <v-btn
+                                    v-if="node.attrs.url"
+                                    small
+                                    dark
+                                    fab
+                                    color="green"
+                                    @click="editMode = false"
+                                >
+                                    <v-icon dark>
+                                        mdi-check
                                     </v-icon>
                                 </v-btn>
 
@@ -202,13 +405,14 @@
                         <v-btn
                                 dark
                                 color="purple"
+                                v-if="!node.attrs.url"
                         >
                             یک فایل را انتخاب کنید
                         </v-btn>
                     </file-upload>
-                    <v-divider />
+                    <v-divider v-if="!node.attrs.url" />
                     <v-btn
-                            v-if="!$refs.upload || !$refs.upload.active"
+                            v-if="!$refs.upload || !$refs.upload.active && !node.attrs.url"
                             dark
                             color="purple"
                             @click.prevent="$refs.upload.active = true"
@@ -216,7 +420,7 @@
                         شروع آپلود
                     </v-btn>
                     <v-btn
-                            v-else
+                            v-else-if="!node.attrs.url"
                             dark
                             color="purple"
                             @click.prevent="$refs.upload.active = false"
@@ -441,6 +645,25 @@
                 </div>
             </div>
         </div>
+        <div :style="{ width: '100%', height: editMode? 0 + 'px' : height + 'px', position: 'relative' }" ref="resizer">
+            <VueDragResize
+                    v-if="!editMode"
+                    :sticks="['br']"
+                    :aspectRatio="true"
+                    :x="left"
+                    :y="top"
+                    :isActive="true"
+                    :isDraggable="false"
+                    :w="width"
+                    :h="height"
+                    :parentW="$refs.resizer.clientWidth"
+                    :parentH="800"
+                    :parentLimitation="true"
+                    v-on:resizing="resize"
+            >
+                <v-img :src="node.attrs.url" width="100%" />
+            </VueDragResize>
+        </div>
     </node-view-wrapper>
 </template>
 
@@ -448,12 +671,18 @@
     import Cropper from 'cropperjs'
     import ImageCompressor from '@xkeshi/image-compressor'
     import FileUpload from 'vue-upload-component'
+    import Vue from 'vue'
+    import VueDragResize from 'vue-drag-resize'
     import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-2'
+
+    Vue.component('vue-drag-resize', VueDragResize)
+
 
     export default {
         components: {
             FileUpload,
-            NodeViewWrapper
+            NodeViewWrapper,
+            VueDragResize
         },
         props: {
             nodeViewProps,
@@ -470,8 +699,13 @@
         },
         data() {
             return {
-                postAction: '/api/v1/question/upload/132',
-                putAction: '/api/v1/question/upload/132',
+                width: 0,
+                height: 0,
+                top: 0,
+                left: 20,
+                editMode: true,
+                postAction: '/api/v1/question/upload/5ffdf5345590063ba07fad54',
+                putAction: '/api/v1/question/upload/5ffdf5345590063ba07fad54',
                 url: '',
                 files: [],
                 accept: 'image/png,image/gif,image/jpeg,image/webp',
@@ -491,7 +725,7 @@
                 // postAction: '/upload/post',
                 // putAction: '/upload/put',
                 data: {
-                    '_csrf_token': 'xxxxxx',
+                    // '_csrf_token': 'xxxxxx',
                 },
                 autoCompress: 1024 * 1024,
                 uploadAuto: false,
@@ -509,7 +743,7 @@
         },
         computed: {
             accessToken () {
-                return this.$store.getters['Auth/accessToken']
+                return this.node.attrs.token
             },
             headers () {
                 return {
@@ -519,7 +753,6 @@
         },
         watch: {
             'editFile.show'(newValue, oldValue) {
-                // 关闭了 自动删除 error
                 if (!newValue && oldValue) {
                     this.$refs.upload.update(this.editFile.id, { error: this.editFile.error || '' })
                 }
@@ -547,6 +780,14 @@
             },
         },
         methods: {
+            resize(newRect) {
+                this.width = newRect.width;
+                this.height = newRect.height;
+                this.updateAttributes({
+                    width: this.width,
+                    height: this.height
+                })
+            },
             copyImageAddress (url) {
                 const el = document.createElement('textarea')
                 el.value = '![](' + url + ')'
@@ -634,6 +875,19 @@
                     img.src = newFile.blob
                 }
             },
+            updateNodeAfterUpload () {
+                this.files.forEach((file) => {
+                    if (file.response.url) {
+                        this.updateAttributes({
+                            url: file.response.url,
+                            width: file.width,
+                            height: file.height
+                        })
+                        this.height = file.height
+                        this.width = file.width
+                    }
+                })
+            },
             // add, update, remove File Event
             inputFile(newFile, oldFile) {
                 if (newFile && oldFile) {
@@ -653,8 +907,7 @@
                     }
                     if (newFile.success && !oldFile.success) {
                         // success
-                        // console.log('oldFile.response.url', oldFile.response.url)
-                        // console.log('this.files', this.files)
+                        this.updateNodeAfterUpload()
                     }
                 }
                 if (!newFile && oldFile) {
@@ -737,7 +990,14 @@
             }
         },
         created() {
-            // console.log('deployed')
+            setTimeout(() => {
+                if (this.node.attrs.url) {
+                    this.editMode = false
+                    this.height = this.node.attrs.height
+                    this.width = this.node.attrs.width
+                }
+            }, 550)
+
         }
     }
 </script>
@@ -807,5 +1067,10 @@
         font-size: 40px;
         color: #fff;
         padding: 0;
+    }
+
+    .example-full .upload th {
+        text-align: center !important;
+        line-height: 48px;
     }
 </style>
