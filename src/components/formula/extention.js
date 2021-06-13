@@ -7,13 +7,18 @@ export default Node.create({
 
   group: 'block',
 
+  inline: false,
+
   atom: true,
 
   addAttributes() {
     return {
       katex: {
-        default: '',
+        default: 'x=\\frac{-2b\\pm \\sqrt{b^2-4ac}}{2a}',
       },
+      inline: {
+        default: false
+      }
     }
   },
 

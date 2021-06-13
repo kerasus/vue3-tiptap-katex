@@ -49,7 +49,7 @@
     "markdown-it": "^12.0.6",
     "markdown-it-container": "^3.0.0",
     "markdown-it-new-katex": "^2.0.3",
-    "mathlive": "^0.69.2",
+    "mathlive": "^0.59.0",
     "node-sass": "^6.0.0",
     "postcss-loader": "^4.2.0",
     "sass-loader": "^10.1.1",
