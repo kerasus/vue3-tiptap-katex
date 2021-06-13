@@ -4,7 +4,7 @@
       <v-card elevation="3" class="tiptap-plus">
         <v-card-title class="tiptap-header">
           <slot name="toolbar">
-            <toolbar :editor="editor" />
+            <toolbar :editor="editor" :access-token="accessToken" />
           </slot>
         </v-card-title>
         <v-card-text class="pa-0">
@@ -72,7 +72,14 @@
       SlotBubbleMenu,
       SlotFloatingMenu
     },
-    props: ['value'],
+    props: {
+      value: {
+        required: false
+      },
+      accessToken: {
+        default: ''
+      }
+    },
     data() {
       return {
         editor: null,

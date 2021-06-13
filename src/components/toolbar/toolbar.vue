@@ -417,7 +417,7 @@
                 icon
                 v-on="on"
                 v-bind="attrs"
-                @click="editor.chain().focus().insertContent('<tiptap-interactive-image-upload></tiptap-interactive-image-upload>').run()"
+                @click="editor.chain().focus().insertContent(tiptapInteractiveImageUpload).run()"
         >
           <v-icon>mdi-image</v-icon>
         </v-btn>
@@ -473,7 +473,12 @@
     components: {
       // DynamicTable,
     },
-    props: ['editor'],
+    props: ['editor', 'accessToken'],
+    computed: {
+      tiptapInteractiveImageUpload () {
+        return '<tiptap-interactive-image-upload token="' + this.accessToken + '"></tiptap-interactive-image-upload>'
+      }
+    }
   }
 </script>
 
