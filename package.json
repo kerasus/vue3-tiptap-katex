@@ -11,14 +11,14 @@
   ],
   "contributors": [
     {
-      "name" : "Ali Esmaeeli",
-      "email" : "aliesmaeeli20@gmail.com",
-      "url" : "https://github.com/kerasus/vue-tiptap-katex"
+      "name": "Ali Esmaeeli",
+      "email": "aliesmaeeli20@gmail.com",
+      "url": "https://github.com/kerasus/vue-tiptap-katex"
     },
     {
-      "name" : "Mostafa Kazemi",
-      "email" : "neo.kazemi168@gmail.com",
-      "url" : "https://github.com/neokazemi/vue-tiptap-katex"
+      "name": "Mostafa Kazemi",
+      "email": "neo.kazemi168@gmail.com",
+      "url": "https://github.com/neokazemi/vue-tiptap-katex"
     }
   ],
   "license": "MIT",
