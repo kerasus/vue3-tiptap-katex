@@ -186,10 +186,9 @@
   }
 
   .tiptap-plus-container {
-    width: 90%;
-    margin: 0 5%;
+    width: 100%;
+    margin: 0;
     border-radius: 10px;
-
   }
 
   .tiptap-plus .tiptap-header {
