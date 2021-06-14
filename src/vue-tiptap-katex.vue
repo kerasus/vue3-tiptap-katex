@@ -1,5 +1,5 @@
 <template>
-  <div class="tiptap-plus-container mt-10">
+  <div class="tiptap-plus-container">
     <v-card elevation="3" class="tiptap-plus">
       <v-card-title class="tiptap-header">
         <slot name="toolbar">
