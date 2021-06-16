@@ -1,7 +1,7 @@
 <template>
   <div class="tiptap-plus-container">
     <v-card elevation="3" class="tiptap-plus">
-      <v-card-title class="tiptap-header">
+      <v-card-title v-if="editor.isFocused" class="tiptap-header">
         <slot name="toolbar">
           <toolbar :editor="editor" :access-token="accessToken" />
         </slot>
