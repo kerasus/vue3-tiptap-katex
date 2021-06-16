@@ -16,7 +16,7 @@
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-            v-if="editor"
+            v-if="editor.isFocused"
             class="floating-menu"
             :tippy-options="{ duration: 100 }"
             :editor="editor"
