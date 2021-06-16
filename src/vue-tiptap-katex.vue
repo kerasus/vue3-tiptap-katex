@@ -1,34 +1,32 @@
 <template>
-  <v-app>
-    <div dir="rtl" class="tiptap-plus-container mt-10">
-      <v-card elevation="3" class="tiptap-plus">
-        <v-card-title class="tiptap-header">
-          <slot name="toolbar">
-            <toolbar :editor="editor" :access-token="accessToken" />
-          </slot>
-        </v-card-title>
-        <v-card-text class="pa-0">
-          <bubble-menu
+  <div class="tiptap-plus-container">
+    <v-card elevation="3" class="tiptap-plus">
+      <v-card-title class="tiptap-header">
+        <slot name="toolbar">
+          <toolbar :editor="editor" :access-token="accessToken" />
+        </slot>
+      </v-card-title>
+      <v-card-text class="pa-0">
+        <bubble-menu
             v-if="editor"
             class="bubble-menu"
             :tippy-options="{ duration: 100 }"
             :editor="editor"
-          >
-            <slot-bubble-menu :editor="editor" />
-          </bubble-menu>
-          <floating-menu
+        >
+          <slot-bubble-menu :editor="editor" />
+        </bubble-menu>
+        <floating-menu
             v-if="editor"
             class="floating-menu"
             :tippy-options="{ duration: 100 }"
             :editor="editor"
-          >
-            <slot-floating-menu :editor="editor" />
-          </floating-menu>
-          <editor-content :editor="editor" />
-        </v-card-text>
-      </v-card>
-    </div>
-  </v-app>
+        >
+          <slot-floating-menu :editor="editor" />
+        </floating-menu>
+        <editor-content :editor="editor" />
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -188,10 +186,9 @@
   }
 
   .tiptap-plus-container {
-    width: 90%;
-    margin: 0 5%;
+    width: 100%;
+    margin: 0;
     border-radius: 10px;
-
   }
 
   .tiptap-plus .tiptap-header {
