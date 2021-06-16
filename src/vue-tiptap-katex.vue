@@ -1,5 +1,5 @@
 <template>
-  <div class="tiptap-plus-container">
+  <div :class="{ 'tiptap-plus-container': true, focused: editor.isFocused }">
     <v-card elevation="3" class="tiptap-plus">
       <v-card-title v-if="editor.isFocused" class="tiptap-header">
         <slot name="toolbar">
@@ -182,7 +182,10 @@
   .ProseMirror {
       outline: none;
       padding: 20px;
-      border-top: solid 1px #dedede;
+  }
+
+  .tiptap-plus-container .v-card__title {
+    border-bottom: solid 1px #dedede;
   }
 
   .tiptap-plus-container {
