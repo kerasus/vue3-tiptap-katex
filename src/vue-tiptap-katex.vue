@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'tiptap-plus-container': true, focused: editor.isFocused }">
+  <div :class="{ 'tiptap-plus-container': true, focused: editor && editor.isFocused }">
     <v-overlay
         absolute
         :value="loading"
@@ -13,7 +13,7 @@
             indeterminate
     ></v-progress-circular>
     <v-card elevation="3" class="tiptap-plus">
-      <v-card-title v-if="editor.isFocused" class="tiptap-header">
+      <v-card-title v-if="editor && editor.isFocused" class="tiptap-header">
         <slot name="toolbar">
           <toolbar :editor="editor" :access-token="accessToken" />
         </slot>
@@ -22,13 +22,13 @@
         <bubble-menu
             v-if="editor"
             class="bubble-menu"
-            :tippy-options="{ duration: 100 }"
+            :tippy-options="{ duration: 100, showOnCreate: false }"
             :editor="editor"
         >
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-            v-if="editor.isFocused"
+            v-if="editor && editor.isFocused"
             class="floating-menu"
             :tippy-options="{ duration: 100 }"
             :editor="editor"
