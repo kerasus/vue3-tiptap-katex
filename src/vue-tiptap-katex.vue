@@ -1,19 +1,20 @@
 <template>
-  <div :class="{ 'tiptap-plus-container': true, focused: editor && editor.isFocused }">
+  <div :class="{ 'tiptap-plus-container': true }">
     <v-overlay
         absolute
+        v-if="loading"
         :value="loading"
         opacity="0.5"
     >
     </v-overlay>
     <v-progress-circular
-            v-if="loading"
-            :size="50"
-            color="#fff"
-            indeterminate
+      v-if="loading"
+      :size="50"
+      color="#fff"
+      indeterminate
     ></v-progress-circular>
     <v-card elevation="3" class="tiptap-plus">
-      <v-card-title v-if="editor && editor.isFocused" class="tiptap-header">
+      <v-card-title v-if="editor" class="tiptap-header">
         <slot name="toolbar">
           <toolbar :editor="editor" :access-token="accessToken" />
         </slot>
@@ -87,6 +88,9 @@
         required: false
       },
       accessToken: {
+        default: ''
+      },
+      uploadUrl: {
         default: ''
       },
       loading: {
