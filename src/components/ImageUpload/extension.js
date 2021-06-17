@@ -23,7 +23,7 @@ export default Node.create({
             token: {
                 default: ''
             },
-            uploadUrl: {
+            upload: {
                 default: ''
             }
         }

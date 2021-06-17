@@ -704,8 +704,8 @@
                 top: 0,
                 left: 20,
                 editMode: true,
-                postAction: '/api/v1/question/upload/5ffdf5345590063ba07fad54',
-                putAction: '/api/v1/question/upload/5ffdf5345590063ba07fad54',
+                // postAction: '/api/v1/question/upload/5ffdf5345590063ba07fad54',
+                // putAction: '/api/v1/question/upload/5ffdf5345590063ba07fad54',
                 url: '',
                 files: [],
                 accept: 'image/png,image/gif,image/jpeg,image/webp',
@@ -749,7 +749,13 @@
                 return {
                     Authorization: 'Bearer ' + this.accessToken
                 }
-            }
+            },
+            postAction () {
+                return this.node.attrs.upload
+            },
+            putAction() {
+                return this.node.attrs.upload
+            },
         },
         watch: {
             'editFile.show'(newValue, oldValue) {

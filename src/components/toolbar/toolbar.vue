@@ -476,7 +476,7 @@
     props: ['editor', 'accessToken', 'uploadUrl'],
     computed: {
       tiptapInteractiveImageUpload () {
-        return '<tiptap-interactive-image-upload token="' + this.accessToken + '" upload-url="' + this.uploadUrl + '"></tiptap-interactive-image-upload>'
+        return '<tiptap-interactive-image-upload token="' + this.accessToken + '" upload="' + this.uploadUrl + '"></tiptap-interactive-image-upload>'
       }
     }
   }
