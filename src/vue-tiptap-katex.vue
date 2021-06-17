@@ -1,5 +1,5 @@
 <template>
-  <div class="tiptap-plus-container">
+  <div :class="{ 'tiptap-plus-container': true, focused: editor.isFocused }">
     <v-overlay
         absolute
         :value="loading"
@@ -13,7 +13,7 @@
             indeterminate
     ></v-progress-circular>
     <v-card elevation="3" class="tiptap-plus">
-      <v-card-title class="tiptap-header">
+      <v-card-title v-if="editor.isFocused" class="tiptap-header">
         <slot name="toolbar">
           <toolbar :editor="editor" :access-token="accessToken" />
         </slot>
@@ -28,7 +28,7 @@
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-            v-if="editor"
+            v-if="editor.isFocused"
             class="floating-menu"
             :tippy-options="{ duration: 100 }"
             :editor="editor"
@@ -198,7 +198,10 @@
   .ProseMirror {
       outline: none;
       padding: 20px;
-      border-top: solid 1px #dedede;
+  }
+
+  .tiptap-plus-container .v-card__title {
+    border-bottom: solid 1px #dedede;
   }
 
   .tiptap-plus-container {
