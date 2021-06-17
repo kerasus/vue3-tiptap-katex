@@ -1,5 +1,17 @@
 <template>
   <div :class="{ 'tiptap-plus-container': true, focused: editor.isFocused }">
+    <v-overlay
+        absolute
+        :value="loading"
+        opacity="0.5"
+    >
+    </v-overlay>
+    <v-progress-circular
+            v-if="loading"
+            :size="50"
+            color="#fff"
+            indeterminate
+    ></v-progress-circular>
     <v-card elevation="3" class="tiptap-plus">
       <v-card-title v-if="editor.isFocused" class="tiptap-header">
         <slot name="toolbar">
@@ -76,6 +88,10 @@
       },
       accessToken: {
         default: ''
+      },
+      loading: {
+        required: false,
+        default: false
       }
     },
     data() {
@@ -192,11 +208,19 @@
     width: 100%;
     margin: 0;
     border-radius: 10px;
+    position: relative;
+  }
+
+  .tiptap-plus-container .v-progress-circular {
+    position: absolute;
+    z-index: 10;
+    left: calc(50% - 25px);
+    top: calc(50% - 25px);
   }
 
   .tiptap-plus .tiptap-header {
     background-color: #e9ecf4;
-      padding: 8px;
+    padding: 8px;
   }
 </style>
 
