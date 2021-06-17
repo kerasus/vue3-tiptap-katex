@@ -22,6 +22,9 @@ export default Node.create({
             },
             token: {
                 default: ''
+            },
+            upload: {
+                default: ''
             }
         }
     },
