@@ -373,6 +373,69 @@
       <span>Table</span>
     </v-tooltip>
 
+    <v-tooltip top v-if="editor.can().addColumnAfter()">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().addColumnAfter().run()"
+        >
+          <v-icon>mdi-table-column-plus-after</v-icon>
+        </v-btn>
+      </template>
+      <span>Add Column</span>
+    </v-tooltip>
+
+    <v-tooltip top v-if="editor.can().addRowAfter()">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().addRowAfter().run()"
+        >
+          <v-icon>mdi-table-row-plus-after</v-icon>
+        </v-btn>
+      </template>
+      <span>Add Row</span>
+    </v-tooltip>
+
+    <v-tooltip top v-if="editor.can().deleteColumn()">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().deleteColumn().run()"
+        >
+          <v-icon>mdi-table-column-remove</v-icon>
+        </v-btn>
+      </template>
+      <span>Delete Column</span>
+    </v-tooltip>
+
+    <v-tooltip top v-if="editor.can().deleteRow()">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().deleteRow().run()"
+        >
+          <v-icon>mdi-table-row-remove</v-icon>
+        </v-btn>
+      </template>
+      <span>Delete Row</span>
+    </v-tooltip>
     <!--        <v-btn small tile icon @click="editor.chain().focus().insertContent('<vue-component></vue-component>').run()">-->
 
     <v-menu
