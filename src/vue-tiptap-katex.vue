@@ -16,7 +16,7 @@
     <v-card elevation="3" class="tiptap-plus">
       <v-card-title v-if="editor" class="tiptap-header">
         <slot name="toolbar">
-          <toolbar :editor="editor" :access-token="accessToken" />
+          <toolbar :editor="editor" :access-token="accessToken" :upload-url="uploadUrl"/>
         </slot>
       </v-card-title>
       <v-card-text class="pa-0">
@@ -29,7 +29,7 @@
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-            v-if="editor && editor.isFocused"
+            v-if="editor"
             class="floating-menu"
             :tippy-options="{ duration: 100 }"
             :editor="editor"
