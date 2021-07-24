@@ -7,6 +7,8 @@ export default Node.create({
 
   group: 'block',
 
+  draggable: true,
+
   inline: false,
 
   atom: true,

@@ -1,5 +1,5 @@
 <template>
-    <node-view-wrapper :class="{ 'vue-component': true, 'inline': node.attrs.inline }">
+    <node-view-wrapper :class="{ 'vue-component': true, 'inline': node.attrs.inline }" data-drag-handle>
         <div id="mathfield" ref="mathfield" dir="ltr" locale="fa" :class="{ 'editable': editMode }" v-show="editMode">
             {{ katex }}
         </div>
