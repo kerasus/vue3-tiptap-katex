@@ -9,6 +9,8 @@ export default Node.create({
 
     atom: true,
 
+    draggable: true,
+
     addAttributes() {
         return {
             url: {
@@ -25,6 +27,9 @@ export default Node.create({
             },
             upload: {
                 default: ''
+            },
+            justify: {
+                default: 'center'
             }
         }
     },
