@@ -1,5 +1,5 @@
 <template>
-    <node-view-wrapper class="vue-component">
+    <node-view-wrapper class="vue-component" data-drag-handle>
         <div class="example-full" v-if="editMode">
 <!--            <v-menu-->
 <!--                    v-if="false"-->
@@ -645,25 +645,40 @@
                 </div>
             </div>
         </div>
-        <div :style="{ width: '100%', height: editMode? 0 + 'px' : height + 'px', position: 'relative' }" ref="resizer">
-            <VueDragResize
-                    v-if="!editMode"
-                    :sticks="['br']"
-                    :aspectRatio="true"
-                    :x="left"
-                    :y="top"
-                    :isActive="true"
-                    :isDraggable="false"
-                    :w="width"
-                    :h="height"
-                    :parentW="$refs.resizer.clientWidth"
-                    :parentH="800"
-                    :parentLimitation="true"
-                    v-on:resizing="resize"
-            >
-                <v-img :src="node.attrs.url" width="100%" />
-            </VueDragResize>
+      <v-hover v-slot="{ hover }">
+        <div :style="{ width: '100%', height: editMode ? 0 + 'px' : height + 'px', position: 'relative' }" ref="resizer" :class="{ 'center': node.attrs.justify === 'center' }">
+          <VueDragResize
+              v-if="!editMode"
+              :sticks="['br', 'bl']"
+              :aspectRatio="true"
+              :x="left"
+              :y="top"
+              :isActive="true"
+              :isDraggable="false"
+              :w="width"
+              :h="height"
+              :parentW="$refs.resizer.clientWidth"
+              :parentH="800"
+              :parentLimitation="true"
+              v-on:resizing="resize"
+          >
+            <v-img :src="node.attrs.url" width="100%" />
+          </VueDragResize>
+          <v-btn-toggle v-model="toggleJustify" v-if="hover" class="toggle-justify">
+            <v-btn value="right" @click="setJustify('right')">
+              <v-icon>mdi-format-align-right</v-icon>
+            </v-btn>
+
+            <v-btn value="center" @click="setJustify('center')">
+              <v-icon>mdi-format-align-center</v-icon>
+            </v-btn>
+
+            <v-btn value="left" @click="setJustify('left')">
+              <v-icon>mdi-format-align-left</v-icon>
+            </v-btn>
+          </v-btn-toggle>
         </div>
+      </v-hover>
     </node-view-wrapper>
 </template>
 
@@ -699,6 +714,7 @@
         },
         data() {
             return {
+                toggleJustify: null,
                 width: 0,
                 height: 0,
                 top: 0,
@@ -758,6 +774,17 @@
             },
         },
         watch: {
+            'node.attrs.justify' () {
+              if (this.node.attrs.justify === 'right') {
+                this.left = (this.$refs.resizer.clientWidth) - (this.width) - 20
+              }
+
+              if (this.node.attrs.justify === 'left') {
+                this.left = 20
+              }
+
+              this.toggleJustify = this.node.attrs.justify
+            },
             'editFile.show'(newValue, oldValue) {
                 if (!newValue && oldValue) {
                     this.$refs.upload.update(this.editFile.id, { error: this.editFile.error || '' })
@@ -786,6 +813,11 @@
             },
         },
         methods: {
+            setJustify (justify) {
+              this.updateAttributes({
+                justify
+              })
+            },
             resize(newRect) {
                 this.width = newRect.width;
                 this.height = newRect.height;
@@ -1002,6 +1034,16 @@
                     this.height = this.node.attrs.height
                     this.width = this.node.attrs.width
                 }
+
+                if (this.node.attrs.justify === 'right') {
+                  this.left = (this.$refs.resizer.clientWidth) - (this.width) - 20
+                }
+
+                if (this.node.attrs.justify === 'left') {
+                  this.left = 20
+                }
+
+                this.toggleJustify = this.node.attrs.justify
             }, 550)
 
         }
@@ -1009,6 +1051,23 @@
 </script>
 
 <style scoped>
+    .toggle-justify {
+      position: absolute;
+      left: 10px;
+      top: -40px;
+      opacity: 0.47;
+    }
+
+    .center {
+      display: flex !important;
+      justify-content: center !important;
+    }
+
+    .center .vdr {
+      position: relative !important;
+      left: 0 !important;
+    }
+
     .example-full .btn-group .dropdown-menu {
         display: block;
         visibility: hidden;
