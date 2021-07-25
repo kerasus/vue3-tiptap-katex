@@ -109,7 +109,7 @@
 
       this.$nextTick(() => {
         that.editor = new Editor({
-          content: this.value,
+          content: that.value,
           extensions: [
             StarterKit,
             TextAlign,
