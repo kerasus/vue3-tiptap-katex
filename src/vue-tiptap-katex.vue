@@ -103,41 +103,13 @@
         editor: null,
       }
     },
+    watch: {
+      value () {
+        this.reinitEditor()
+      }
+    },
     mounted() {
-
-      let that = this
-
-      this.$nextTick(() => {
-        that.editor = new Editor({
-          content: that.value,
-          extensions: [
-            StarterKit,
-            TextAlign,
-            Highlight,
-            // Document.extend({
-            //   content: 'paper',
-            // }),
-            // Text,
-            // Paper,
-            Table.configure({
-              resizable: true,
-            }),
-            TableRow,
-            TableHeader,
-            TableCell,
-            TiptapInteractiveKatex,
-            TiptapInteractiveKatexInline,
-            TiptapInteractiveImageUpload
-          ],
-          // triggered on every change
-          onUpdate() {
-            that.$emit('input', this.getHTML())
-            // console.log('html', this.getHTML())
-            // const json =
-            // send the content to an API here
-          },
-        })
-      });
+      this.initEditor()
 
       // this.editor.on('focus', this.focusHandler)
       // this.editor.on('blur', this.blurHandler)
@@ -146,6 +118,45 @@
       this.editor.destroy()
     },
     methods: {
+      initEditor () {
+        let that = this
+        this.$nextTick(() => {
+          console.log('that.value', that.value)
+          that.editor = new Editor({
+            content: that.value,
+            extensions: [
+              StarterKit,
+              TextAlign,
+              Highlight,
+              // Document.extend({
+              //   content: 'paper',
+              // }),
+              // Text,
+              // Paper,
+              Table.configure({
+                resizable: true,
+              }),
+              TableRow,
+              TableHeader,
+              TableCell,
+              TiptapInteractiveKatex,
+              TiptapInteractiveKatexInline,
+              TiptapInteractiveImageUpload
+            ],
+            // triggered on every change
+            onUpdate() {
+              that.$emit('input', this.getHTML())
+              // console.log('html', this.getHTML())
+              // const json =
+              // send the content to an API here
+            },
+          })
+        });
+      },
+      reinitEditor () {
+        this.editor.destroy()
+        this.initEditor()
+      }
       // focusHandler() {
       //   console.log('focusHandler -> this.editor.view', this.editor.view)
       //   // we use `setTimeout` to make sure `selection` is already updated
