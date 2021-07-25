@@ -104,8 +104,8 @@
       }
     },
     watch: {
-      value () {
-        this.reinitEditor()
+      value (newValue) {
+        this.editor.commands.setContent(newValue)
       }
     },
     mounted() {
