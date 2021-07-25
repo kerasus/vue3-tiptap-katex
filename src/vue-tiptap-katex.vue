@@ -107,35 +107,37 @@
 
       let that = this
 
-      this.editor = new Editor({
-        content: this.value,
-        extensions: [
-          StarterKit,
-          TextAlign,
-          Highlight,
-          // Document.extend({
-          //   content: 'paper',
-          // }),
-          // Text,
-          // Paper,
-          Table.configure({
-            resizable: true,
-          }),
-          TableRow,
-          TableHeader,
-          TableCell,
-          TiptapInteractiveKatex,
-          TiptapInteractiveKatexInline,
-          TiptapInteractiveImageUpload
-        ],
-        // triggered on every change
-        onUpdate() {
-          that.$emit('input', this.getHTML())
+      this.$nextTick(() => {
+        that.editor = new Editor({
+          content: this.value,
+          extensions: [
+            StarterKit,
+            TextAlign,
+            Highlight,
+            // Document.extend({
+            //   content: 'paper',
+            // }),
+            // Text,
+            // Paper,
+            Table.configure({
+              resizable: true,
+            }),
+            TableRow,
+            TableHeader,
+            TableCell,
+            TiptapInteractiveKatex,
+            TiptapInteractiveKatexInline,
+            TiptapInteractiveImageUpload
+          ],
+          // triggered on every change
+          onUpdate() {
+            that.$emit('input', this.getHTML())
             // console.log('html', this.getHTML())
-          // const json =
-          // send the content to an API here
-        },
-      })
+            // const json =
+            // send the content to an API here
+          },
+        })
+      });
 
       // this.editor.on('focus', this.focusHandler)
       // this.editor.on('blur', this.blurHandler)
