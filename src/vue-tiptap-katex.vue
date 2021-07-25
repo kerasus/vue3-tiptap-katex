@@ -104,9 +104,14 @@
       }
     },
     watch: {
-      value (newValue) {
-        this.editor.commands.setContent(newValue)
-      }
+      // inputText(value) {
+      //   this.editor.commands.setContent(value);
+      // },
+      // value (newValue) {
+      //   if (newValue !== this.inputText) {
+      //     this.inputText = newValue
+      //   }
+      // }
     },
     mounted() {
       this.initEditor()
