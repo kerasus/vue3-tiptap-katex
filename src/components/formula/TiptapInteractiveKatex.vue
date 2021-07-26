@@ -30,6 +30,7 @@
   import 'mathlive/dist/mathlive-static.css'
   import '@mdi/font/css/materialdesignicons.css'
   import MathLive from 'mathlive'
+  import md from 'markdown-it'
 
   export default {
     components: {
@@ -54,7 +55,8 @@
           formula: '',
           editMode: false,
           questMarkdownText: '# Math Rulez! \n  $x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$',
-          katex: '$x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$'
+          katex: '$x=\\frac{-b\\pm\\sqrt[]{b^2-4ac}}{2a}$',
+          icons: {}
       }
     },
     mounted() {
@@ -74,107 +76,194 @@
                     styles: "",
                     rows: [
                         [
-                            {
-                                class: "keycap tex",
-                                insert: "$$\\leftrightharpoons$$",
-                                label: "<i aria-hidden=\"true\" class=\"v-icon mdi mdi-swap-horizontal theme--dark\"></i>"
-                            },
-                            {
-                                class: "keycap tex",
-                                insert: "$$\\gets$$",
-                                label: "<i aria-hidden=\"true\" class=\"v-icon mdi mdi-arrow-left theme--dark\"></i>"
-                            },
-                            {
-                                class: "keycap tex",
-                                insert: "$$\\to$$",
-                                label: "<i aria-hidden=\"true\" class=\"v-icon mdi mdi-arrow-right theme--dark\"></i>"
-                            },
-                            { class: "separator w5" },
-                            { label: "17", key: "17", latex: '$$17$$', insert: '$$17$$' },
-                            // Will display the label using the system font. To display
-                            // with the TeX font, use:
-                            // { class: "tex", label: "7", key: "7" },
-                            // or
-                            // { latex: "7"},
-                            { label: "8", key: "8" },
-                            { label: "9", key: "9" },
-                            { latex: "\\div" },
-                            { class: "separator w5" },
-                            {
-                                class: "tex small",
-                                label: "<span><i>x</i>&thinsp;²</span>",
-                                insert: "$$#@^{2}$$"
-                            },
-                            {
-                                class: "tex small",
-                                label: "<span><i>x</i><sup>&thinsp;<i>n</i></sup></span>",
-                                insert: "$$#@^{}$$"
-                            },
-                            {
-                                class: "small",
-                                latex: "\\sqrt{#0}",
-                                insert: "$$\\sqrt{#0}$$",
-                            }
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\rightarrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\uparrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\downarrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\gets$$",
+                            label: this.icons.test
+                          },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\le$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\geq$$",
+                            label:this.icons.test
+                          },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\land$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\lor$$",
+                            label:this.icons.test
+                          },
+                          { class: "separator w5" },
                         ],
                         [
-                            {
-                                class: "keycap tex",
-                                insert: "$$\\cap$$",
-                                label: "<i data-v-11cdb290=\"\" aria-hidden=\"true\" class=\"v-icon notranslate mdi mdi-swap-horizontal theme--dark\"></i>"
-                            },
-                            {
-                                class: "keycap tex",
-                                insert: "$$\\leftrightharpoons$$",
-                                label: "<i data-v-11cdb290=\"\" aria-hidden=\"true\" class=\"v-icon notranslate mdi mdi-swap-horizontal theme--dark\"></i>"
-                            },
-                            { class: "separator w5" },
-                            { label: "4", latex:"4" },
-                            { label: "5", key: "5" },
-                            { label: "6", key: "6" },
-                            { latex: "\\times" },
-                            { class: "separator w5" },
-                            { class: "small", latex: "\\frac{#0}{#0}" },
-                            { class: "separator" },
-                            { class: "separator" }
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\nearrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\nwarrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "\\leftrightharpoons$$",
+                            label: this.icons.test
+                          },
+                          { class: "separator w5" },
+                          { class: "separator w5" },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\leqslant$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\geqslant$$",
+                            label:this.icons.test
+                          },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\cup$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\cap$$",
+                            label:this.icons.test
+                          },
                         ],
                         [
-                            { class: "tex", label: "<i>c</i>" },
-                            { class: "tex", label: "<i>z</i>" },
-                            { class: "separator w5" },
-                            { label: "1", key: "1" },
-                            { label: "2", key: "2" },
-                            { label: "3", key: "3" },
-                            { latex: "-" },
-                            { class: "separator w5" },
-                            { class: "separator" },
-                            { class: "separator" },
-                            { class: "separator" }
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\searrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\swarrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\leftrightarrow$$",
+                            label:this.icons.test
+                          },
+                          { class: "separator w5" },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\N$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\R$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\Z$$",
+                            label:this.icons.test
+                          },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\odot$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\otimes$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\surd$$",
+                            label:this.icons.test
+                          },
                         ],
                         [
-                            { latex: "(" },
-                            { latex: ")" },
-
-                            { class: "separator w5" },
-                            { label: "0", key: "0" },
-                            { latex: "." },
-                            { latex: "\\pi" },
-                            { latex: "+" },
-                            { class: "separator w5" },
-                            {
-                                class: "action",
-                                label: "<svg><use xlink:href='#svg-arrow-left' /></svg>",
-                                command: ["performWithFeedback", "moveToPreviousChar"]
-                            },
-                            {
-                                class: "action",
-                                label: "<svg><use xlink:href='#svg-arrow-right' /></svg>",
-                                command: ["performWithFeedback", "moveToNextChar"]
-                            },
-                            {
-                                class: "action font-glyph bottom right",
-                                label: "&#x232b;",
-                                command: ["performWithFeedback", "deleteBackward"]
-                            }
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\Rightarrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\Leftrightarrow$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\Leftarrow$$",
+                            label:this.icons.test
+                          },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\Delta$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\alpha$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\exists$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\Omega$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\ell$$",
+                            label:this.icons.test
+                          },
+                          { class: "separator w5" },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\varnothing$$",
+                            label:this.icons.test
+                          },
+                          {
+                            class: "keycap tex",
+                            insert: "$$\\^$$",
+                            label:this.icons.test
+                          },
                         ]
                     ]
                 },
@@ -609,9 +698,14 @@
             return this.markdown.render('$' + this.node.attrs.katex + '$')
         }
     },
-      created () {
-        this.katex = this.node.attrs.katex
+    created () {
+      this.katex = this.node.attrs.katex
+    },
+    methods: {
+      setIcons () {
+        this.icons.test = md.render('\\to')
       }
+    }
   }
 </script>
 
