@@ -261,6 +261,7 @@
 <style lang="scss">
     /* Basic editor styles */
     .ProseMirror {
+      white-space: normal !important;
 
         > * + * {
             margin-top: 0.75em;
