@@ -389,6 +389,38 @@
       <span>Table</span>
     </v-tooltip>
 
+    <v-tooltip top v-if="editor.can().mergeCells()">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().mergeCells().run()"
+        >
+          <v-icon>mdi-table-merge-cells</v-icon>
+        </v-btn>
+      </template>
+      <span>Merge Cells</span>
+    </v-tooltip>
+
+    <v-tooltip top v-if="editor.can().splitCell()">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().splitCell().run()"
+        >
+          <v-icon>mdi-table-split-cell</v-icon>
+        </v-btn>
+      </template>
+      <span>Split Cells</span>
+    </v-tooltip>
+
     <v-tooltip top v-if="editor.can().addColumnAfter()">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -452,41 +484,56 @@
       </template>
       <span>Delete Row</span>
     </v-tooltip>
-    <!--        <v-btn small tile icon @click="editor.chain().focus().insertContent('<vue-component></vue-component>').run()">-->
 
-    <v-menu
-            open-on-hover
-            bottom
-            :tile="true"
-            offset-y
-            rounded
-            content-class="formula-menu"
-    >
+    <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-                small
-                tile
-                icon
-                v-on="on"
-                v-bind="attrs"
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline>').run()"
         >
           <v-icon>mdi-sigma</v-icon>
         </v-btn>
       </template>
+      <span>Add Formula</span>
+    </v-tooltip>
 
-      <v-list>
-        <v-list-item>
-          <v-btn dense tile elevation="0" color="#fff" block @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline>').run()">
-            Inline
-          </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn dense tile elevation="0" color="#fff" block @click="editor.chain().focus().insertContent('<tiptap-interactive-katex></tiptap-interactive-katex>').run()">
-            Block
-          </v-btn>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+<!--    <v-menu-->
+<!--            open-on-hover-->
+<!--            bottom-->
+<!--            :tile="true"-->
+<!--            offset-y-->
+<!--            rounded-->
+<!--            content-class="formula-menu"-->
+<!--    >-->
+<!--      <template v-slot:activator="{ on, attrs }">-->
+<!--        <v-btn-->
+<!--                small-->
+<!--                tile-->
+<!--                icon-->
+<!--                v-on="on"-->
+<!--                v-bind="attrs"-->
+<!--        >-->
+<!--          <v-icon>mdi-sigma</v-icon>-->
+<!--        </v-btn>-->
+<!--      </template>-->
+
+<!--      <v-list>-->
+<!--        <v-list-item>-->
+<!--          <v-btn dense tile elevation="0" color="#fff" block @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline>').run()">-->
+<!--            Inline-->
+<!--          </v-btn>-->
+<!--        </v-list-item>-->
+<!--        <v-list-item>-->
+<!--          <v-btn dense tile elevation="0" color="#fff" block @click="editor.chain().focus().insertContent('<tiptap-interactive-katex></tiptap-interactive-katex>').run()">-->
+<!--            Block-->
+<!--          </v-btn>-->
+<!--        </v-list-item>-->
+<!--      </v-list>-->
+<!--    </v-menu>-->
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
