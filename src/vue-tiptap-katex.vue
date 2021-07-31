@@ -70,6 +70,31 @@
     FloatingMenu
   } from '@tiptap/vue-2'
 
+  import { Extension } from '@tiptap/core'
+  const AutoDir = Extension.create({
+    addGlobalAttributes() {
+      return [
+        {
+          types: [
+            'heading',
+            'paragraph',
+            'bulletList',
+            'orderedList',
+          ],
+          attributes: {
+            autoDir: {
+              renderHTML: () => ({
+                dir: 'auto',
+              }),
+              parseHTML: element => ({
+                autoDir: element.dir.autoDir || 'auto',
+              }),
+            },
+          },
+        },
+      ]
+    },
+  })
   // import {EditorView} from "prosemirror-view";
   // import {EditorState} from "prosemirror-state";
   // import {posToDOMRect} from "@tiptap/core";
@@ -128,7 +153,8 @@
           TableCell,
           TiptapInteractiveKatex,
           TiptapInteractiveKatexInline,
-          TiptapInteractiveImageUpload
+          TiptapInteractiveImageUpload,
+          AutoDir
         ],
         // triggered on every change
         onUpdate() {
