@@ -57,6 +57,7 @@
   import TableHeader from '@tiptap/extension-table-header'
   import TextAlign from '@tiptap/extension-text-align'
   import Highlight from '@tiptap/extension-highlight'
+  import Underline from '@tiptap/extension-underline'
 
   // import Document from '@tiptap/extension-document'
   // import Text from '@tiptap/extension-text'
@@ -113,6 +114,7 @@
           StarterKit,
           TextAlign,
           Highlight,
+          Underline,
           // Document.extend({
           //   content: 'paper',
           // }),
@@ -130,6 +132,7 @@
         ],
         // triggered on every change
         onUpdate() {
+          // that.$emit('input', that.convertToPureHTML(this.getHTML()))
           that.$emit('input', this.getHTML())
             // console.log('html', this.getHTML())
           // const json =
@@ -144,6 +147,7 @@
       this.editor.destroy()
     },
     methods: {
+
       // focusHandler() {
       //   console.log('focusHandler -> this.editor.view', this.editor.view)
       //   // we use `setTimeout` to make sure `selection` is already updated

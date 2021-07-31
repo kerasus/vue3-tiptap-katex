@@ -148,6 +148,22 @@
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
+            small
+            tile
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="editor.chain().focus().toggleUnderline().run()"
+        >
+          <v-icon>mdi-format-underline</v-icon>
+        </v-btn>
+      </template>
+      <span>Underline</span>
+    </v-tooltip>
+
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
                 small
                 tile
                 icon
