@@ -57,6 +57,7 @@
   import TableHeader from '@tiptap/extension-table-header'
   import TextAlign from '@tiptap/extension-text-align'
   import Highlight from '@tiptap/extension-highlight'
+  import Underline from '@tiptap/extension-underline'
 
   // import Document from '@tiptap/extension-document'
   // import Text from '@tiptap/extension-text'
@@ -69,6 +70,31 @@
     FloatingMenu
   } from '@tiptap/vue-2'
 
+  import { Extension } from '@tiptap/core'
+  const AutoDir = Extension.create({
+    addGlobalAttributes() {
+      return [
+        {
+          types: [
+            'heading',
+            'paragraph',
+            'bulletList',
+            'orderedList',
+          ],
+          attributes: {
+            autoDir: {
+              renderHTML: () => ({
+                dir: 'auto',
+              }),
+              parseHTML: element => ({
+                autoDir: element.dir.autoDir || 'auto',
+              }),
+            },
+          },
+        },
+      ]
+    },
+  })
   // import {EditorView} from "prosemirror-view";
   // import {EditorState} from "prosemirror-state";
   // import {posToDOMRect} from "@tiptap/core";
@@ -84,9 +110,6 @@
       SlotFloatingMenu
     },
     props: {
-      value: {
-        required: false
-      },
       accessToken: {
         default: ''
       },
@@ -103,18 +126,41 @@
         editor: null,
       }
     },
-    watch: {
-      // inputText(value) {
-      //   this.editor.commands.setContent(value);
-      // },
-      // value (newValue) {
-      //   if (newValue !== this.inputText) {
-      //     this.inputText = newValue
-      //   }
-      // }
-    },
     mounted() {
-      this.initEditor()
+
+
+      this.editor = new Editor({
+        content: this.value,
+        extensions: [
+          StarterKit,
+          TextAlign,
+          Highlight,
+          Underline,
+          // Document.extend({
+          //   content: 'paper',
+          // }),
+          // Text,
+          // Paper,
+          Table.configure({
+            resizable: true,
+          }),
+          TableRow,
+          TableHeader,
+          TableCell,
+          TiptapInteractiveKatex,
+          TiptapInteractiveKatexInline,
+          TiptapInteractiveImageUpload,
+          AutoDir
+        ],
+        // triggered on every change
+        onUpdate() {
+          // that.$emit('input', that.convertToPureHTML(this.getHTML()))
+          // that.$emit('update', this.getHTML())
+          // console.log('html', this.getHTML())
+          // const json =
+          // send the content to an API here
+        },
+      })
 
       // this.editor.on('focus', this.focusHandler)
       // this.editor.on('blur', this.blurHandler)
@@ -123,45 +169,121 @@
       this.editor.destroy()
     },
     methods: {
-      initEditor () {
-        let that = this
-        this.$nextTick(() => {
-          console.log('that.value', that.value)
-          that.editor = new Editor({
-            content: that.value,
-            extensions: [
-              StarterKit,
-              TextAlign,
-              Highlight,
-              // Document.extend({
-              //   content: 'paper',
-              // }),
-              // Text,
-              // Paper,
-              Table.configure({
-                resizable: true,
-              }),
-              TableRow,
-              TableHeader,
-              TableCell,
-              TiptapInteractiveKatex,
-              TiptapInteractiveKatexInline,
-              TiptapInteractiveImageUpload
-            ],
-            // triggered on every change
-            onUpdate() {
-              that.$emit('input', this.getHTML())
-              // console.log('html', this.getHTML())
-              // const json =
-              // send the content to an API here
-            },
-          })
-        });
+      setContent (pureHTML) {
+        let string = this.convertToTiptap(pureHTML)
+        this.editor.commands.setContent(string)
       },
-      reinitEditor () {
-        this.editor.destroy()
-        this.initEditor()
-      }
+      getContent () {
+        return this.convertToPureHTML(this.editor.getHTML())
+      },
+      convertToPureHTML (string) { //call this function when you want to convert tiptap output to pure html
+        string = this.convertInteractiveImagesToHTML(string)
+        string = this.convertInteractiveIKatexToHTML(string)
+        return string
+      },
+      convertInteractiveImagesToHTML (string) { //this function converts interactiveImage from tiptap to html image
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let images = wrapper.querySelectorAll('tiptap-interactive-image-upload')
+        images.forEach(item => {
+          let interactiveImage = item.attributes[0].nodeValue
+          if (interactiveImage) {
+            //create img tag and set its attrs
+            interactiveImage =
+                '<img src="' + item.attributes['url'].nodeValue + '" style="width: ' + item.attributes['width'].nodeValue + 'px; height: ' + item.attributes['height'].nodeValue + 'px" />'
+            //create img parent and set the display settings and justify the image
+            var imageWrapper = document.createElement('div')
+            imageWrapper.innerHTML = interactiveImage
+            imageWrapper.style.display = 'flex'
+            if (item.attributes['justify'].nodeValue === 'right') {
+              imageWrapper.style.justifyContent = "flex-start"
+            } else if (item.attributes['justify'].nodeValue === 'center') {
+              imageWrapper.style.justifyContent = "center"
+            } else if (item.attributes['justify'].nodeValue === 'left') {
+              imageWrapper.style.justifyContent = "flex-end"
+            }
+            item.replaceWith(imageWrapper)
+          }
+        })
+        return wrapper.innerHTML
+      },
+      convertInteractiveIKatexToHTML (string) { //this function converts interactiveKatex from tiptap to html image
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let images = wrapper.querySelectorAll('tiptap-interactive-katex-inline')
+        images.forEach(item => {
+          let interactiveKatex = item.attributes[0].nodeValue
+          if (interactiveKatex) {
+            interactiveKatex = '$' + item.attributes['katex'].nodeValue + '$'
+            var katexWrapper = document.createElement('div')
+            katexWrapper.setAttribute('katex', true)
+            katexWrapper.innerHTML = interactiveKatex
+            item.replaceWith(katexWrapper.innerHTML)
+          }
+        })
+        return wrapper.innerHTML
+      },
+
+      convertToTiptap (string) { //call this function when you want to convert pure HTML to tiptap format
+        string = this.convertHTMLImageToInteractive(string)
+        string = this.convertHTMLKatexToInteractive(string)
+        return string
+      },
+      convertHTMLImageToInteractive (string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let imagesParent = wrapper.querySelectorAll('img')
+        imagesParent.forEach(item => {
+          let imageHTML = item.attributes[0].nodeValue
+          if (imageHTML) {
+            let justify = 'center'
+            if (item.parentElement.style.display === 'flex') {
+              if (item.parentElement.style.justifyContent === 'flex-start') {
+                justify = "right"
+              } else if (item.parentElement.style.justifyContent === 'center') {
+                justify = "center"
+              } else if (item.parentElement.style.justifyContent === 'flex-end') {
+                justify = "left"
+              }
+            }
+            imageHTML =
+                '<tiptap-interactive-image-upload url="' + item.attributes['src'].nodeValue + '" width="' + item.style.width.slice(0, -2) + '" height="' + item.style.height.slice(0, -2) + '" justify="' + justify + '"></tiptap-interactive-image-upload>'
+            var imageWrapper = document.createElement('div')
+            imageWrapper.innerHTML = imageHTML
+            if (item.parentElement.style.display === 'flex') {
+              item.parentElement.replaceWith(imageWrapper)
+            }
+            item.replaceWith(imageWrapper)
+          }
+        })
+        return wrapper.innerHTML
+      },
+      convertHTMLKatexToInteractive (string) {
+        // var wrapper = document.createElement('div')
+        // wrapper.innerHTML = string
+        // let katexes = wrapper.querySelectorAll('div[katex="true"]')
+        // katexes.forEach(item => {
+        //   let katexHTML = '<tiptap-interactive-katex katex="' + item.innerHTML.slice(1, -1) + '"></tiptap-interactive-katex>'
+        //
+        //   var doc = new DOMParser().parseFromString(katexHTML, "text/xml");
+        //   item.replaceWith(doc.firstChild)
+        // })
+
+        let regex = /(\$((?! ).){1}((?!\$).)*((?! ).){1}\$)/gi;
+        string = string.replace(regex, (match) => {
+
+          let finalMatch
+          if (match.includes('$$')) {
+            finalMatch = match.slice(2, -2)
+          } else {
+            finalMatch = match.slice(1, -1)
+          }
+          return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
+        })
+        return string
+
+      },
+
       // focusHandler() {
       //   console.log('focusHandler -> this.editor.view', this.editor.view)
       //   // we use `setTimeout` to make sure `selection` is already updated
@@ -249,6 +371,7 @@
 <style lang="scss">
     /* Basic editor styles */
     .ProseMirror {
+      white-space: normal !important;
 
         > * + * {
             margin-top: 0.75em;
