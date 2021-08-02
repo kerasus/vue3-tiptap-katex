@@ -257,8 +257,9 @@
             imageWrapper.innerHTML = imageHTML
             if (item.parentElement.style.display === 'flex') {
               item.parentElement.replaceWith(imageWrapper)
+            } else {
+              item.replaceWith(imageWrapper)
             }
-            item.replaceWith(imageWrapper)
           }
         })
         return wrapper.innerHTML
