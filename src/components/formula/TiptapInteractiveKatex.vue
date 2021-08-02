@@ -3,7 +3,7 @@
         <div id="mathfield" ref="mathfield" dir="ltr" locale="fa" :class="{ 'editable': editMode }" v-show="editMode">
             {{ katex }}
         </div>
-        <div class="converted" v-html="convertMarkdown" dir="ltr" v-show="!editMode" @click="editMode = true"/>
+        <div class="converted" v-katex:auto v-html="convertMarkdown" dir="ltr" v-show="!editMode" @click="editMode = true"/>
         <v-btn
             icon
             @click="editMode = true"
@@ -606,7 +606,7 @@
         },
     computed: {
         convertMarkdown () {
-            return this.markdown.render('$' + this.node.attrs.katex + '$')
+            return '$' + this.node.attrs.katex + '$'
         }
     },
       created () {
