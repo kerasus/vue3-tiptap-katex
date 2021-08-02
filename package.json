@@ -47,6 +47,7 @@
     "cropperjs": "^1.5.11",
     "css-loader": "^3.6.0",
     "github-markdown-css": "^4.0.0",
+    "katex": "^0.12.0",
     "markdown-it": "^12.0.6",
     "markdown-it-container": "^3.0.0",
     "markdown-it-new-katex": "^2.0.3",
@@ -59,6 +60,7 @@
     "turndown": "^7.0.0",
     "vue": "^2.6.11",
     "vue-drag-resize": "^1.5.4",
+    "vue-katex": "^0.5.0",
     "vue-upload-component": "^2.8.22",
     "vuetify": "^2.5.3",
     "webpack": "<=4"
