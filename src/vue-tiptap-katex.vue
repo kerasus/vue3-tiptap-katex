@@ -247,7 +247,7 @@
               }
             }
             imageHTML =
-                '<tiptap-interactive-image-upload url="' + item.attributes['src'].nodeValue + '" width="' + item.attributes['width'].nodeValue ? item.attributes['width'].nodeValue : 100 + '" height="' + item.attributes['height'].nodeValue ? item.attributes['height'].nodeValue : 100 + '" justify="' + justify + '"></tiptap-interactive-image-upload>'
+                '<tiptap-interactive-image-upload url="' + item.attributes['src'].nodeValue + '" width="' + item.attributes['width'] ? item.attributes['width'].nodeValue : 100 + '" height="' + item.attributes['height'] ? item.attributes['height'].nodeValue : 100 + '" justify="' + justify + '"></tiptap-interactive-image-upload>'
             var imageWrapper = document.createElement('div')
             imageWrapper.innerHTML = imageHTML
             if (item.parentElement.style.display === 'flex') {
