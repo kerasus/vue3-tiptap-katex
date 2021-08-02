@@ -190,7 +190,7 @@
           if (interactiveImage) {
             //create img tag and set its attrs
             interactiveImage =
-                '<img src="' + item.attributes['url'].nodeValue + '" style="width: ' + item.attributes['width'].nodeValue + 'px; height: ' + item.attributes['height'].nodeValue + 'px" />'
+                '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" />'
             //create img parent and set the display settings and justify the image
             var imageWrapper = document.createElement('div')
             imageWrapper.innerHTML = interactiveImage
@@ -247,7 +247,7 @@
               }
             }
             imageHTML =
-                '<tiptap-interactive-image-upload url="' + item.attributes['src'].nodeValue + '" width="' + item.style.width.slice(0, -2) + '" height="' + item.style.height.slice(0, -2) + '" justify="' + justify + '"></tiptap-interactive-image-upload>'
+                '<tiptap-interactive-image-upload url="' + item.attributes['src'].nodeValue + '" width="' + item.attributes['width'].nodeValue ? item.attributes['width'].nodeValue : 100 + '" height="' + item.attributes['height'].nodeValue ? item.attributes['height'].nodeValue : 100 + '" justify="' + justify + '"></tiptap-interactive-image-upload>'
             var imageWrapper = document.createElement('div')
             imageWrapper.innerHTML = imageHTML
             if (item.parentElement.style.display === 'flex') {
