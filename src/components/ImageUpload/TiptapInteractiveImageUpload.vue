@@ -1033,6 +1033,10 @@
                     this.editMode = false
                     this.height = this.node.attrs.height
                     this.width = this.node.attrs.width
+                    if (!this.width && !this.height) {
+                      this.width = 100
+                      this.height = 100
+                    }
                 }
 
                 if (this.node.attrs.justify === 'right') {
@@ -1042,6 +1046,7 @@
                 if (this.node.attrs.justify === 'left') {
                   this.left = 20
                 }
+
 
                 this.toggleJustify = this.node.attrs.justify
             }, 550)
