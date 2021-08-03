@@ -1,6 +1,6 @@
 {
   "name": "vue-tiptap-katex",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "tiptap editor with katex in vue",
   "main": "index.js",
   "keywords": [
@@ -26,7 +26,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint src"
   },
   "dependencies": {
     "@mdi/font": "^5.8.55",
@@ -46,11 +46,7 @@
     "core-js": "^3.6.5",
     "cropperjs": "^1.5.11",
     "css-loader": "^3.6.0",
-    "github-markdown-css": "^4.0.0",
     "katex": "^0.12.0",
-    "markdown-it": "^12.0.6",
-    "markdown-it-container": "^3.0.0",
-    "markdown-it-new-katex": "^2.0.3",
     "mathlive": "^0.59.0",
     "node-sass": "^6.0.0",
     "postcss-loader": "^4.2.0",
@@ -67,26 +63,46 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-eslint": "^3.1.1",
+    "@vue/cli-service": "^3.12.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11"
   },
+
   "eslintConfig": {
     "root": true,
     "env": {
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/strongly-recommended",
       "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "vue/attributes-order": "warn",
+      "vue/this-in-template": "error",
+      "vue/arrow-spacing": "error",
+      "vue/block-spacing": "error",
+      "vue/comma-dangle": "error",
+      "vue/eqeqeq": "warn",
+      "vue/key-spacing": "error",
+      "vue/keyword-spacing": "error",
+      "vue/no-deprecated-scope-attribute": "warn",
+      "vue/no-deprecated-slot-attribute": "warn",
+      "vue/no-deprecated-slot-scope-attribute": "warn",
+      "vue/no-irregular-whitespace": "error",
+      "vue/no-reserved-component-names": "error",
+      "vue/valid-v-slot": "error",
+      "quotes": [
+        2,
+        "single"
+      ]
+    }
   },
   "browserslist": [
     "> 1%",

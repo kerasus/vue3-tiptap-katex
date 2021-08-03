@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import VueTiptapKatex from "@/vue-tiptap-katex";
+import VueTiptapKatex from '@/vue-tiptap-katex';
 export default {
-  name: "test",
+  name: 'Test',
   components: {VueTiptapKatex}
 }
 </script>
