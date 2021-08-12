@@ -38,7 +38,7 @@
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-          v-if="editor"
+          v-if="false"
           class="floating-menu"
           :tippy-options="{ duration: 100 }"
           :editor="editor"
