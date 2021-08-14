@@ -409,6 +409,34 @@ export default {
                 insert: '$$\\enspace$$',
                 label: 'space',
               },
+              {
+                class: 'keycap tex',
+                insert: '$$\\overbrace{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\underbrace{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\overgroup{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\undergroup{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\overbrace{#@}^{\\text{note}}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\underbrace{#@}_{\\text{note}}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\boxed{#@}$$',
+              }
             ]
           ]
         },
