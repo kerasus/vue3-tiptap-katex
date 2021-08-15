@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="editor"
-    class="d-flex"
+    class=""
   >
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -113,10 +113,7 @@
       <span>Heading 6</span>
     </v-tooltip>
 
-    <v-divider
-      class="mx-3"
-      vertical
-    />
+    <div class="vl mx-3"></div>
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -198,10 +195,7 @@
       <span>Highlight</span>
     </v-tooltip>
 
-    <v-divider
-      class="mx-3"
-      vertical
-    />
+    <div class="vl mx-3"></div>
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -267,10 +261,7 @@
       <span>Align Justify</span>
     </v-tooltip>
 
-    <v-divider
-      class="mx-3"
-      vertical
-    />
+    <div class="vl mx-3"></div>
 
 
     <v-tooltip top>
@@ -305,10 +296,7 @@
       <span>Ordered List</span>
     </v-tooltip>
 
-    <v-divider
-      class="mx-3"
-      vertical
-    />
+    <div class="vl mx-3"></div>
     <!--    <v-btn-->
     <!--      small-->
     <!--      tile-->
@@ -385,10 +373,7 @@
       <span>Horizontal Divider</span>
     </v-tooltip>
 
-    <v-divider
-      class="mx-3"
-      vertical
-    />
+    <div class="vl mx-3"></div>
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -587,10 +572,7 @@
     </v-tooltip>
 
     <!--    <dynamic-table :editor="editor" />-->
-    <v-divider
-      class="mx-3"
-      vertical
-    />
+    <div class="vl mx-3"></div>
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -657,6 +639,13 @@
 </script>
 
 <style scoped>
+
+.vl {
+  border-left: 1px dotted gray;
+  white-space: nowrap;
+  display: inline;
+}
+
     button:not(.v-btn) {
         border: solid 1px gray;
         padding: 5px;
