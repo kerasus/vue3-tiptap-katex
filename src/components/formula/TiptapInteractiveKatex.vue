@@ -104,6 +104,7 @@ export default {
         // katex: this.latexData
         katex: newValue
       })
+      this.katex = newValue
     }
   },
   computed: {
@@ -152,9 +153,46 @@ export default {
               {
                 class: 'keycap tex',
                 insert: '$$\\gets$$',
-                label: this.icons.test
               },
               {class: 'separator w5'},
+              {
+                class: 'keycap tex',
+                insert: '$$\\nearrow$$',
+
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\nwarrow$$',
+
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\searrow$$',
+
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\swarrow$$',
+
+              },
+              {class: 'separator w5'},
+              {
+                class: 'keycap tex',
+                insert: '$$\\Rightarrow$$',
+
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\Leftrightarrow$$',
+
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\Leftarrow$$',
+
+              },
+            ],
+            [
               {
                 class: 'keycap tex',
                 insert: '$$\\le$$',
@@ -163,6 +201,16 @@ export default {
               {
                 class: 'keycap tex',
                 insert: '$$\\geq$$',
+
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\leqslant$$',
+
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\geqslant$$',
 
               },
               {class: 'separator w5'},
@@ -176,43 +224,6 @@ export default {
                 insert: '$$\\lor$$',
 
               },
-              {class: 'separator w5'},
-            ],
-            [
-              {
-                class: 'keycap tex',
-                insert: '$$\\nearrow$$',
-
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\nwarrow$$',
-
-              },
-              {
-                class: 'keycap tex',
-                insert: '\\leftrightharpoons$$',
-                label: this.icons.test
-              },
-              {class: 'separator w5'},
-              {class: 'separator w5'},
-              {class: 'separator w5'},
-              {
-                class: 'keycap tex',
-                insert: '$$\\leqslant$$',
-
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\geqslant$$',
-
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\simeq$$',
-
-              },
-              {class: 'separator w5'},
               {
                 class: 'keycap tex',
                 insert: '$$\\cup$$',
@@ -221,27 +232,23 @@ export default {
               {
                 class: 'keycap tex',
                 insert: '$$\\cap$$',
-
               },
-            ],
-            [
+              {class: 'separator w5'},
               {
                 class: 'keycap tex',
-                insert: '$$\\searrow$$',
-
+                insert: '\\leftrightharpoons$$',
               },
               {
                 class: 'keycap tex',
-                insert: '$$\\swarrow$$',
-
+                insert: '$$\\simeq$$',
               },
               {
                 class: 'keycap tex',
                 insert: '$$\\leftrightarrow$$',
 
               },
-              {class: 'separator w5'},
-              {class: 'separator w5'},
+            ],
+            [
               {
                 class: 'keycap tex',
                 insert: '$$\\N$$',
@@ -264,6 +271,23 @@ export default {
               {class: 'separator w5'},
               {
                 class: 'keycap tex',
+                insert: '$$\\overbrace{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\underbrace{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\overbrace{#@}^{\\text{note}}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\underbrace{#@}_{\\text{note}}$$',
+              },
+              {class: 'separator w5'},
+              {
+                class: 'keycap tex',
                 insert: '$$\\odot$$',
 
               },
@@ -274,27 +298,11 @@ export default {
               },
               {
                 class: 'keycap tex',
-                insert: '$$\\surd$$',
+                insert: '$$\\varnothing$$',
 
               },
             ],
             [
-              {
-                class: 'keycap tex',
-                insert: '$$\\Rightarrow$$',
-
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\Leftrightarrow$$',
-
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\Leftarrow$$',
-
-              },
-              {class: 'separator w5'},
               {
                 class: 'keycap tex',
                 insert: '$$\\Delta$$',
@@ -315,15 +323,10 @@ export default {
                 insert: '$$\\Omega$$',
 
               },
-              {
-                class: 'keycap tex',
-                insert: '$$\\ell$$',
-
-              },
               {class: 'separator w5'},
               {
                 class: 'keycap tex',
-                insert: '$$\\varnothing$$',
+                insert: '$$\\ell$$',
 
               },
               {
@@ -334,28 +337,26 @@ export default {
               {
                 class: 'keycap tex',
                 insert: '$$\\^$$',
-
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\surd$$',
+              },
+              {class: 'separator w5'},
+              {
+                class: 'keycap tex',
+                insert: '$$\\cancel{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\bcancel{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\xcancel{#@}$$',
               },
             ],
             [
-              {
-                class: 'keycap tex',
-                insert: '$$\\hat{#@}$$',
-              },
-              {class: 'separator w5'},
-              {
-                class: 'keycap tex',
-                insert: '$$\\xLeftarrow{#@}$$',
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\xRightarrow{#@}$$',
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\xLeftrightarrow{#@}$$',
-              },
-              {class: 'separator w5'},
               {
                 class: 'keycap tex',
                 insert: '$$\\xleftarrow{#@}$$',
@@ -381,12 +382,29 @@ export default {
                 class: 'keycap tex',
                 insert: '$${#@}/{#@}$$',
               },
-            ],
-            [
+              {
+                class: 'keycap tex',
+                insert: '$$\\hat{#@}$$',
+              },
               {
                 class: 'keycap tex',
                 insert: '$${#@}_u^o$$',
               },
+              {class: 'separator w5'},
+              {
+                class: 'keycap tex',
+                insert: '$$\\xLeftarrow{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\xRightarrow{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\xLeftrightarrow{#@}$$',
+              },
+            ],
+            [
               {
                 class: 'keycap tex',
                 insert: '$$\\sqrt{#@}$$',
@@ -394,28 +412,8 @@ export default {
               {class: 'separator w5'},
               {
                 class: 'keycap tex',
-                insert: '$$\\cancel{#@}$$',
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\bcancel{#@}$$',
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\xcancel{#@}$$',
-              },
-              {
-                class: 'keycap tex',
                 insert: '$$\\enspace$$',
                 label: 'space',
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\overbrace{#@}$$',
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\underbrace{#@}$$',
               },
               {
                 class: 'keycap tex',
@@ -427,16 +425,8 @@ export default {
               },
               {
                 class: 'keycap tex',
-                insert: '$$\\overbrace{#@}^{\\text{note}}$$',
-              },
-              {
-                class: 'keycap tex',
-                insert: '$$\\underbrace{#@}_{\\text{note}}$$',
-              },
-              {
-                class: 'keycap tex',
                 insert: '$$\\boxed{#@}$$',
-              }
+              },
             ]
           ]
         },
