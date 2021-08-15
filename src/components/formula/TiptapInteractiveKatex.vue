@@ -104,6 +104,7 @@ export default {
         // katex: this.latexData
         katex: newValue
       })
+      this.katex = newValue
     }
   },
   computed: {
