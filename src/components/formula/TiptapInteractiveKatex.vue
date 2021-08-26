@@ -415,6 +415,11 @@ export default {
               },
               {class: 'separator w5'},
               {
+                class: 'keycap w30',
+                insert: '$$\\,$$',
+                label: 'half-space',
+              },
+              {
                 class: 'keycap w50',
                 insert: '$$\\enspace$$',
                 label: 'space',
@@ -845,8 +850,9 @@ export default {
       mf.setOptions({
         'customVirtualKeyboardLayers': EXTRA_KEYBOARD_LAYER,
         'customVirtualKeyboards': EXTRA_KEYBOARD,
-        'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard extra-keyboard'
+        'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard extra-keyboard',
       });
+      // console.log(mf.getOption())
       // mf.$setConfig(
       //     //{ macros: { ...mf.getConfig('macros'), smallfrac: '{}^{#1}\\!\\!/\\!{}_{#2}', }, }
       // );
