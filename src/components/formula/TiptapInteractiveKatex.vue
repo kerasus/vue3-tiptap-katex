@@ -409,9 +409,13 @@ export default {
                 class: 'keycap tex',
                 insert: '$$\\sqrt{#@}$$',
               },
+              {
+                class: 'keycap tex small w30',
+                insert: '$$y=\\begin{cases}y=x^2 & x>0 \\\\ y=x^3 & x<0\\end{cases}$$',
+              },
               {class: 'separator w5'},
               {
-                class: 'keycap tex',
+                class: 'keycap w50',
                 insert: '$$\\enspace$$',
                 label: 'space',
               },
@@ -929,5 +933,9 @@ export default {
 
 .converted p {
   margin-bottom: 0 !important;
+}
+
+.ML__keyboard div .rows > ul > .w30 {
+  width: 200px;
 }
 </style>
