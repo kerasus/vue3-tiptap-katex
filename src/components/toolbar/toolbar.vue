@@ -571,6 +571,22 @@
       <span>Image</span>
     </v-tooltip>
 
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+                small
+                tile
+                icon
+                v-bind="attrs"
+                v-on="on"
+                @click="editor.chain().focus().insertContent(tiptapInteractiveImageUploadInline).run()"
+        >
+          <v-icon>mdi-image</v-icon>
+        </v-btn>
+      </template>
+      <span>Inline Image</span>
+    </v-tooltip>
+
     <!--    <dynamic-table :editor="editor" />-->
     <div class="vl mx-3"></div>
 
@@ -633,6 +649,9 @@
     computed: {
       tiptapInteractiveImageUpload () {
         return '<tiptap-interactive-image-upload token="' + this.accessToken + '" upload="' + this.uploadUrl + '"></tiptap-interactive-image-upload>'
+      },
+      tiptapInteractiveImageUploadInline () {
+        return '<tiptap-interactive-image-upload-inline token="' + this.accessToken + '" upload="' + this.uploadUrl + '"></tiptap-interactive-image-upload-inline>'
       }
     }
   }

@@ -190,6 +190,7 @@ export default {
       return this.convertToPureHTML(this.editor.getHTML())
     },
     convertToPureHTML(string) { //call this function when you want to convert tiptap output to pure html
+      string = this.convertInlineInteractiveImagesToHTML(string)
       string = this.convertInteractiveImagesToHTML(string)
       string = this.convertInteractiveIKatexToHTML(string)
       return string
@@ -220,6 +221,24 @@ export default {
       })
       return wrapper.innerHTML
     },
+    convertInlineInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
+      var wrapper = document.createElement('div')
+      wrapper.innerHTML = string
+      let images = wrapper.querySelectorAll('tiptap-interactive-image-upload-inline')
+      images.forEach(item => {
+        let interactiveImage = item.attributes[0].nodeValue
+        if (interactiveImage) {
+          //create img tag and set its attrs
+          interactiveImage =
+                  '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" style="margin-bottom: ' + item.attributes['vertical'].nodeValue + 'px;" />'
+          //create img parent and set the display settings and justify the image
+          var imageWrapper = document.createElement('span')
+          imageWrapper.innerHTML = interactiveImage
+          item.replaceWith(imageWrapper)
+        }
+      })
+      return wrapper.innerHTML
+    },
     convertInteractiveIKatexToHTML(string) { //this function converts interactiveKatex from tiptap to html image
       var wrapper = document.createElement('div')
       wrapper.innerHTML = string
@@ -238,6 +257,7 @@ export default {
     },
 
     convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
+      string = this.convertHTMLImageToInlineInteractive(string)
       string = this.convertHTMLImageToInteractive(string)
       string = this.convertHTMLKatexToInteractive(string)
       return string
@@ -273,6 +293,32 @@ export default {
           } else {
             item.replaceWith(imageWrapper)
           }
+        }
+      })
+      return wrapper.innerHTML
+    },
+    convertHTMLImageToInlineInteractive(string) {
+      var wrapper = document.createElement('div')
+      wrapper.innerHTML = string
+      let imagesParent = wrapper.querySelectorAll('span img')
+      imagesParent.forEach(item => {
+        let imageHTML = item.attributes[0].nodeValue
+        if (imageHTML) {
+          let marginBottom = 0
+          if (item.style.marginBottom) {
+            marginBottom = item.style.marginBottom.slice(0, -2)
+          }
+          imageHTML =
+                  '<tiptap-interactive-image-upload-inline' +
+                  ' url="' + item.attributes['src'].nodeValue + '" ' +
+                  'width="' + item.attributes['width'].nodeValue + '" ' +
+                  'height="' + item.attributes['height'].nodeValue + '" ' +
+                  'vertical="' + marginBottom + '" ' +
+                  'justify="center"' +
+                  '></tiptap-interactive-image-upload-inline>'
+          var imageWrapper = document.createElement('span')
+          imageWrapper.innerHTML = imageHTML
+          item.parentElement.replaceWith(imageWrapper)
         }
       })
       return wrapper.innerHTML
