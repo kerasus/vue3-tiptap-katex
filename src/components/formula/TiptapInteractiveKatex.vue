@@ -409,9 +409,18 @@ export default {
                 class: 'keycap tex',
                 insert: '$$\\sqrt{#@}$$',
               },
+              {
+                class: 'keycap tex small w30',
+                insert: '$$y=\\begin{cases}y=x^2 & x>0 \\\\ y=x^3 & x<0\\end{cases}$$',
+              },
               {class: 'separator w5'},
               {
-                class: 'keycap tex',
+                class: 'keycap w30',
+                insert: '$$\\,$$',
+                label: 'half-space',
+              },
+              {
+                class: 'keycap w50',
                 insert: '$$\\enspace$$',
                 label: 'space',
               },
@@ -841,8 +850,9 @@ export default {
       mf.setOptions({
         'customVirtualKeyboardLayers': EXTRA_KEYBOARD_LAYER,
         'customVirtualKeyboards': EXTRA_KEYBOARD,
-        'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard extra-keyboard'
+        'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard extra-keyboard',
       });
+      // console.log(mf.getOption())
       // mf.$setConfig(
       //     //{ macros: { ...mf.getConfig('macros'), smallfrac: '{}^{#1}\\!\\!/\\!{}_{#2}', }, }
       // );
@@ -929,5 +939,9 @@ export default {
 
 .converted p {
   margin-bottom: 0 !important;
+}
+
+.ML__keyboard div .rows > ul > .w30 {
+  width: 200px;
 }
 </style>
