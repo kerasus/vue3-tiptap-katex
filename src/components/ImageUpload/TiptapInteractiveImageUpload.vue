@@ -1,15 +1,15 @@
 <template>
   <node-view-wrapper
-          :class="{ 'vue-component': true, 'inline': node.attrs.inline }"
-          data-drag-handle
+    :class="{ 'vue-component': true, 'inline': node.attrs.inline }"
+    data-drag-handle
   >
     <div
-            v-if="editMode"
-            class="example-full"
+      v-if="editMode"
+      class="example-full"
     >
       <div
-              v-show="$refs.upload && $refs.upload.dropActive"
-              class="drop-active"
+        v-show="$refs.upload && $refs.upload.dropActive"
+        class="drop-active"
       >
         <h3>فایل را اینجا رها کنید</h3>
       </div>
@@ -17,182 +17,182 @@
         <v-simple-table fixed-header>
           <template v-slot:default>
             <thead>
-            <tr>
-              <th>#</th>
-              <th>تصویر</th>
-              <th>نام فایل</th>
-              <th>عرض</th>
-              <th>ارتفاع</th>
-              <th>حجم</th>
-              <th>سرعت</th>
-              <th>وضعیت</th>
-              <th>فعالیت</th>
-            </tr>
+              <tr>
+                <th>#</th>
+                <th>تصویر</th>
+                <th>نام فایل</th>
+                <th>عرض</th>
+                <th>ارتفاع</th>
+                <th>حجم</th>
+                <th>سرعت</th>
+                <th>وضعیت</th>
+                <th>فعالیت</th>
+              </tr>
             </thead>
             <tbody>
-            <tr v-if="!files.length">
-              <td colspan="9">
-                <div class="text-center p-5">
-                  <h4>فایل ها را در این قسمت رها کنید</h4>
-                </div>
-              </td>
-            </tr>
-            <tr
-                    v-for="(file, index) in files"
-                    :key="file.id"
-            >
-              <td>{{ index }}</td>
-              <td>
-                <img
-                        v-if="file.thumb"
-                        class="td-image-thumb"
-                        :src="file.thumb"
-                >
-                <span v-else>No Image</span>
-              </td>
-              <td>
-                <div class="filename">
-                  {{ file.name }}
-                </div>
-                <div
-                        v-if="file.active || file.progress !== '0.00'"
-                        class="progress"
-                >
+              <tr v-if="!files.length">
+                <td colspan="9">
+                  <div class="text-center p-5">
+                    <h4>فایل ها را در این قسمت رها کنید</h4>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                v-for="(file, index) in files"
+                :key="file.id"
+              >
+                <td>{{ index }}</td>
+                <td>
+                  <img
+                    v-if="file.thumb"
+                    class="td-image-thumb"
+                    :src="file.thumb"
+                  >
+                  <span v-else>No Image</span>
+                </td>
+                <td>
+                  <div class="filename">
+                    {{ file.name }}
+                  </div>
                   <div
-                          :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}"
-                          role="progressbar"
-                          :style="{width: file.progress + '%'}"
+                    v-if="file.active || file.progress !== '0.00'"
+                    class="progress"
                   >
-                    {{ file.progress }}%
+                    <div
+                      :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}"
+                      role="progressbar"
+                      :style="{width: file.progress + '%'}"
+                    >
+                      {{ file.progress }}%
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td>{{ file.width || 0 }}</td>
-              <td>{{ file.height || 0 }}</td>
-              <td>{{ formatSize(file.size) }}</td>
-              <td>{{ formatSize(file.speed) }}</td>
+                </td>
+                <td>{{ file.width || 0 }}</td>
+                <td>{{ file.height || 0 }}</td>
+                <td>{{ formatSize(file.size) }}</td>
+                <td>{{ formatSize(file.speed) }}</td>
 
-              <td v-if="file.error">
-                {{ file.error }}
-              </td>
-              <td v-else-if="file.success">
-                success
-              </td>
-              <td v-else-if="file.active">
-                active
-              </td>
-              <td v-else />
-              <td>
-                <v-btn
-                        dark
-                        small
-                        fab
-                        color="red"
-                        @click.prevent="$refs.upload.remove(file)"
-                >
-                  <v-icon dark>
-                    mdi-delete-forever
-                  </v-icon>
-                </v-btn>
-                <v-btn
-                        v-if="file.response && file.response.url"
-                        dark
-                        small
-                        fab
-                        color="blue"
-                        @click.prevent="copyImageAddress(file.response.url)"
-                >
-                  <v-icon dark>
-                    mdi-content-copy
-                  </v-icon>
-                </v-btn>
+                <td v-if="file.error">
+                  {{ file.error }}
+                </td>
+                <td v-else-if="file.success">
+                  success
+                </td>
+                <td v-else-if="file.active">
+                  active
+                </td>
+                <td v-else />
+                <td>
+                  <v-btn
+                    dark
+                    small
+                    fab
+                    color="red"
+                    @click.prevent="$refs.upload.remove(file)"
+                  >
+                    <v-icon dark>
+                      mdi-delete-forever
+                    </v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-if="file.response && file.response.url"
+                    dark
+                    small
+                    fab
+                    color="blue"
+                    @click.prevent="copyImageAddress(file.response.url)"
+                  >
+                    <v-icon dark>
+                      mdi-content-copy
+                    </v-icon>
+                  </v-btn>
 
-                <v-btn
-                        v-if="node.attrs.url"
-                        small
-                        dark
-                        fab
-                        color="green"
-                        @click="editMode = false"
-                >
-                  <v-icon dark>
-                    mdi-check
-                  </v-icon>
-                </v-btn>
+                  <v-btn
+                    v-if="node.attrs.url"
+                    small
+                    dark
+                    fab
+                    color="green"
+                    @click="editMode = false"
+                  >
+                    <v-icon dark>
+                      mdi-check
+                    </v-icon>
+                  </v-btn>
 
 
-                <v-btn
-                        v-if="false"
-                        dark
-                        small
-                        fab
-                        color="purple"
-                        :disabled="file.active || file.success || file.error === 'compressing' || file.error === 'image parsing'"
+                  <v-btn
+                    v-if="false"
+                    dark
+                    small
+                    fab
+                    color="purple"
+                    :disabled="file.active || file.success || file.error === 'compressing' || file.error === 'image parsing'"
+                    @click.prevent="file.active || file.success || file.error === 'compressing' ? false : onEditFileShow(file)"
+                  >
+                    <v-icon dark>
+                      mdi-file-document-edit-outline
+                    </v-icon>
+                  </v-btn>
+
+                  <div
+                    v-if="false"
+                    class="btn-group"
+                  >
+                    <button
+                      class="btn btn-secondary btn-sm dropdown-toggle"
+                      type="button"
+                    >
+                      Action
+                    </button>
+                    <div class="dropdown-menu">
+                      <a
+                        :class="{'dropdown-item': true, disabled: file.active || file.success || file.error === 'compressing' || file.error === 'image parsing'}"
+                        href="#"
                         @click.prevent="file.active || file.success || file.error === 'compressing' ? false : onEditFileShow(file)"
-                >
-                  <v-icon dark>
-                    mdi-file-document-edit-outline
-                  </v-icon>
-                </v-btn>
+                      >Edit</a>
+                      <a
+                        :class="{'dropdown-item': true, disabled: !file.active}"
+                        href="#"
+                        @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false"
+                      >Cancel</a>
 
-                <div
-                        v-if="false"
-                        class="btn-group"
-                >
-                  <button
-                          class="btn btn-secondary btn-sm dropdown-toggle"
-                          type="button"
-                  >
-                    Action
-                  </button>
-                  <div class="dropdown-menu">
-                    <a
-                            :class="{'dropdown-item': true, disabled: file.active || file.success || file.error === 'compressing' || file.error === 'image parsing'}"
-                            href="#"
-                            @click.prevent="file.active || file.success || file.error === 'compressing' ? false : onEditFileShow(file)"
-                    >Edit</a>
-                    <a
-                            :class="{'dropdown-item': true, disabled: !file.active}"
-                            href="#"
-                            @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false"
-                    >Cancel</a>
+                      <a
+                        v-if="file.active"
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="$refs.upload.update(file, {active: false})"
+                      >Abort</a>
+                      <a
+                        v-else-if="file.error && file.error !== 'compressing' && file.error !== 'image parsing' && $refs.upload.features.html5"
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="$refs.upload.update(file, {active: true, error: '', progress: '0.00'})"
+                      >Retry upload</a>
+                      <a
+                        v-else
+                        :class="{'dropdown-item': true, disabled: file.success || file.error === 'compressing' || file.error === 'image parsing'}"
+                        href="#"
+                        @click.prevent="file.success || file.error === 'compressing' || file.error === 'image parsing' ? false : $refs.upload.update(file, {active: true})"
+                      >Upload</a>
 
-                    <a
-                            v-if="file.active"
-                            class="dropdown-item"
-                            href="#"
-                            @click.prevent="$refs.upload.update(file, {active: false})"
-                    >Abort</a>
-                    <a
-                            v-else-if="file.error && file.error !== 'compressing' && file.error !== 'image parsing' && $refs.upload.features.html5"
-                            class="dropdown-item"
-                            href="#"
-                            @click.prevent="$refs.upload.update(file, {active: true, error: '', progress: '0.00'})"
-                    >Retry upload</a>
-                    <a
-                            v-else
-                            :class="{'dropdown-item': true, disabled: file.success || file.error === 'compressing' || file.error === 'image parsing'}"
-                            href="#"
-                            @click.prevent="file.success || file.error === 'compressing' || file.error === 'image parsing' ? false : $refs.upload.update(file, {active: true})"
-                    >Upload</a>
-
-                    <div class="dropdown-divider" />
-                    <a
-                            class="dropdown-item"
-                            href="#"
-                            @click.prevent="$refs.upload.remove(file)"
-                    >Remove</a>
+                      <div class="dropdown-divider" />
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="$refs.upload.remove(file)"
+                      >Remove</a>
+                    </div>
                   </div>
-                </div>
-              </td>
-            </tr>
+                </td>
+              </tr>
             </tbody>
           </template>
         </v-simple-table>
         <div class="example-foorer">
           <div
-                  v-if="false"
-                  class="footer-status float-right"
+            v-if="false"
+            class="footer-status float-right"
           >
             Drop: {{ $refs.upload ? $refs.upload.drop : false }},
             Active: {{ $refs.upload ? $refs.upload.active : false }},
@@ -200,65 +200,65 @@
             Drop active: {{ $refs.upload ? $refs.upload.dropActive : false }}
           </div>
           <file-upload
-                  ref="upload"
-                  v-model="files"
-                  :post-action="postAction"
-                  :extensions="extensions"
-                  :accept="accept"
-                  :multiple="multiple"
-                  :directory="directory"
-                  :create-directory="createDirectory"
-                  :size="size || 0"
-                  :thread="thread < 1 ? 1 : (thread > 5 ? 5 : thread)"
-                  :headers="headers"
-                  :data="data"
-                  :drop="drop"
-                  :drop-directory="dropDirectory"
-                  :add-index="addIndex"
-                  @input-filter="inputFilter"
-                  @input-file="inputFile"
+            ref="upload"
+            v-model="files"
+            :post-action="postAction"
+            :extensions="extensions"
+            :accept="accept"
+            :multiple="multiple"
+            :directory="directory"
+            :create-directory="createDirectory"
+            :size="size || 0"
+            :thread="thread < 1 ? 1 : (thread > 5 ? 5 : thread)"
+            :headers="headers"
+            :data="data"
+            :drop="drop"
+            :drop-directory="dropDirectory"
+            :add-index="addIndex"
+            @input-filter="inputFilter"
+            @input-file="inputFile"
           >
             <v-btn
-                    v-if="!node.attrs.url"
-                    dark
-                    color="purple"
+              v-if="!node.attrs.url"
+              dark
+              color="purple"
             >
               یک فایل را انتخاب کنید
             </v-btn>
           </file-upload>
           <v-divider v-if="!node.attrs.url" />
           <v-btn
-                  v-if="!$refs.upload || !$refs.upload.active && !node.attrs.url"
-                  dark
-                  color="purple"
-                  @click.prevent="$refs.upload.active = true"
+            v-if="!$refs.upload || !$refs.upload.active && !node.attrs.url"
+            dark
+            color="purple"
+            @click.prevent="$refs.upload.active = true"
           >
             شروع آپلود
           </v-btn>
           <v-btn
-                  v-else-if="!node.attrs.url"
-                  dark
-                  color="purple"
-                  @click.prevent="$refs.upload.active = false"
+            v-else-if="!node.attrs.url"
+            dark
+            color="purple"
+            @click.prevent="$refs.upload.active = false"
           >
             توقف آپلود
           </v-btn>
         </div>
       </div>
       <div
-              v-if="false"
-              :class="{'modal-backdrop': true, 'fade': true, show: addData.show}"
+        v-if="false"
+        :class="{'modal-backdrop': true, 'fade': true, show: addData.show}"
       />
       <div
-              v-if="false"
-              id="modal-add-data"
-              :class="{modal: true, fade: true, show: addData.show}"
-              tabindex="-1"
-              role="dialog"
+        v-if="false"
+        id="modal-add-data"
+        :class="{modal: true, fade: true, show: addData.show}"
+        tabindex="-1"
+        role="dialog"
       >
         <div
-                class="modal-dialog"
-                role="document"
+          class="modal-dialog"
+          role="document"
         >
           <div class="modal-content">
             <div class="modal-header">
@@ -266,9 +266,9 @@
                 Add data
               </h5>
               <button
-                      type="button"
-                      class="close"
-                      @click.prevent="addData.show = false"
+                type="button"
+                class="close"
+                @click.prevent="addData.show = false"
               >
                 <span>&times;</span>
               </button>
@@ -278,50 +278,50 @@
                 <div class="form-group">
                   <label for="data-name">Name:</label>
                   <input
-                          id="data-name"
-                          v-model="addData.name"
-                          type="text"
-                          class="form-control"
-                          required
-                          placeholder="Please enter a file name"
+                    id="data-name"
+                    v-model="addData.name"
+                    type="text"
+                    class="form-control"
+                    required
+                    placeholder="Please enter a file name"
                   >
                   <small class="form-text text-muted">Such as <code>filename.txt</code></small>
                 </div>
                 <div class="form-group">
                   <label for="data-type">Type:</label>
                   <input
-                          id="data-type"
-                          v-model="addData.type"
-                          type="text"
-                          class="form-control"
-                          required
-                          placeholder="Please enter the MIME type"
+                    id="data-type"
+                    v-model="addData.type"
+                    type="text"
+                    class="form-control"
+                    required
+                    placeholder="Please enter the MIME type"
                   >
                   <small class="form-text text-muted">Such as <code>text/plain</code></small>
                 </div>
                 <div class="form-group">
                   <label for="content">Content:</label>
                   <textarea
-                          id="content"
-                          v-model="addData.content"
-                          class="form-control"
-                          required
-                          rows="3"
-                          placeholder="Please enter the file contents"
+                    id="content"
+                    v-model="addData.content"
+                    class="form-control"
+                    required
+                    rows="3"
+                    placeholder="Please enter the file contents"
                   />
                 </div>
               </div>
               <div class="modal-footer">
                 <button
-                        type="button"
-                        class="btn btn-secondary"
-                        @click.prevent="addData.show = false"
+                  type="button"
+                  class="btn btn-secondary"
+                  @click.prevent="addData.show = false"
                 >
                   Close
                 </button>
                 <button
-                        type="submit"
-                        class="btn btn-primary"
+                  type="submit"
+                  class="btn btn-primary"
                 >
                   Save
                 </button>
@@ -331,19 +331,19 @@
         </div>
       </div>
       <div
-              v-if="false"
-              :class="{'modal-backdrop': true, 'fade': true, show: editFile.show}"
+        v-if="false"
+        :class="{'modal-backdrop': true, 'fade': true, show: editFile.show}"
       />
       <div
-              v-if="false"
-              id="modal-edit-file"
-              :class="{modal: true, fade: true, show: editFile.show}"
-              tabindex="-1"
-              role="dialog"
+        v-if="false"
+        id="modal-edit-file"
+        :class="{modal: true, fade: true, show: editFile.show}"
+        tabindex="-1"
+        role="dialog"
       >
         <div
-                class="modal-dialog modal-lg"
-                role="document"
+          class="modal-dialog modal-lg"
+          role="document"
         >
           <div class="modal-content">
             <div class="modal-header">
@@ -351,9 +351,9 @@
                 Edit file
               </h5>
               <button
-                      type="button"
-                      class="close"
-                      @click.prevent="editFile.show = false"
+                type="button"
+                class="close"
+                @click.prevent="editFile.show = false"
               >
                 <span>&times;</span>
               </button>
@@ -363,78 +363,78 @@
                 <div class="form-group">
                   <label for="name">Name:</label>
                   <input
-                          id="name"
-                          v-model="editFile.name"
-                          type="text"
-                          class="form-control"
-                          required
-                          placeholder="Please enter a file name"
+                    id="name"
+                    v-model="editFile.name"
+                    type="text"
+                    class="form-control"
+                    required
+                    placeholder="Please enter a file name"
                   >
                 </div>
                 <div
-                        v-if="editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'"
-                        class="form-group"
+                  v-if="editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'"
+                  class="form-group"
                 >
                   <label>Image: </label>
                   <div class="edit-image">
                     <img
-                            ref="editImage"
-                            :src="editFile.blob"
+                      ref="editImage"
+                      :src="editFile.blob"
                     >
                   </div>
 
                   <div class="edit-image-tool">
                     <div
-                            class="btn-group"
-                            role="group"
+                      class="btn-group"
+                      role="group"
                     >
                       <button
-                              type="button"
-                              class="btn btn-primary"
-                              title="cropper.rotate(-90)"
-                              @click="editFile.cropper.rotate(-90)"
+                        type="button"
+                        class="btn btn-primary"
+                        title="cropper.rotate(-90)"
+                        @click="editFile.cropper.rotate(-90)"
                       >
                         <i
-                                class="fa fa-undo"
-                                aria-hidden="true"
+                          class="fa fa-undo"
+                          aria-hidden="true"
                         />
                       </button>
                       <button
-                              type="button"
-                              class="btn btn-primary"
-                              title="cropper.rotate(90)"
-                              @click="editFile.cropper.rotate(90)"
+                        type="button"
+                        class="btn btn-primary"
+                        title="cropper.rotate(90)"
+                        @click="editFile.cropper.rotate(90)"
                       >
                         <i
-                                class="fa fa-repeat"
-                                aria-hidden="true"
+                          class="fa fa-repeat"
+                          aria-hidden="true"
                         />
                       </button>
                     </div>
                     <div
-                            class="btn-group"
-                            role="group"
+                      class="btn-group"
+                      role="group"
                     >
                       <button
-                              type="button"
-                              class="btn btn-primary"
-                              title="cropper.crop()"
-                              @click="editFile.cropper.crop()"
+                        type="button"
+                        class="btn btn-primary"
+                        title="cropper.crop()"
+                        @click="editFile.cropper.crop()"
                       >
                         <i
-                                class="fa fa-check"
-                                aria-hidden="true"
+                          class="fa fa-check"
+                          aria-hidden="true"
                         />
                       </button>
                       <button
-                              type="button"
-                              class="btn btn-primary"
-                              title="cropper.clear()"
-                              @click="editFile.cropper.clear()"
+                        type="button"
+                        class="btn btn-primary"
+                        title="cropper.clear()"
+                        @click="editFile.cropper.clear()"
                       >
                         <i
-                                class="fa fa-remove"
-                                aria-hidden="true"
+                          class="fa fa-remove"
+                          aria-hidden="true"
                         />
                       </button>
                     </div>
@@ -443,15 +443,15 @@
               </div>
               <div class="modal-footer">
                 <button
-                        type="button"
-                        class="btn btn-secondary"
-                        @click.prevent="editFile.show = false"
+                  type="button"
+                  class="btn btn-secondary"
+                  @click.prevent="editFile.show = false"
                 >
                   Close
                 </button>
                 <button
-                        type="submit"
-                        class="btn btn-primary"
+                  type="submit"
+                  class="btn btn-primary"
                 >
                   Save
                 </button>
@@ -461,55 +461,59 @@
         </div>
       </div>
     </div>
-    <v-hover v-slot="{ hover }" class="image-parent">
+    <v-hover
+      v-slot="{ hover }"
+      class="image-parent"
+      :style="{ marginBottom: vertical + 'px' }"
+    >
       <div
-              ref="resizer"
-              :style="{ width: '100%', height: editMode ? 0 + 'px' : height + 'px', position: 'relative' }"
-              :class="{ 'center': node.attrs.justify === 'center', 'image': true }"
+        ref="resizer"
+        :style="{ width: '100%', height: editMode ? 0 + 'px' : height + 'px', position: 'relative' }"
+        :class="{ 'center': node.attrs.justify === 'center', 'image': true }"
       >
         <VueDragResize
-                v-if="!editMode"
-                :sticks="['br', 'bl']"
-                :aspect-ratio="true"
-                :x="left"
-                :y="top"
-                :is-active="true"
-                :is-draggable="true"
-                :w="width"
-                :h="height"
-                :parent-w="$refs.resizer.clientWidth"
-                :parent-h="height * 2"
-                :parent-limitation="true"
-                @resizing="resize"
-                @dragstop="dragstop"
+          v-if="!editMode"
+          :sticks="['br', 'bl']"
+          :aspect-ratio="true"
+          :x="left"
+          :y="top"
+          :is-active="true"
+          :is-draggable="true"
+          :w="width"
+          :h="height"
+          :parent-w="$refs.resizer.clientWidth"
+          :parent-h="height * 2"
+          :parent-limitation="true"
+          @resizing="resize"
+          @dragstop="dragstop"
         >
           <img
-                  :src="node.attrs.url"
-                  width="100%"
-          />
+            :src="node.attrs.url"
+            width="100%"
+          >
         </VueDragResize>
         <v-btn-toggle
-                v-if="hover && !node.attrs.inline"
-                v-model="toggleJustify"
-                class="toggle-justify"
+          v-if="hover && !node.attrs.inline"
+          v-model="toggleJustify"
+          class="toggle-justify"
         >
           <v-btn
-                  value="right"
-                  @click="setJustify('right')"
+            value="right"
+            @click="setJustify('right')"
           >
             <v-icon>mdi-format-align-right</v-icon>
           </v-btn>
 
           <v-btn
-                  value="center"
-                  @click="setJustify('center')"
+            value="center"
+            @click="setJustify('center')"
           >
             <v-icon>mdi-format-align-center</v-icon>
           </v-btn>
 
           <v-btn
-                  value="left"
-                  @click="setJustify('left')"
+            value="left"
+            @click="setJustify('left')"
           >
             <v-icon>mdi-format-align-left</v-icon>
           </v-btn>
