@@ -474,31 +474,20 @@
                 :x="left"
                 :y="top"
                 :is-active="true"
-                :is-draggable="false"
+                :is-draggable="true"
                 :w="width"
                 :h="height"
                 :parent-w="$refs.resizer.clientWidth"
-                :parent-h="800"
+                :parent-h="height * 2"
                 :parent-limitation="true"
                 @resizing="resize"
+                @dragstop="dragstop"
         >
           <img
                   :src="node.attrs.url"
                   width="100%"
-                  :style="{ marginBottom: -1 * vertical + 'px' }"
           />
         </VueDragResize>
-        <v-slider
-                v-if="node.attrs.inline"
-                :max="height"
-                :min="-1 * height"
-                :height="'61'"
-                vertical
-                v-model="vertical"
-                @change="updateVertical"
-                dense
-                class="mr-5 ml-1"
-        ></v-slider>
         <v-btn-toggle
                 v-if="hover && !node.attrs.inline"
                 v-model="toggleJustify"
@@ -626,9 +615,6 @@
       vertical () {
         console.log('vertical', this.vertical)
       },
-      'node.attrs.vertical' () {
-        console.log('node', this.node.attrs.vertical)
-      },
       'node.attrs.justify' () {
         if (this.node.attrs.justify === 'right') {
           this.left = (this.$refs.resizer.clientWidth) - (this.width) - 20
@@ -668,7 +654,8 @@
       },
     },
     methods: {
-      updateVertical () {
+      dragstop (object) {
+        this.vertical = object.top
         this.updateAttributes({
           vertical: -1 * this.vertical
         })
@@ -898,7 +885,7 @@
             this.height = 100
           }
           this.vertical = -1 * this.node.attrs.vertical
-          console.log('2', this.node.attrs.vertical)
+          this.top = this.vertical
         }
 
         if (this.node.attrs.justify === 'right') {
