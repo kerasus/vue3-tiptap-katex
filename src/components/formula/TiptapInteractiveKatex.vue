@@ -851,6 +851,7 @@ export default {
         'customVirtualKeyboardLayers': EXTRA_KEYBOARD_LAYER,
         'customVirtualKeyboards': EXTRA_KEYBOARD,
         'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard extra-keyboard',
+        mathModeSpace: '\\:'
       });
       // console.log(mf.getOption())
       // mf.$setConfig(
