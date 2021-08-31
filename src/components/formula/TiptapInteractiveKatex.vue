@@ -891,7 +891,7 @@ export default {
 }
 
 .vue-component.inline {
-  display: ruby-base-container;
+  display: inline-flex;
 }
 
 .label {
