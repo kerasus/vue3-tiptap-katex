@@ -513,7 +513,7 @@
           icon
           v-bind="attrs"
           v-on="on"
-          @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline>').run()"
+          @click="editor.chain().focus().insertContent('<tiptap-interactive-katex-inline></tiptap-interactive-katex-inline> ').run()"
         >
           <v-icon>mdi-sigma</v-icon>
         </v-btn>

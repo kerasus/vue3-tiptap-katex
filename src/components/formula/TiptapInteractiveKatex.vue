@@ -33,7 +33,7 @@
       v-if="editMode"
       icon
       color="green"
-      @click="editMode = false"
+      @click="toggleEdit"
     >
       <v-icon>mdi-check</v-icon>
     </v-btn>
@@ -76,6 +76,9 @@ export default {
       type: Function,
       required: true,
     },
+    editor: {
+      type: Object
+    }
   },
   data: () => {
     return {
@@ -116,6 +119,10 @@ export default {
     this.katex = this.node.attrs.katex
   },
   methods: {
+    toggleEdit () {
+      this.editMode = !this.editMode
+      this.editor.chain().focus().run()
+    },
     getMathliveValue (mf) {
       return mf.getValue().replaceAll('\\mleft', '\\left').replaceAll('\\mright', '\\right')
     },
@@ -891,7 +898,7 @@ export default {
 }
 
 .vue-component.inline {
-  display: ruby-base-container;
+  display: inline-flex;
 }
 
 .label {

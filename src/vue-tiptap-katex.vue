@@ -30,7 +30,7 @@
       </v-card-title>
       <v-card-text class="pa-0">
         <bubble-menu
-                v-if="editor"
+                v-if="false"
                 class="bubble-menu"
                 :tippy-options="{ duration: 100, showOnCreate: false }"
                 :editor="editor"
@@ -109,6 +109,16 @@
     },
   })
 
+  const HalfSpace = Extension.create({
+    addKeyboardShortcuts() {
+      return {
+        // ↓ your new keyboard shortcut
+        // eslint-disable-next-line vue/no-parsing-error
+        'Mod-Shift-Space': () => this.editor.chain().focus().insertContent('').run(),
+      }
+    },
+  })
+
 
   // import {EditorView} from "prosemirror-view";
   // import {EditorState} from "prosemirror-state";
@@ -180,7 +190,8 @@
           TiptapInteractiveImageUpload,
           TiptapInteractiveImageUploadInline,
           AutoDir,
-          ImageAlign
+          ImageAlign,
+          HalfSpace
         ],
         // triggered on every change
         onUpdate() {
