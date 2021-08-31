@@ -30,7 +30,7 @@
       </v-card-title>
       <v-card-text class="pa-0">
         <bubble-menu
-                v-if="editor"
+                v-if="false"
                 class="bubble-menu"
                 :tippy-options="{ duration: 100, showOnCreate: false }"
                 :editor="editor"
