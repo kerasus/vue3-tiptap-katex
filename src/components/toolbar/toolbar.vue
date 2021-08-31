@@ -205,7 +205,7 @@
           icon
           v-bind="attrs"
           v-on="on"
-          @click="editor.chain().focus().setTextAlign('right').run()"
+          @click="justify('right')"
         >
           <v-icon>mdi-format-align-right</v-icon>
         </v-btn>
@@ -221,7 +221,7 @@
           icon
           v-bind="attrs"
           v-on="on"
-          @click="editor.chain().focus().setTextAlign('center').run()"
+          @click="justify('center')"
         >
           <v-icon>mdi-format-align-center</v-icon>
         </v-btn>
@@ -237,7 +237,7 @@
           icon
           v-bind="attrs"
           v-on="on"
-          @click="editor.chain().focus().setTextAlign('left').run()"
+          @click="justify('left')"
         >
           <v-icon>mdi-format-align-left</v-icon>
         </v-btn>
@@ -555,21 +555,21 @@
     <!--      </v-list>-->
     <!--    </v-menu>-->
 
-    <v-tooltip top>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          small
-          tile
-          icon
-          v-bind="attrs"
-          v-on="on"
-          @click="editor.chain().focus().insertContent(tiptapInteractiveImageUpload).run()"
-        >
-          <v-icon>mdi-image</v-icon>
-        </v-btn>
-      </template>
-      <span>Image</span>
-    </v-tooltip>
+<!--    <v-tooltip top>-->
+<!--      <template v-slot:activator="{ on, attrs }">-->
+<!--        <v-btn-->
+<!--          small-->
+<!--          tile-->
+<!--          icon-->
+<!--          v-bind="attrs"-->
+<!--          v-on="on"-->
+<!--          @click="editor.chain().focus().insertContent(tiptapInteractiveImageUpload).run()"-->
+<!--        >-->
+<!--          <v-icon>mdi-image</v-icon>-->
+<!--        </v-btn>-->
+<!--      </template>-->
+<!--      <span>Image</span>-->
+<!--    </v-tooltip>-->
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -652,6 +652,12 @@
       },
       tiptapInteractiveImageUploadInline () {
         return '<tiptap-interactive-image-upload-inline token="' + this.accessToken + '" upload="' + this.uploadUrl + '"></tiptap-interactive-image-upload-inline>'
+      }
+    },
+    methods: {
+      justify (value) {
+        this.editor.chain().focus().setTextAlign(value).run()
+        this.editor.chain().focus().setImageAlign(value).run()
       }
     }
   }

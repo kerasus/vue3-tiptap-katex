@@ -473,18 +473,20 @@
       >
         <VueDragResize
           v-if="!editMode"
-          :sticks="['br', 'bl']"
+          :sticks="['br']"
           :aspect-ratio="true"
           :x="left"
           :y="top"
           :is-active="true"
-          :is-draggable="true"
+          :is-draggable="node.attrs.inline"
           :w="width"
           :h="height"
+          :minw="20"
+          :minh="20"
           :parent-w="$refs.resizer.clientWidth"
-          :parent-h="height * 2"
+          :parent-h="node.attrs.inline ? height * 2 : 800"
           :parent-limitation="true"
-          @resizing="resize"
+          @resizestop="resize"
           @dragstop="dragstop"
         >
           <img
