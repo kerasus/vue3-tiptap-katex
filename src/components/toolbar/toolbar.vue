@@ -584,7 +584,7 @@
           <v-icon>mdi-image</v-icon>
         </v-btn>
       </template>
-      <span>Inline Image</span>
+      <span>Image</span>
     </v-tooltip>
 
     <!--    <dynamic-table :editor="editor" />-->
