@@ -167,11 +167,7 @@
           bubbleMenu: true,
           floatingMenu: true
         }
-        Object.keys(options).forEach(key => {
-          if (this.options[key] !== null && this.options[key] !== undefined) {
-            options[key] = this.options[key]
-          }
-        })
+        Object.assign(options, this.options)
         return options
       }
     },
