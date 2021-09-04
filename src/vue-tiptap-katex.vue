@@ -30,7 +30,7 @@
       </v-card-title>
       <v-card-text class="pa-0">
         <bubble-menu
-                v-if="false"
+                v-if="editorOptions.bubbleMenu"
                 class="bubble-menu"
                 :tippy-options="{ duration: 100, showOnCreate: false }"
                 :editor="editor"
@@ -38,7 +38,7 @@
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-                v-if="false"
+                v-if="editorOptions.floatingMenu"
                 class="floating-menu"
                 :tippy-options="{ duration: 100 }"
                 :editor="editor"
@@ -147,11 +147,28 @@
         type: Boolean,
         required: false,
         default: false
+      },
+      options: {
+        type: Object,
+        required: false,
+        default () {
+          return {}
+        }
       }
     },
     data() {
       return {
         editor: null,
+      }
+    },
+    computed: {
+      editorOptions () {
+        const options = {
+          bubbleMenu: true,
+          floatingMenu: true
+        }
+        Object.assign(options, this.options)
+        return options
       }
     },
     mounted() {
