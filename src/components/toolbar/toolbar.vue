@@ -621,6 +621,22 @@
       </template>
       <span>Undo</span>
     </v-tooltip>
+
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          small
+          tile
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click="paste"
+        >
+          <v-icon>mdi-content-paste</v-icon>
+        </v-btn>
+      </template>
+      <span>Paste</span>
+    </v-tooltip>
   </div>
 </template>
 
@@ -658,7 +674,109 @@
       justify (value) {
         this.editor.chain().focus().setTextAlign(value).run()
         this.editor.chain().focus().setImageAlign(value).run()
-      }
+      },
+      paste () {
+        navigator.clipboard.readText()
+          .then(text => {
+            let string = this.convertToTiptap(text)
+            this.editor.commands.insertContent(string)
+          })
+          .catch(err => {
+            console.error('Failed to read clipboard contents: ', err);
+          });
+      },
+      convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
+        string = this.convertHTMLImageToInlineInteractive(string)
+        string = this.convertHTMLImageToInteractive(string)
+        string = this.convertHTMLKatexToInteractive(string)
+        return string
+      },
+      convertHTMLImageToInteractive(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let imagesParent = wrapper.querySelectorAll('img')
+        imagesParent.forEach(item => {
+          let imageHTML = item.attributes[0].nodeValue
+          if (imageHTML) {
+            let justify = 'center'
+            if (item.parentElement.style.display === 'flex') {
+              if (item.parentElement.style.justifyContent === 'flex-start') {
+                justify = 'right'
+              } else if (item.parentElement.style.justifyContent === 'center') {
+                justify = 'center'
+              } else if (item.parentElement.style.justifyContent === 'flex-end') {
+                justify = 'left'
+              }
+            }
+            imageHTML =
+                    '<tiptap-interactive-image-upload-inline' +
+                    ' url="' + item.attributes['src'].nodeValue + '" ' +
+                    'width="' + item.attributes['width'].nodeValue + '" ' +
+                    'height="' + item.attributes['height'].nodeValue + '" ' +
+                    'justify="' + justify + '"' +
+                    '></tiptap-interactive-image-upload-inline>'
+            var imageWrapper = document.createElement('div')
+            imageWrapper.innerHTML = imageHTML
+            if (item.parentElement.style.display === 'flex') {
+              item.parentElement.replaceWith(imageWrapper)
+            } else {
+              item.replaceWith(imageWrapper)
+            }
+          }
+        })
+        return wrapper.innerHTML
+      },
+      convertHTMLImageToInlineInteractive(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let imagesParent = wrapper.querySelectorAll('span img')
+        imagesParent.forEach(item => {
+          let imageHTML = item.attributes[0].nodeValue
+          if (imageHTML) {
+            let marginBottom = 0
+            if (item.style.marginBottom) {
+              marginBottom = item.style.marginBottom.slice(0, -2)
+            }
+            imageHTML =
+                    '<tiptap-interactive-image-upload-inline' +
+                    ' url="' + item.attributes['src'].nodeValue + '" ' +
+                    'width="' + item.attributes['width'].nodeValue + '" ' +
+                    'height="' + item.attributes['height'].nodeValue + '" ' +
+                    'vertical="' + marginBottom + '" ' +
+                    'justify="center"' +
+                    '></tiptap-interactive-image-upload-inline>'
+            var imageWrapper = document.createElement('span')
+            imageWrapper.innerHTML = imageHTML
+            item.parentElement.replaceWith(imageWrapper)
+          }
+        })
+        return wrapper.innerHTML
+      },
+      convertHTMLKatexToInteractive(string) {
+        // var wrapper = document.createElement('div')
+        // wrapper.innerHTML = string
+        // let katexes = wrapper.querySelectorAll('div[katex="true"]')
+        // katexes.forEach(item => {
+        //   let katexHTML = '<tiptap-interactive-katex katex="' + item.innerHTML.slice(1, -1) + '"></tiptap-interactive-katex>'
+        //
+        //   var doc = new DOMParser().parseFromString(katexHTML, "text/xml");
+        //   item.replaceWith(doc.firstChild)
+        // })
+
+        let regex = /(\$((?! ).){1}((?!\$).)*((?! ).){1}\$)/gi;
+        string = string.replace(regex, (match) => {
+
+          let finalMatch
+          if (match.includes('$$')) {
+            finalMatch = match.slice(2, -2)
+          } else {
+            finalMatch = match.slice(1, -1)
+          }
+          return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
+        })
+        return string
+
+      },
     }
   }
 </script>
