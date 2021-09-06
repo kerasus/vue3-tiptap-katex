@@ -25,6 +25,7 @@
                   :editor="editor"
                   :access-token="accessToken"
                   :upload-url="uploadUrl"
+                  :options="editorOptions"
           />
         </slot>
       </v-card-title>
@@ -59,6 +60,7 @@
   import TiptapInteractiveKatexInline from './components/formula/entensionInline'
   import TiptapInteractiveImageUpload from './components/ImageUpload/extension';
   import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline';
+  import TiptapInteractivePoem from './components/poem/extension';
 
 
   import StarterKit from '@tiptap/starter-kit'
@@ -165,7 +167,8 @@
       editorOptions () {
         const options = {
           bubbleMenu: true,
-          floatingMenu: true
+          floatingMenu: true,
+          poem: false
         }
         Object.assign(options, this.options)
         return options
@@ -206,6 +209,7 @@
           TiptapInteractiveKatexInline,
           TiptapInteractiveImageUpload,
           TiptapInteractiveImageUploadInline,
+          TiptapInteractivePoem,
           AutoDir,
           ImageAlign,
           HalfSpace
@@ -235,10 +239,28 @@
         return this.convertToPureHTML(this.editor.getHTML())
       },
       convertToPureHTML(string) { //call this function when you want to convert tiptap output to pure html
+        string = this.convertInteractivePoemToHTML(string)
         string = this.convertInlineInteractiveImagesToHTML(string)
         string = this.convertInteractiveImagesToHTML(string)
         string = this.convertInteractiveIKatexToHTML(string)
         return string
+      },
+      convertInteractivePoemToHTML(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let poems = wrapper.querySelectorAll('tiptap-interactive-poem')
+        poems.forEach(item => {
+          let interactivePoem = item.attributes[0].nodeValue
+          if (interactivePoem) {
+            interactivePoem =
+                    '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
+            //create img parent and set the display settings and justify the image
+            var poemWrapper = document.createElement('div')
+            poemWrapper.innerHTML = interactivePoem
+            item.replaceWith(poemWrapper)
+          }
+        })
+        return wrapper.innerHTML
       },
       convertInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
         var wrapper = document.createElement('div')

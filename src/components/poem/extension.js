@@ -1,6 +1,7 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import TiptapInteractivePoem from './TiptapInteractivePoem';
+
 export default Node.create({
     name: 'TiptapInteractivePoem',
 
@@ -14,8 +15,11 @@ export default Node.create({
 
     addAttributes() {
         return {
-            poem: {
-                default: [['الا یا ایها الساقی ادر کاسا و ناولها', 'که عشق آسان نمود اول ولی افتاد مشکل ها']],
+            poem1: {
+                default: ''
+            },
+            poem2: {
+                default: ''
             }
         }
     },
