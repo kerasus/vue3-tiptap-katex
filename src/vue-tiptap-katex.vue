@@ -289,15 +289,15 @@
       convertInteractiveIKatexToHTML(string) { //this function converts interactiveKatex from tiptap to html image
         var wrapper = document.createElement('div')
         wrapper.innerHTML = string
-        let images = wrapper.querySelectorAll('tiptap-interactive-katex-inline')
-        images.forEach(item => {
+        let katexes = wrapper.querySelectorAll('tiptap-interactive-katex-inline')
+        katexes.forEach(item => {
           let interactiveKatex = item.attributes[0].nodeValue
           if (interactiveKatex) {
             interactiveKatex = '$' + item.attributes['katex'].nodeValue + '$'
             var katexWrapper = document.createElement('div')
             katexWrapper.setAttribute('katex', true)
-            katexWrapper.innerHTML = interactiveKatex
-            item.replaceWith(katexWrapper.innerHTML)
+            katexWrapper.textContent = interactiveKatex
+            item.replaceWith(katexWrapper.textContent)
           }
         })
         return wrapper.innerHTML
