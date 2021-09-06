@@ -113,7 +113,7 @@
       <span>Heading 6</span>
     </v-tooltip>
 
-    <div class="vl mx-3"></div>
+    <div class="vl mx-3" />
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -195,7 +195,7 @@
       <span>Highlight</span>
     </v-tooltip>
 
-    <div class="vl mx-3"></div>
+    <div class="vl mx-3" />
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -261,7 +261,7 @@
       <span>Align Justify</span>
     </v-tooltip>
 
-    <div class="vl mx-3"></div>
+    <div class="vl mx-3" />
 
 
     <v-tooltip top>
@@ -296,7 +296,7 @@
       <span>Ordered List</span>
     </v-tooltip>
 
-    <div class="vl mx-3"></div>
+    <div class="vl mx-3" />
     <!--    <v-btn-->
     <!--      small-->
     <!--      tile-->
@@ -373,7 +373,7 @@
       <span>Horizontal Divider</span>
     </v-tooltip>
 
-    <div class="vl mx-3"></div>
+    <div class="vl mx-3" />
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -555,31 +555,31 @@
     <!--      </v-list>-->
     <!--    </v-menu>-->
 
-<!--    <v-tooltip top>-->
-<!--      <template v-slot:activator="{ on, attrs }">-->
-<!--        <v-btn-->
-<!--          small-->
-<!--          tile-->
-<!--          icon-->
-<!--          v-bind="attrs"-->
-<!--          v-on="on"-->
-<!--          @click="editor.chain().focus().insertContent(tiptapInteractiveImageUpload).run()"-->
-<!--        >-->
-<!--          <v-icon>mdi-image</v-icon>-->
-<!--        </v-btn>-->
-<!--      </template>-->
-<!--      <span>Image</span>-->
-<!--    </v-tooltip>-->
+    <!--    <v-tooltip top>-->
+    <!--      <template v-slot:activator="{ on, attrs }">-->
+    <!--        <v-btn-->
+    <!--          small-->
+    <!--          tile-->
+    <!--          icon-->
+    <!--          v-bind="attrs"-->
+    <!--          v-on="on"-->
+    <!--          @click="editor.chain().focus().insertContent(tiptapInteractiveImageUpload).run()"-->
+    <!--        >-->
+    <!--          <v-icon>mdi-image</v-icon>-->
+    <!--        </v-btn>-->
+    <!--      </template>-->
+    <!--      <span>Image</span>-->
+    <!--    </v-tooltip>-->
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-                small
-                tile
-                icon
-                v-bind="attrs"
-                v-on="on"
-                @click="editor.chain().focus().insertContent(tiptapInteractiveImageUploadInline).run()"
+          small
+          tile
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click="editor.chain().focus().insertContent(tiptapInteractiveImageUploadInline).run()"
         >
           <v-icon>mdi-image</v-icon>
         </v-btn>
@@ -588,7 +588,7 @@
     </v-tooltip>
 
     <!--    <dynamic-table :editor="editor" />-->
-    <div class="vl mx-3"></div>
+    <div class="vl mx-3" />
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -637,6 +637,25 @@
       </template>
       <span>Paste</span>
     </v-tooltip>
+
+    <v-tooltip
+      v-if="options && options.poem"
+      top
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          small
+          tile
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click="editor.chain().focus().insertContent('<tiptap-interactive-poem></tiptap-interactive-poem>').run()"
+        >
+          <v-icon>mdi-format-columns</v-icon>
+        </v-btn>
+      </template>
+      <span>Poem</span>
+    </v-tooltip>
   </div>
 </template>
 
@@ -658,6 +677,10 @@
         default: ''
       },
       editor: {
+        type: Object,
+        default: () => {}
+      },
+      options: {
         type: Object,
         default: () => {}
       }
