@@ -656,6 +656,25 @@
       </template>
       <span>Poem</span>
     </v-tooltip>
+
+    <v-tooltip
+      v-if="options && options.poem"
+      top
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          small
+          tile
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click="editor.chain().focus().insertContent('<tiptap-interactive-reading></tiptap-interactive-reading>').run()"
+        >
+          <v-icon>mdi-eye-off</v-icon>
+        </v-btn>
+      </template>
+      <span>Reading</span>
+    </v-tooltip>
   </div>
 </template>
 
