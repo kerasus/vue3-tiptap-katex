@@ -61,6 +61,7 @@
   import TiptapInteractiveImageUpload from './components/ImageUpload/extension';
   import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline';
   import TiptapInteractivePoem from './components/poem/extension';
+  import TiptapInteractiveReading from './components/reading/extension';
 
 
   import StarterKit from '@tiptap/starter-kit'
@@ -168,7 +169,8 @@
         const options = {
           bubbleMenu: true,
           floatingMenu: true,
-          poem: false
+          poem: false,
+          reading: false
         }
         Object.assign(options, this.options)
         return options
@@ -185,7 +187,7 @@
         extensions: [
           StarterKit,
           TextAlign.configure({
-            types: ['heading', 'paragraph', 'TiptapInteractiveImageUpload'],
+            types: ['heading', 'paragraph', 'TiptapInteractiveImageUpload', 'TiptapInteractiveReading'],
             defaultAlignment: ''
           }),
           Highlight,
@@ -210,6 +212,7 @@
           TiptapInteractiveImageUpload,
           TiptapInteractiveImageUploadInline,
           TiptapInteractivePoem,
+          TiptapInteractiveReading,
           AutoDir,
           ImageAlign,
           HalfSpace
@@ -243,7 +246,22 @@
         string = this.convertInlineInteractiveImagesToHTML(string)
         string = this.convertInteractiveImagesToHTML(string)
         string = this.convertInteractiveIKatexToHTML(string)
+        string = this.convertInteractiveReadingToHTML(string)
         return string
+      },
+      convertInteractiveReadingToHTML(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let readings = wrapper.querySelectorAll('tiptap-interactive-reading')
+        readings.forEach(item => {
+          let interactiveReading =
+                  '<p class="reading-duplicate">' + item.innerHTML + '</p>'
+          //create img parent and set the display settings and justify the image
+          var poemWrapper = document.createElement('div')
+          poemWrapper.innerHTML = interactiveReading
+          item.replaceWith(poemWrapper)
+        })
+        return wrapper.innerHTML
       },
       convertInteractivePoemToHTML(string) {
         var wrapper = document.createElement('div')
@@ -326,10 +344,41 @@
       },
 
       convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
+        string = this.convertHTMLPoemToInteractive(string)
+        string = this.convertHTMLReadingToInteractive(string)
         string = this.convertHTMLImageToInlineInteractive(string)
         string = this.convertHTMLImageToInteractive(string)
         string = this.convertHTMLKatexToInteractive(string)
         return string
+      },
+      convertHTMLPoemToInteractive(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let poemParent = wrapper.querySelectorAll('.beit')
+        poemParent.forEach(item => {
+          let poemHTML =
+                  '<tiptap-interactive-poem' +
+                  ' poem1="' + item.childNodes[0].textContent + '" ' +
+                  'poem2="' + item.childNodes[1].textContent + '" ' +
+                  '></tiptap-interactive-poem>'
+          var poemWrapper = document.createElement('div')
+          poemWrapper.innerHTML = poemHTML
+          item.parentElement.replaceWith(poemWrapper)
+        })
+        return wrapper.innerHTML
+      },
+      convertHTMLReadingToInteractive(string) {
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let poemParent = wrapper.querySelectorAll('.reading-duplicate')
+        poemParent.forEach(item => {
+          let poemHTML =
+                  '<tiptap-interactive-reading>' + item.innerHTML + '</tiptap-interactive-reading>'
+          var poemWrapper = document.createElement('div')
+          poemWrapper.innerHTML = poemHTML
+          item.parentElement.replaceWith(poemWrapper)
+        })
+        return wrapper.innerHTML
       },
       convertHTMLImageToInteractive(string) {
         var wrapper = document.createElement('div')
