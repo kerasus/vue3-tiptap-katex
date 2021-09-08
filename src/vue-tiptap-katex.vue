@@ -452,19 +452,20 @@
         //   item.replaceWith(doc.firstChild)
         // })
 
-        let regex = /(\$((?! ).){1}((?!\$).)*((?! ).){1}\$)/gi;
+        let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gm;
         string = string.replace(regex, (match) => {
-
+          console.log(match)
           let finalMatch
           if (match.includes('$$')) {
             finalMatch = match.slice(2, -2)
-          } else {
+          } else if (match.includes('$')) {
             finalMatch = match.slice(1, -1)
+          } else {
+            finalMatch = match.slice(2, -2)
           }
           return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
         })
         return string
-
       },
 
       // focusHandler() {
