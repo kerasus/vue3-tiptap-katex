@@ -649,8 +649,10 @@
           icon
           v-bind="attrs"
           v-on="on"
-          @click="editor.chain().focus().insertContent('<tiptap-interactive-poem></tiptap-interactive-poem>').run()"
+          @click="insertPoem"
         >
+<!--          @click="editor.chain().focus().insertContent('<tiptap-interactive-poem></tiptap-interactive-poem>').run()"            -->
+<!--          <tiptap-interactive-poem><table><tr><td>test1</td><td>test2</td></tr></table></tiptap-interactive-poem>          -->
           <v-icon>mdi-format-columns</v-icon>
         </v-btn>
       </template>
@@ -668,7 +670,7 @@
           icon
           v-bind="attrs"
           v-on="on"
-          @click="editor.chain().focus().insertContent('<tiptap-interactive-reading></tiptap-interactive-reading>').run()"
+          @click="editor.chain().focus().insertContent('<tiptap-interactive-reading>Type Here</tiptap-interactive-reading>').run()"
         >
           <v-icon>mdi-eye-off</v-icon>
         </v-btn>
@@ -681,10 +683,34 @@
 <script>
     // import DynamicTable from "./dynamicTools/DynamicTable"
 
+    import { DOMParser } from 'prosemirror-model'
+
+    function elementFromString(value) {
+      const element = document.createElement('div')
+      element.innerHTML = value.trim()
+
+      return element
+    }
+
+    function insertHTML({ state, view }, value) {
+      const { selection } = state
+      const element = elementFromString(value)
+
+      const slice = DOMParser.fromSchema(state.schema).parseSlice(element)
+      const transaction = state.tr.insert(selection.anchor, slice.content)
+
+      view.dispatch(transaction)
+    }
+
   export default {
     name: 'Toolbar',
     components: {
       // DynamicTable,
+    },
+    data () {
+      return {
+        poemCom: '<p style="color: red;">test</p>'
+      }
     },
     props: {
       accessToken: {
@@ -713,6 +739,11 @@
       }
     },
     methods: {
+      insertPoem () {
+        this.editor.chain().focus().insertContent('<ol><li>').run()
+        insertHTML(this.editor, '<ol><li><table class="poem"><tr class="beit"><td class="mesra1">معشوقه به سامان شد تا باد چنین بادا</td><td class="mesra2">کفرش همه ایمان شد تا باد چنین بادا</td></tr></table></ol></li>')
+        this.editor.chain().focus().insertContent('</ol></li>').run()
+      },
       justify (value) {
         this.editor.chain().focus().setTextAlign(value).run()
         this.editor.chain().focus().setImageAlign(value).run()
@@ -728,6 +759,7 @@
           });
       },
       convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
+        string = string.replaceAll('¬', '&#8202;')
         string = this.convertHTMLImageToInlineInteractive(string)
         string = this.convertHTMLImageToInteractive(string)
         string = this.convertHTMLKatexToInteractive(string)

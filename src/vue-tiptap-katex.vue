@@ -242,7 +242,7 @@
         return this.convertToPureHTML(this.editor.getHTML())
       },
       convertToPureHTML(string) { //call this function when you want to convert tiptap output to pure html
-        string = this.convertInteractivePoemToHTML(string)
+        // string = this.convertInteractivePoemToHTML(string)
         string = this.convertInlineInteractiveImagesToHTML(string)
         string = this.convertInteractiveImagesToHTML(string)
         string = this.convertInteractiveIKatexToHTML(string)
@@ -254,8 +254,9 @@
         wrapper.innerHTML = string
         let readings = wrapper.querySelectorAll('tiptap-interactive-reading')
         readings.forEach(item => {
+          console.log(item.innerHTML, 'item')
           let interactiveReading =
-                  '<p class="reading-duplicate" dir="auto">' + item.innerHTML + '</p>'
+                  '<div class="reading-duplicate" dir="auto">' + item.innerHTML + '</div>'
           //create img parent and set the display settings and justify the image
           var poemWrapper = document.createElement('div')
           poemWrapper.innerHTML = interactiveReading
@@ -263,23 +264,55 @@
         })
         return wrapper.innerHTML
       },
-      convertInteractivePoemToHTML(string) {
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let poems = wrapper.querySelectorAll('tiptap-interactive-poem')
-        poems.forEach(item => {
-          let interactivePoem = item.attributes[0].nodeValue
-          if (interactivePoem) {
-            interactivePoem =
-                    '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
-            //create img parent and set the display settings and justify the image
-            var poemWrapper = document.createElement('div')
-            poemWrapper.innerHTML = interactivePoem
-            item.replaceWith(poemWrapper)
-          }
-        })
-        return wrapper.innerHTML
-      },
+      // convertInteractivePoemToHTML(string) {
+        // var wrapper = document.createElement('div')
+        // wrapper.innerHTML = string
+        // let poems = wrapper.querySelectorAll('tiptap-interactive-poem')
+        // poems.forEach(item => {
+        //   let interactivePoem = item.attributes[0].nodeValue
+        //   if (interactivePoem) {
+        //     interactivePoem =
+        //             '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
+        //     //create img parent and set the display settings and justify the image
+        //     var poemWrapper = document.createElement('div')
+        //     poemWrapper.innerHTML = interactivePoem
+        //     item.replaceWith(poemWrapper)
+        //   }
+        // })
+        // return wrapper.innerHTML
+
+
+
+        // var wrapper = document.createElement('div')
+        // wrapper.innerHTML = string
+        // let poems = wrapper.querySelectorAll('ol li table tr')
+        // console.log(poems[0].innerHTML)
+        // let test = document.createElement('div')
+        // test.innerHTML = poems[0].innerHTML
+        // console.log(test.querySelectorAll('p'))
+        // let poem1 = test.querySelectorAll('p')[0].textContent
+        // let poem2 = test.querySelectorAll('p')[1].textContent
+        // let interactivePoem = '<div class="beit"><div class="mesra">' + poem1 + '</div><div class="mesra">' + poem2 + '</div></div>'
+        // var poemWrapper = document.createElement('div')
+        //     poemWrapper.innerHTML = interactivePoem
+        //     item.replaceWith(poemWrapper)
+        //   }
+        // })
+        // // return wrapper.innerHTML
+        // poems.forEach(item => {
+        //   let interactivePoem = item.attributes[0].nodeValue
+        //   if (interactivePoem) {
+        //     interactivePoem =
+        //         '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
+        //     //create img parent and set the display settings and justify the image
+        //     var poemWrapper = document.createElement('div')
+        //     poemWrapper.innerHTML = interactivePoem
+        //     item.replaceWith(poemWrapper)
+        //   }
+        // })
+        // return wrapper.innerHTML
+        // return string
+      // },
       convertInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
         var wrapper = document.createElement('div')
         wrapper.innerHTML = string
@@ -523,6 +556,30 @@
 </script>
 
 <style>
+.beit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.beit .mesra {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
   .ProseMirror {
     outline: none;
     padding: 20px;
