@@ -255,7 +255,7 @@
         let readings = wrapper.querySelectorAll('tiptap-interactive-reading')
         readings.forEach(item => {
           let interactiveReading =
-                  '<p class="reading-duplicate">' + item.innerHTML + '</p>'
+                  '<p class="reading-duplicate" dir="auto">' + item.innerHTML + '</p>'
           //create img parent and set the display settings and justify the image
           var poemWrapper = document.createElement('div')
           poemWrapper.innerHTML = interactiveReading
@@ -326,7 +326,7 @@
         })
         return wrapper.innerHTML
       },
-      convertInteractiveIKatexToHTML(string) { //this function converts interactiveKatex from tiptap to html image
+      convertInteractiveIKatexToHTML(string) { // this function converts interactiveKatex from tiptap to html image
         var wrapper = document.createElement('div')
         wrapper.innerHTML = string
         let katexes = wrapper.querySelectorAll('tiptap-interactive-katex-inline')
