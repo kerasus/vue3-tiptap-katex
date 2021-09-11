@@ -740,9 +740,7 @@
     },
     methods: {
       insertPoem () {
-        this.editor.chain().focus().insertContent('<ol><li>').run()
         insertHTML(this.editor, '<ol><li><table class="poem"><tr class="beit"><td class="mesra1">معشوقه به سامان شد تا باد چنین بادا</td><td class="mesra2">کفرش همه ایمان شد تا باد چنین بادا</td></tr></table></ol></li>')
-        this.editor.chain().focus().insertContent('</ol></li>').run()
       },
       justify (value) {
         this.editor.chain().focus().setTextAlign(value).run()

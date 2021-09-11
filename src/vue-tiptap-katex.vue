@@ -242,7 +242,7 @@
         return this.convertToPureHTML(this.editor.getHTML())
       },
       convertToPureHTML(string) { //call this function when you want to convert tiptap output to pure html
-        // string = this.convertInteractivePoemToHTML(string)
+        string = this.convertInteractivePoemToHTML(string)
         string = this.convertInlineInteractiveImagesToHTML(string)
         string = this.convertInteractiveImagesToHTML(string)
         string = this.convertInteractiveIKatexToHTML(string)
@@ -264,12 +264,13 @@
         })
         return wrapper.innerHTML
       },
-      // convertInteractivePoemToHTML(string) {
+      convertInteractivePoemToHTML(string) {
         // var wrapper = document.createElement('div')
         // wrapper.innerHTML = string
         // let poems = wrapper.querySelectorAll('tiptap-interactive-poem')
         // poems.forEach(item => {
         //   let interactivePoem = item.attributes[0].nodeValue
+
         //   if (interactivePoem) {
         //     interactivePoem =
         //             '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
@@ -283,22 +284,21 @@
 
 
 
-        // var wrapper = document.createElement('div')
-        // wrapper.innerHTML = string
-        // let poems = wrapper.querySelectorAll('ol li table tr')
-        // console.log(poems[0].innerHTML)
-        // let test = document.createElement('div')
-        // test.innerHTML = poems[0].innerHTML
-        // console.log(test.querySelectorAll('p'))
-        // let poem1 = test.querySelectorAll('p')[0].textContent
-        // let poem2 = test.querySelectorAll('p')[1].textContent
-        // let interactivePoem = '<div class="beit"><div class="mesra">' + poem1 + '</div><div class="mesra">' + poem2 + '</div></div>'
-        // var poemWrapper = document.createElement('div')
-        //     poemWrapper.innerHTML = interactivePoem
-        //     item.replaceWith(poemWrapper)
-        //   }
-        // })
-        // // return wrapper.innerHTML
+        var wrapper = document.createElement('div')
+        wrapper.innerHTML = string
+        let poems = wrapper.querySelectorAll('ol li table tr')
+        poems.forEach(poem => {
+          let poemWrapper = document.createElement('div')
+          poemWrapper.innerHTML = poem.innerHTML
+          let poem1 = poemWrapper.querySelectorAll('p')[0].textContent
+          let poem2 = poemWrapper.querySelectorAll('p')[1].textContent
+          let interactivePoem = '<div class="beit"><div class="mesra">' + poem1 + '</div><div class="mesra">' + poem2 + '</div></div>'
+          var PoemWrapper = document.createElement('div')
+          PoemWrapper.innerHTML = interactivePoem
+          poem.replaceWith(PoemWrapper)
+        })
+
+        // return wrapper.innerHTML
         // poems.forEach(item => {
         //   let interactivePoem = item.attributes[0].nodeValue
         //   if (interactivePoem) {
@@ -310,9 +310,8 @@
         //     item.replaceWith(poemWrapper)
         //   }
         // })
-        // return wrapper.innerHTML
-        // return string
-      // },
+        return wrapper.innerHTML
+      },
       convertInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
         var wrapper = document.createElement('div')
         wrapper.innerHTML = string
@@ -389,11 +388,9 @@
         wrapper.innerHTML = string
         let poemParent = wrapper.querySelectorAll('.beit')
         poemParent.forEach(item => {
-          let poemHTML =
-                  '<tiptap-interactive-poem' +
-                  ' poem1="' + item.childNodes[0].textContent + '" ' +
-                  'poem2="' + item.childNodes[1].textContent + '" ' +
-                  '></tiptap-interactive-poem>'
+          let poemHTML = '<ol><li><table class="poem"><tr class="beit">' +
+              '<td class="mesra1">' + item.childNodes[0].textContent + '</td><td class="mesra2">' + item.childNodes[1].textContent + '</td>' +
+              '</tr></table></ol></li>'
           var poemWrapper = document.createElement('div')
           poemWrapper.innerHTML = poemHTML
           item.parentElement.replaceWith(poemWrapper)
