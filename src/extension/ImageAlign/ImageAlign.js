@@ -14,7 +14,7 @@ const ImageAlign = Extension.create({
                 attributes: {
                     imageAlign: {
                         default: this.options.defaultAlignment,
-                        parseHTML: element => ({
+                        parseHTML: () => ({
                             textAlign: this.options.defaultAlignment,
                         }),
                         renderHTML: attributes => {
@@ -31,10 +31,10 @@ const ImageAlign = Extension.create({
                 if (!this.options.alignments.includes(alignment)) {
                     return false;
                 }
-                return this.options.types.every(type => commands.updateAttributes('TiptapInteractiveImageUpload', { justify: alignment }))
+                return this.options.types.every(() => commands.updateAttributes('TiptapInteractiveImageUpload', { justify: alignment }))
             },
             unsetImageAlign: () => ({ commands }) => {
-                return this.options.types.every(type => commands.updateAttributes('TiptapInteractiveImageUpload', { justify: 'center' }))
+                return this.options.types.every(() => commands.updateAttributes('TiptapInteractiveImageUpload', { justify: 'center' }))
             },
         };
     },

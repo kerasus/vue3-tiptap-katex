@@ -3,36 +3,38 @@
     class="vue-component"
     data-drag-handle
   >
-    <v-row>
-      <v-col :cols="6">
-        <v-text-field
-          v-model="poem1"
-          outlined
-          dense
-          label="مصراع 1"
-          @change="update"
-        />
-      </v-col>
-      <v-col :cols="6">
-        <v-text-field
-          v-model="poem2"
-          outlined
-          dense
-          label="مصراع 2"
-          @change="update"
-        />
-      </v-col>
-    </v-row>
+    <node-view-content as="table" class="content" dir="auto" ref="test" id="test"/>
+<!--    <v-row>-->
+<!--      <v-col :cols="6">-->
+<!--        <v-textarea-->
+<!--          v-model="poem1"-->
+<!--          outlined-->
+<!--          dense-->
+<!--          label="مصراع 1"-->
+<!--          @change="update"-->
+<!--        />-->
+<!--      </v-col>-->
+<!--      <v-col :cols="6">-->
+<!--        <v-text-field-->
+<!--          v-model="poem2"-->
+<!--          outlined-->
+<!--          dense-->
+<!--          label="مصراع 2"-->
+<!--          @change="update"-->
+<!--        />-->
+<!--      </v-col>-->
+<!--    </v-row>-->
   </node-view-wrapper>
 </template>
 
 <script>
 
-import {NodeViewWrapper, nodeViewProps} from '@tiptap/vue-2'
+import {NodeViewWrapper, NodeViewContent, nodeViewProps} from '@tiptap/vue-2'
 export default {
   name: 'TiptapInteractivePoem',
   components: {
     NodeViewWrapper,
+    NodeViewContent
   },
   props: {
     nodeViewProps,
@@ -62,6 +64,13 @@ export default {
       this.poem2 = this.node.attrs.poem2
     }
   },
+  mounted() {
+    setTimeout(() => {
+      console.log(this.$refs.test)
+      console.log(document.getElementById('test'))
+      document.getElementById('test').innerHTML = '<div style="color: red;">test</div>'
+    }, 2000);
+  },
   methods: {
     update () {
       this.updateAttributes({
@@ -73,6 +82,32 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
 
+td,
+th {
+  min-width: 1em;
+  border: 2px solid #ced4da;
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+
+> * {
+  margin-bottom: 0;
+}
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #f1f3f5;
+}
+}
 </style>

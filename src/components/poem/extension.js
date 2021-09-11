@@ -7,11 +7,7 @@ export default Node.create({
 
     group: 'block',
 
-    draggable: true,
-
-    inline: false,
-
-    atom: true,
+    content: 'inline*',
 
     addAttributes() {
         return {
@@ -33,7 +29,7 @@ export default Node.create({
     },
 
     renderHTML({ HTMLAttributes }) {
-        return ['tiptap-interactive-poem', mergeAttributes(HTMLAttributes)]
+        return ['tiptap-interactive-poem', mergeAttributes(HTMLAttributes), 0]
     },
 
     addNodeView() {

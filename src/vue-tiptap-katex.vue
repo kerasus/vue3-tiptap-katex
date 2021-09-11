@@ -254,8 +254,9 @@
         wrapper.innerHTML = string
         let readings = wrapper.querySelectorAll('tiptap-interactive-reading')
         readings.forEach(item => {
+          console.log(item.innerHTML, 'item')
           let interactiveReading =
-                  '<p class="reading-duplicate">' + item.innerHTML + '</p>'
+                  '<div class="reading-duplicate" dir="auto">' + item.innerHTML + '</div>'
           //create img parent and set the display settings and justify the image
           var poemWrapper = document.createElement('div')
           poemWrapper.innerHTML = interactiveReading
@@ -264,20 +265,51 @@
         return wrapper.innerHTML
       },
       convertInteractivePoemToHTML(string) {
+        // var wrapper = document.createElement('div')
+        // wrapper.innerHTML = string
+        // let poems = wrapper.querySelectorAll('tiptap-interactive-poem')
+        // poems.forEach(item => {
+        //   let interactivePoem = item.attributes[0].nodeValue
+
+        //   if (interactivePoem) {
+        //     interactivePoem =
+        //             '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
+        //     //create img parent and set the display settings and justify the image
+        //     var poemWrapper = document.createElement('div')
+        //     poemWrapper.innerHTML = interactivePoem
+        //     item.replaceWith(poemWrapper)
+        //   }
+        // })
+        // return wrapper.innerHTML
+
+
+
         var wrapper = document.createElement('div')
         wrapper.innerHTML = string
-        let poems = wrapper.querySelectorAll('tiptap-interactive-poem')
-        poems.forEach(item => {
-          let interactivePoem = item.attributes[0].nodeValue
-          if (interactivePoem) {
-            interactivePoem =
-                    '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
-            //create img parent and set the display settings and justify the image
-            var poemWrapper = document.createElement('div')
-            poemWrapper.innerHTML = interactivePoem
-            item.replaceWith(poemWrapper)
-          }
+        let poems = wrapper.querySelectorAll('ol li table tr')
+        poems.forEach(poem => {
+          let poemWrapper = document.createElement('div')
+          poemWrapper.innerHTML = poem.innerHTML
+          let poem1 = poemWrapper.querySelectorAll('p')[0].textContent
+          let poem2 = poemWrapper.querySelectorAll('p')[1].textContent
+          let interactivePoem = '<div class="beit"><div class="mesra">' + poem1 + '</div><div class="mesra">' + poem2 + '</div></div>'
+          var PoemWrapper = document.createElement('div')
+          PoemWrapper.innerHTML = interactivePoem
+          poem.replaceWith(PoemWrapper)
         })
+
+        // return wrapper.innerHTML
+        // poems.forEach(item => {
+        //   let interactivePoem = item.attributes[0].nodeValue
+        //   if (interactivePoem) {
+        //     interactivePoem =
+        //         '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
+        //     //create img parent and set the display settings and justify the image
+        //     var poemWrapper = document.createElement('div')
+        //     poemWrapper.innerHTML = interactivePoem
+        //     item.replaceWith(poemWrapper)
+        //   }
+        // })
         return wrapper.innerHTML
       },
       convertInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
@@ -326,7 +358,7 @@
         })
         return wrapper.innerHTML
       },
-      convertInteractiveIKatexToHTML(string) { //this function converts interactiveKatex from tiptap to html image
+      convertInteractiveIKatexToHTML(string) { // this function converts interactiveKatex from tiptap to html image
         var wrapper = document.createElement('div')
         wrapper.innerHTML = string
         let katexes = wrapper.querySelectorAll('tiptap-interactive-katex-inline')
@@ -356,11 +388,9 @@
         wrapper.innerHTML = string
         let poemParent = wrapper.querySelectorAll('.beit')
         poemParent.forEach(item => {
-          let poemHTML =
-                  '<tiptap-interactive-poem' +
-                  ' poem1="' + item.childNodes[0].textContent + '" ' +
-                  'poem2="' + item.childNodes[1].textContent + '" ' +
-                  '></tiptap-interactive-poem>'
+          let poemHTML = '<ol><li><table class="poem"><tr class="beit">' +
+              '<td class="mesra1">' + item.childNodes[0].textContent + '</td><td class="mesra2">' + item.childNodes[1].textContent + '</td>' +
+              '</tr></table></ol></li>'
           var poemWrapper = document.createElement('div')
           poemWrapper.innerHTML = poemHTML
           item.parentElement.replaceWith(poemWrapper)
@@ -523,6 +553,30 @@
 </script>
 
 <style>
+.beit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.beit .mesra {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
   .ProseMirror {
     outline: none;
     padding: 20px;
