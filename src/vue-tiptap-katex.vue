@@ -290,8 +290,8 @@
         poems.forEach(poem => {
           let poemWrapper = document.createElement('div')
           poemWrapper.innerHTML = poem.innerHTML
-          let poem1 = poemWrapper.querySelectorAll('p')[0].textContent
-          let poem2 = poemWrapper.querySelectorAll('p')[1].textContent
+          let poem1 = poemWrapper.querySelectorAll('p')[0].innerHTML
+          let poem2 = poemWrapper.querySelectorAll('p')[1].innerHTML
           let interactivePoem = '<div class="beit"><div class="mesra">' + poem1 + '</div><div class="mesra">' + poem2 + '</div></div>'
           var PoemWrapper = document.createElement('div')
           PoemWrapper.innerHTML = interactivePoem
