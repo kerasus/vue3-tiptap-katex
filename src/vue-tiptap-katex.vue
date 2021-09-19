@@ -482,8 +482,10 @@
         //   item.replaceWith(doc.firstChild)
         // })
 
-        let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gm;
-        string = string.replace(regex, (match) => {
+        string = string.replaceAll('\\[ ', '\\[')
+        string = string.replaceAll(' \\]', ' \\]')
+
+        let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gm;        string = string.replace(regex, (match) => {
           console.log(match)
           let finalMatch
           if (match.includes('$$')) {
