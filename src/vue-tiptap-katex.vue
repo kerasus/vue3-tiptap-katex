@@ -87,6 +87,15 @@
   } from '@tiptap/vue-2'
 
   import {Extension} from '@tiptap/core'
+  import { DOMParser } from 'prosemirror-model'
+
+  function elementFromString(value) {
+    const element = document.createElement('div')
+    element.innerHTML = value.trim()
+
+    return element
+  }
+
   const AutoDir = Extension.create({
     addGlobalAttributes() {
       return [
@@ -162,6 +171,7 @@
     data() {
       return {
         editor: null,
+        poems: []
       }
     },
     computed: {
@@ -234,9 +244,49 @@
       this.editor.destroy()
     },
     methods: {
+
+      insertPoem({ state, view }, value, index) {
+        const { selection } = state
+        const element = elementFromString(value)
+        const slice = DOMParser.fromSchema(state.schema).parseSlice(element)
+
+        let reachedEnd = false
+        let first = 0, last = 5
+        let findIndex = -1
+        while (!reachedEnd) {
+          try {
+            const text = state.doc.textBetween(first, last)
+            if (text === 'poem' + index) {
+              reachedEnd = true
+              findIndex = first
+            }
+            first++
+            last++
+          } catch {
+            console.log('poem' + index + ' not found')
+            break;
+          }
+        }
+
+        const { doc, tr } = state;
+        let trx = tr;
+
+        trx = trx.insertText('',findIndex,findIndex + 5)
+
+        trx = trx.insert(first, slice.content)
+        view.dispatch(trx)
+      },
       setContent(pureHTML) {
         let string = this.convertToTiptap(pureHTML)
-        this.editor.commands.setContent(string)
+        if (string.length) {
+          this.editor.commands.setContent(string)
+          this.poems.forEach((poem, index) => {
+            let poemString = '<ol><li><table class="poem"><tr class="beit">' +
+                '<td class="mesra1">' + poem.poem1 + '</td><td class="mesra2">' + poem.poem2 + '</td>' +
+                '</tr></table></li></ol>'
+            this.insertPoem(this.editor, poemString, index)
+          })
+        }
       },
       getContent() {
         return this.convertToPureHTML(this.editor.getHTML())
@@ -295,7 +345,7 @@
           let interactivePoem = '<div class="beit"><div class="mesra">' + poem1 + '</div><div class="mesra">' + poem2 + '</div></div>'
           var PoemWrapper = document.createElement('div')
           PoemWrapper.innerHTML = interactivePoem
-          poem.replaceWith(PoemWrapper)
+          poem.parentNode.parentNode.parentNode.parentNode.replaceWith(PoemWrapper)
         })
 
         // return wrapper.innerHTML
@@ -376,24 +426,28 @@
       },
 
       convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
-        string = this.convertHTMLPoemToInteractive(string)
+        string = this.convertHTMLKatexToInteractive(string)
         string = this.convertHTMLReadingToInteractive(string)
         string = this.convertHTMLImageToInlineInteractive(string)
         string = this.convertHTMLImageToInteractive(string)
-        string = this.convertHTMLKatexToInteractive(string)
+        string = this.convertHTMLPoemToInteractive(string)
         return string
       },
       convertHTMLPoemToInteractive(string) {
         var wrapper = document.createElement('div')
         wrapper.innerHTML = string
         let poemParent = wrapper.querySelectorAll('.beit')
-        poemParent.forEach(item => {
-          let poemHTML = '<ol><li><table class="poem"><tr class="beit">' +
-              '<td class="mesra1">' + item.childNodes[0].textContent + '</td><td class="mesra2">' + item.childNodes[1].textContent + '</td>' +
-              '</tr></table></ol></li>'
-          var poemWrapper = document.createElement('div')
-          poemWrapper.innerHTML = poemHTML
-          item.parentElement.replaceWith(poemWrapper)
+        poemParent.forEach((item, index) => {
+          // let poemHTML = '<ol><li><table class="poem"><tr class="beit">' +
+          //     '<td class="mesra1">' + item.childNodes[0].innerHTML + '</td><td class="mesra2">' + item.childNodes[1].innerHTML + '</td>' +
+          //     '</tr></table></li></ol>'
+          this.poems.push({ poem1: item.childNodes[0].innerHTML, poem2: item.childNodes[1].innerHTML, index: string.indexOf(item.outerHTML) - 5 })
+          // let poemHTML = '<ol><li><table class="poem"><tr class="beit">' +
+          //     '<td class="mesra1">' + item.childNodes[0].innerHTML + '</td><td class="mesra2">' + item.childNodes[1].innerHTML + '</td>' +
+          //     '</tr></table></li></ol>'
+          // var poemWrapper = document.createElement('div')
+          // poemWrapper.innerHTML = poemHTML
+          item.parentElement.replaceWith('poem' + index)
         })
         return wrapper.innerHTML
       },
