@@ -1,48 +1,48 @@
 <template>
   <div :class="{ 'tiptap-plus-container': true }">
     <v-overlay
-            v-if="loading"
-            absolute
-            :value="loading"
-            opacity="0.5"
+      v-if="loading"
+      absolute
+      :value="loading"
+      opacity="0.5"
     />
     <v-progress-circular
-            v-if="loading"
-            :size="50"
-            color="#fff"
-            indeterminate
+      v-if="loading"
+      :size="50"
+      color="#fff"
+      indeterminate
     />
     <v-card
-            elevation="3"
-            class="tiptap-plus"
+      elevation="3"
+      class="tiptap-plus"
     >
       <v-card-title
-              v-if="editor"
-              class="tiptap-header"
+        v-if="editor"
+        class="tiptap-header"
       >
         <slot name="toolbar">
           <toolbar
-                  :editor="editor"
-                  :access-token="accessToken"
-                  :upload-url="uploadUrl"
-                  :options="editorOptions"
+            :editor="editor"
+            :access-token="accessToken"
+            :upload-url="uploadUrl"
+            :options="editorOptions"
           />
         </slot>
       </v-card-title>
       <v-card-text class="pa-0">
         <bubble-menu
-                v-if="editorOptions.bubbleMenu"
-                class="bubble-menu"
-                :tippy-options="{ duration: 100, showOnCreate: false }"
-                :editor="editor"
+          v-if="editorOptions.bubbleMenu"
+          class="bubble-menu"
+          :tippy-options="{ duration: 100, showOnCreate: false }"
+          :editor="editor"
         >
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-                v-if="editorOptions.floatingMenu"
-                class="floating-menu"
-                :tippy-options="{ duration: 100 }"
-                :editor="editor"
+          v-if="editorOptions.floatingMenu"
+          class="floating-menu"
+          :tippy-options="{ duration: 100 }"
+          :editor="editor"
         >
           <slot-floating-menu :editor="editor" />
         </floating-menu>
@@ -87,14 +87,8 @@
   } from '@tiptap/vue-2'
 
   import {Extension} from '@tiptap/core'
-  import { DOMParser } from 'prosemirror-model'
-
-  function elementFromString(value) {
-    const element = document.createElement('div')
-    element.innerHTML = value.trim()
-
-    return element
-  }
+  import mixinConvertToHTML from './mixins/convertToHTML';
+  import mixinConvertToTiptap from './mixins/convertToTiptap';
 
   const AutoDir = Extension.create({
     addGlobalAttributes() {
@@ -138,6 +132,7 @@
 
   export default {
     name: 'VueTiptapKatex',
+    mixins: [mixinConvertToHTML, mixinConvertToTiptap],
     components: {
       EditorContent,
       BubbleMenu,
@@ -171,7 +166,6 @@
     data() {
       return {
         editor: null,
-        poems: []
       }
     },
     computed: {
@@ -187,8 +181,6 @@
       }
     },
     mounted() {
-
-
       this.editor = new Editor({
         content: this.value,
         parseOptions: {
@@ -229,53 +221,13 @@
         ],
         // triggered on every change
         onUpdate() {
-          // that.$emit('input', that.convertToPureHTML(this.getHTML()))
-          // that.$emit('update', this.getHTML())
-          // console.log('html', this.getHTML())
-          // const json =
-          // send the content to an API here
         },
       })
-
-      // this.editor.on('focus', this.focusHandler)
-      // this.editor.on('blur', this.blurHandler)
     },
     beforeDestroy() {
       this.editor.destroy()
     },
     methods: {
-
-      insertPoem({ state, view }, value, index) {
-        const { selection } = state
-        const element = elementFromString(value)
-        const slice = DOMParser.fromSchema(state.schema).parseSlice(element)
-
-        let reachedEnd = false
-        let first = 0, last = 5
-        let findIndex = -1
-        while (!reachedEnd) {
-          try {
-            const text = state.doc.textBetween(first, last)
-            if (text === 'poem' + index) {
-              reachedEnd = true
-              findIndex = first
-            }
-            first++
-            last++
-          } catch {
-            console.log('poem' + index + ' not found')
-            break;
-          }
-        }
-
-        const { doc, tr } = state;
-        let trx = tr;
-
-        trx = trx.insertText('',findIndex,findIndex + 5)
-
-        trx = trx.insert(first, slice.content)
-        view.dispatch(trx)
-      },
       setContent(pureHTML) {
         let string = this.convertToTiptap(pureHTML)
         if (string.length) {
@@ -291,319 +243,6 @@
       getContent() {
         return this.convertToPureHTML(this.editor.getHTML())
       },
-      convertToPureHTML(string) { //call this function when you want to convert tiptap output to pure html
-        string = this.convertInteractivePoemToHTML(string)
-        string = this.convertInlineInteractiveImagesToHTML(string)
-        string = this.convertInteractiveImagesToHTML(string)
-        string = this.convertInteractiveIKatexToHTML(string)
-        string = this.convertInteractiveReadingToHTML(string)
-        return string
-      },
-      convertInteractiveReadingToHTML(string) {
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let readings = wrapper.querySelectorAll('tiptap-interactive-reading')
-        readings.forEach(item => {
-          console.log(item.innerHTML, 'item')
-          let interactiveReading =
-                  '<div class="reading-duplicate" dir="auto">' + item.innerHTML + '</div>'
-          //create img parent and set the display settings and justify the image
-          var poemWrapper = document.createElement('div')
-          poemWrapper.innerHTML = interactiveReading
-          item.replaceWith(poemWrapper)
-        })
-        return wrapper.innerHTML
-      },
-      convertInteractivePoemToHTML(string) {
-        // var wrapper = document.createElement('div')
-        // wrapper.innerHTML = string
-        // let poems = wrapper.querySelectorAll('tiptap-interactive-poem')
-        // poems.forEach(item => {
-        //   let interactivePoem = item.attributes[0].nodeValue
-
-        //   if (interactivePoem) {
-        //     interactivePoem =
-        //             '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
-        //     //create img parent and set the display settings and justify the image
-        //     var poemWrapper = document.createElement('div')
-        //     poemWrapper.innerHTML = interactivePoem
-        //     item.replaceWith(poemWrapper)
-        //   }
-        // })
-        // return wrapper.innerHTML
-
-
-
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let poems = wrapper.querySelectorAll('ol li table tr')
-        poems.forEach(poem => {
-          let poemWrapper = document.createElement('div')
-          poemWrapper.innerHTML = poem.innerHTML
-          let poem1 = poemWrapper.querySelectorAll('p')[0].innerHTML
-          let poem2 = poemWrapper.querySelectorAll('p')[1].innerHTML
-          let interactivePoem = '<div class="beit"><div class="mesra">' + poem1 + '</div><div class="mesra">' + poem2 + '</div></div>'
-          var PoemWrapper = document.createElement('div')
-          PoemWrapper.innerHTML = interactivePoem
-          poem.parentNode.parentNode.parentNode.parentNode.replaceWith(PoemWrapper)
-        })
-
-        // return wrapper.innerHTML
-        // poems.forEach(item => {
-        //   let interactivePoem = item.attributes[0].nodeValue
-        //   if (interactivePoem) {
-        //     interactivePoem =
-        //         '<div class="beit"><div class="mesra">' + item.attributes['poem1'].nodeValue + '</div><div class="mesra">' + item.attributes['poem2'].nodeValue + '</div></div>'
-        //     //create img parent and set the display settings and justify the image
-        //     var poemWrapper = document.createElement('div')
-        //     poemWrapper.innerHTML = interactivePoem
-        //     item.replaceWith(poemWrapper)
-        //   }
-        // })
-        return wrapper.innerHTML
-      },
-      convertInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let images = wrapper.querySelectorAll('tiptap-interactive-image-upload')
-        images.forEach(item => {
-          let interactiveImage = item.attributes[0].nodeValue
-          if (interactiveImage) {
-            //create img tag and set its attrs
-            interactiveImage =
-                    '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" />'
-            //create img parent and set the display settings and justify the image
-            var imageWrapper = document.createElement('div')
-            imageWrapper.innerHTML = interactiveImage
-            imageWrapper.style.display = 'flex'
-            if (item.attributes['justify'].nodeValue === 'right') {
-              imageWrapper.style.justifyContent = 'flex-start'
-            } else if (item.attributes['justify'].nodeValue === 'center') {
-              imageWrapper.style.justifyContent = 'center'
-            } else if (item.attributes['justify'].nodeValue === 'left') {
-              imageWrapper.style.justifyContent = 'flex-end'
-            }
-            item.replaceWith(imageWrapper)
-          }
-        })
-        return wrapper.innerHTML
-      },
-      convertInlineInteractiveImagesToHTML(string) { //this function converts interactiveImage from tiptap to html image
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let images = wrapper.querySelectorAll('tiptap-interactive-image-upload-inline')
-        images.forEach(item => {
-          let interactiveImage = item.attributes[0].nodeValue
-          if (interactiveImage) {
-            //create img tag and set its attrs
-            interactiveImage =
-                    '<img src="' + item.attributes['url'].nodeValue + '" width="' + item.attributes['width'].nodeValue + '" height="' + item.attributes['height'].nodeValue + '" style="margin-bottom: ' + item.attributes['vertical'].nodeValue + 'px;" />'
-            //create img parent and set the display settings and justify the image
-            var imageWrapper = document.createElement('span')
-            imageWrapper.style.display = 'inline-block'
-            imageWrapper.style.height = item.attributes['height'].nodeValue + 'px'
-            imageWrapper.innerHTML = interactiveImage
-            item.replaceWith(imageWrapper)
-          }
-        })
-        return wrapper.innerHTML
-      },
-      convertInteractiveIKatexToHTML(string) { // this function converts interactiveKatex from tiptap to html image
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let katexes = wrapper.querySelectorAll('tiptap-interactive-katex-inline')
-        katexes.forEach(item => {
-          let interactiveKatex = item.attributes[0].nodeValue
-          if (interactiveKatex) {
-            interactiveKatex = '$' + item.attributes['katex'].nodeValue + '$'
-            var katexWrapper = document.createElement('div')
-            katexWrapper.setAttribute('katex', true)
-            katexWrapper.textContent = interactiveKatex
-            item.replaceWith(katexWrapper.textContent)
-          }
-        })
-        return wrapper.innerHTML
-      },
-
-      convertToTiptap(string) { //call this function when you want to convert pure HTML to tiptap format
-        string = this.convertHTMLKatexToInteractive(string)
-        string = this.convertHTMLReadingToInteractive(string)
-        string = this.convertHTMLImageToInlineInteractive(string)
-        string = this.convertHTMLImageToInteractive(string)
-        string = this.convertHTMLPoemToInteractive(string)
-        return string
-      },
-      convertHTMLPoemToInteractive(string) {
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let poemParent = wrapper.querySelectorAll('.beit')
-        poemParent.forEach((item, index) => {
-          // let poemHTML = '<ol><li><table class="poem"><tr class="beit">' +
-          //     '<td class="mesra1">' + item.childNodes[0].innerHTML + '</td><td class="mesra2">' + item.childNodes[1].innerHTML + '</td>' +
-          //     '</tr></table></li></ol>'
-          this.poems.push({ poem1: item.childNodes[0].innerHTML, poem2: item.childNodes[1].innerHTML, index: string.indexOf(item.outerHTML) - 5 })
-          // let poemHTML = '<ol><li><table class="poem"><tr class="beit">' +
-          //     '<td class="mesra1">' + item.childNodes[0].innerHTML + '</td><td class="mesra2">' + item.childNodes[1].innerHTML + '</td>' +
-          //     '</tr></table></li></ol>'
-          // var poemWrapper = document.createElement('div')
-          // poemWrapper.innerHTML = poemHTML
-          item.parentElement.replaceWith('poem' + index)
-        })
-        return wrapper.innerHTML
-      },
-      convertHTMLReadingToInteractive(string) {
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let poemParent = wrapper.querySelectorAll('.reading-duplicate')
-        poemParent.forEach(item => {
-          let poemHTML =
-                  '<tiptap-interactive-reading>' + item.innerHTML + '</tiptap-interactive-reading>'
-          var poemWrapper = document.createElement('div')
-          poemWrapper.innerHTML = poemHTML
-          item.parentElement.replaceWith(poemWrapper)
-        })
-        return wrapper.innerHTML
-      },
-      convertHTMLImageToInteractive(string) {
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let imagesParent = wrapper.querySelectorAll('img')
-        imagesParent.forEach(item => {
-          let imageHTML = item.attributes[0].nodeValue
-          if (imageHTML) {
-            let justify = 'center'
-            if (item.parentElement.style.display === 'flex') {
-              if (item.parentElement.style.justifyContent === 'flex-start') {
-                justify = 'right'
-              } else if (item.parentElement.style.justifyContent === 'center') {
-                justify = 'center'
-              } else if (item.parentElement.style.justifyContent === 'flex-end') {
-                justify = 'left'
-              }
-            }
-            imageHTML =
-                    '<tiptap-interactive-image-upload-inline' +
-                    ' url="' + item.attributes['src'].nodeValue + '" ' +
-                    'width="' + item.attributes['width'].nodeValue + '" ' +
-                    'height="' + item.attributes['height'].nodeValue + '" ' +
-                    'justify="' + justify + '"' +
-                    '></tiptap-interactive-image-upload-inline>'
-            var imageWrapper = document.createElement('div')
-            imageWrapper.innerHTML = imageHTML
-            if (item.parentElement.style.display === 'flex') {
-              item.parentElement.replaceWith(imageWrapper)
-            } else {
-              item.replaceWith(imageWrapper)
-            }
-          }
-        })
-        return wrapper.innerHTML
-      },
-      convertHTMLImageToInlineInteractive(string) {
-        var wrapper = document.createElement('div')
-        wrapper.innerHTML = string
-        let imagesParent = wrapper.querySelectorAll('span img')
-        imagesParent.forEach(item => {
-          let imageHTML = item.attributes[0].nodeValue
-          if (imageHTML) {
-            let marginBottom = 0
-            if (item.style.marginBottom) {
-              marginBottom = item.style.marginBottom.slice(0, -2)
-            }
-            imageHTML =
-                    '<tiptap-interactive-image-upload-inline' +
-                    ' url="' + item.attributes['src'].nodeValue + '" ' +
-                    'width="' + item.attributes['width'].nodeValue + '" ' +
-                    'height="' + item.attributes['height'].nodeValue + '" ' +
-                    'vertical="' + marginBottom + '" ' +
-                    'justify="center"' +
-                    '></tiptap-interactive-image-upload-inline>'
-            var imageWrapper = document.createElement('span')
-            imageWrapper.innerHTML = imageHTML
-            item.parentElement.replaceWith(imageWrapper)
-          }
-        })
-        return wrapper.innerHTML
-      },
-      convertHTMLKatexToInteractive(string) {
-        // var wrapper = document.createElement('div')
-        // wrapper.innerHTML = string
-        // let katexes = wrapper.querySelectorAll('div[katex="true"]')
-        // katexes.forEach(item => {
-        //   let katexHTML = '<tiptap-interactive-katex katex="' + item.innerHTML.slice(1, -1) + '"></tiptap-interactive-katex>'
-        //
-        //   var doc = new DOMParser().parseFromString(katexHTML, "text/xml");
-        //   item.replaceWith(doc.firstChild)
-        // })
-
-        string = string.replaceAll('\\[ ', '\\[')
-        string = string.replaceAll(' \\]', ' \\]')
-
-        let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gm;        string = string.replace(regex, (match) => {
-          console.log(match)
-          let finalMatch
-          if (match.includes('$$')) {
-            finalMatch = match.slice(2, -2)
-          } else if (match.includes('$')) {
-            finalMatch = match.slice(1, -1)
-          } else {
-            finalMatch = match.slice(2, -2)
-          }
-          return '<tiptap-interactive-katex-inline katex="' + finalMatch + '"></tiptap-interactive-katex-inline>'
-        })
-        return string
-      },
-
-      // focusHandler() {
-      //   console.log('focusHandler -> this.editor.view', this.editor.view)
-      //   // we use `setTimeout` to make sure `selection` is already updated
-      //   setTimeout(() => this.update(this.editor.view))
-      // },
-      // blurHandler(data) {
-      //   console.log('blurHandler -> data', data)
-      //   // if (this.preventHide) {
-      //   //   this.preventHide = false
-      //   //
-      //   //   return
-      //   // }
-      //   //
-      //   // if (
-      //   //         event?.relatedTarget
-      //   //         && this.element.parentNode?.contains(event.relatedTarget as Node)
-      //   // ) {
-      //   //   return
-      //   // }
-      //   //
-      //   // this.hide()
-      // },
-      // update(view, oldState) {
-      //   const {state, composing} = view
-      //   const {doc, selection} = state
-      //   const isSame = oldState && oldState.doc.eq(doc) && oldState.selection.eq(selection)
-      //   if (composing || isSame)
-      //   {
-      //     return
-      //   }
-      //   const {empty, $anchor, ranges} = selection
-      //   // support for CellSelections
-      //   const from = Math.min(...ranges.map(range => range.$from.pos))
-      //   const to = Math.max(...ranges.map(range => range.$to.pos))
-      //
-      //   console.log('report : ', {from, to, empty, $anchor, ranges})
-      //   console.log('report222 : ', posToDOMRect(view, from, to))
-      //   // Sometime check for `empty` is not enough.
-      //   // Doubleclick an empty paragraph returns a node size of 2.
-      //   // So we check also for an empty text size.
-      //   // if (empty || !$anchor.parent.textContent)
-      //   // {
-      //   //   this.hide()
-      //   //   return
-      //   // }
-      //   // this.tippy.setProps({
-      //   //   getReferenceClientRect: () => posToDOMRect(view, from, to),
-      //   // })
-      //   // this.show()
-      // }
     },
   }
 </script>
