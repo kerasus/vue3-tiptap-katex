@@ -62,8 +62,6 @@
   import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline';
   import TiptapInteractivePoem from './components/poem/extension';
   import TiptapInteractiveReading from './components/reading/extension';
-
-
   import StarterKit from '@tiptap/starter-kit'
   import Table from '@tiptap/extension-table'
   import TableRow from '@tiptap/extension-table-row'
@@ -90,7 +88,6 @@
 
   import mixinConvertToHTML from './mixins/convertToHTML';
   import mixinConvertToTiptap from './mixins/convertToTiptap';
-
   // import {EditorView} from "prosemirror-view";
   // import {EditorState} from "prosemirror-state";
   // import {posToDOMRect} from "@tiptap/core";
@@ -163,11 +160,6 @@
           Heading,
           Document,
           Text,
-          // Document.extend({
-          //   content: 'paper',
-          // }),
-          // Text,
-          // Paper,
           Table.configure({
             resizable: true,
           }),
