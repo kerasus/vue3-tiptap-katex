@@ -77,6 +77,8 @@
   import Document from '@tiptap/extension-document'
   import Heading from '@tiptap/extension-heading'
   import ImageAlign from './extension/ImageAlign/ImageAlign'
+  import AutoDir from './extension/AutoDir/AutoDir';
+  import ThinSpace from './extension/ThinSpace/ThinSpace';
   // import Paper from './Drawing/Paper.js'
 
   import {
@@ -86,45 +88,8 @@
     FloatingMenu
   } from '@tiptap/vue-2'
 
-  import {Extension} from '@tiptap/core'
   import mixinConvertToHTML from './mixins/convertToHTML';
   import mixinConvertToTiptap from './mixins/convertToTiptap';
-
-  const AutoDir = Extension.create({
-    addGlobalAttributes() {
-      return [
-        {
-          types: [
-            'heading',
-            'paragraph',
-            'bulletList',
-            'orderedList',
-          ],
-          attributes: {
-            autoDir: {
-              renderHTML: () => ({
-                dir: 'auto',
-              }),
-              parseHTML: element => ({
-                autoDir: element.dir.autoDir || 'auto',
-              }),
-            },
-          },
-        },
-      ]
-    },
-  })
-
-  const HalfSpace = Extension.create({
-    addKeyboardShortcuts() {
-      return {
-        // ↓ your new keyboard shortcut
-        // eslint-disable-next-line vue/no-parsing-error
-        'Mod-Shift-Space': () => this.editor.chain().focus().insertContent('').run(),
-      }
-    },
-  })
-
 
   // import {EditorView} from "prosemirror-view";
   // import {EditorState} from "prosemirror-state";
@@ -217,7 +182,7 @@
           TiptapInteractiveReading,
           AutoDir,
           ImageAlign,
-          HalfSpace
+          ThinSpace
         ],
         // triggered on every change
         onUpdate() {
