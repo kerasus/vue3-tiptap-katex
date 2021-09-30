@@ -263,6 +263,40 @@
 
     <div class="vl mx-3" />
 
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          small
+          tile
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click="editor.chain().focus().setTextDirection('rtl').run()"
+        >
+          <v-icon>mdi-format-textdirection-r-to-l</v-icon>
+        </v-btn>
+      </template>
+      <span>Text rtl</span>
+    </v-tooltip>
+
+    <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          small
+          tile
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click="editor.chain().focus().setTextDirection('ltr').run()"
+        >
+          <v-icon>mdi-format-textdirection-l-to-r</v-icon>
+        </v-btn>
+      </template>
+      <span>Text ltr</span>
+    </v-tooltip>
+
+    <div class="vl mx-3" />
+
 
     <v-tooltip top>
       <template v-slot:activator="{ on, attrs }">
@@ -651,8 +685,8 @@
           v-on="on"
           @click="insertPoem"
         >
-<!--          @click="editor.chain().focus().insertContent('<tiptap-interactive-poem></tiptap-interactive-poem>').run()"            -->
-<!--          <tiptap-interactive-poem><table><tr><td>test1</td><td>test2</td></tr></table></tiptap-interactive-poem>          -->
+          <!--          @click="editor.chain().focus().insertContent('<tiptap-interactive-poem></tiptap-interactive-poem>').run()"            -->
+          <!--          <tiptap-interactive-poem><table><tr><td>test1</td><td>test2</td></tr></table></tiptap-interactive-poem>          -->
           <v-icon>mdi-format-columns</v-icon>
         </v-btn>
       </template>
