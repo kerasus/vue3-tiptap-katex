@@ -443,6 +443,14 @@ export default {
                 class: 'keycap tex',
                 insert: '$$\\boxed{#@}$$',
               },
+              {
+                class: 'keycap tex',
+                insert: '$$\\equiv$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$^{\\prime \\prime}$$',
+              },
             ]
           ]
         },

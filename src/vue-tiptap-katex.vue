@@ -68,6 +68,7 @@
   import TableCell from '@tiptap/extension-table-cell'
   import TableHeader from '@tiptap/extension-table-header'
   import TextAlign from '@tiptap/extension-text-align'
+  import TextDirection from 'tiptap-text-direction-extension';
   import Highlight from '@tiptap/extension-highlight'
   import Underline from '@tiptap/extension-underline'
   import Paragraph from '@tiptap/extension-paragraph'
@@ -75,7 +76,7 @@
   import Document from '@tiptap/extension-document'
   import Heading from '@tiptap/extension-heading'
   import ImageAlign from './extension/ImageAlign/ImageAlign'
-  import AutoDir from './extension/AutoDir/AutoDir';
+  // import Focus from '@tiptap/extension-focus'
   import ThinSpace from './extension/ThinSpace/ThinSpace';
   // import Paper from './Drawing/Paper.js'
 
@@ -143,6 +144,7 @@
       }
     },
     mounted() {
+      console.log('ine', TextAlign)
       this.editor = new Editor({
         content: this.value,
         parseOptions: {
@@ -154,9 +156,12 @@
             types: ['heading', 'paragraph', 'TiptapInteractiveImageUpload', 'TiptapInteractiveReading'],
             defaultAlignment: ''
           }),
+          TextDirection,
           Highlight,
           Underline,
-          Paragraph,
+          Paragraph.configure({
+            HTMLAttributes: { dir: 'auto' },
+          }),
           Heading,
           Document,
           Text,
@@ -172,8 +177,11 @@
           TiptapInteractiveImageUploadInline,
           TiptapInteractivePoem,
           TiptapInteractiveReading,
-          AutoDir,
           ImageAlign,
+          // Focus.configure({
+          //   className: 'has-focus',
+          //   mode: 'all',
+          // }),
           ThinSpace
         ],
         // triggered on every change
