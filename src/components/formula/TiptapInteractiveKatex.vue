@@ -362,6 +362,18 @@ export default {
                 class: 'keycap tex',
                 insert: '$$\\xcancel{#@}$$',
               },
+              {
+                class: 'keycap tex',
+                insert: '$$\\nparallel$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\parallel$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\bot$$',
+              },
             ],
             [
               {
@@ -409,6 +421,10 @@ export default {
               {
                 class: 'keycap tex',
                 insert: '$$\\xLeftrightarrow{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\bar{#@}$$',
               },
             ],
             [
