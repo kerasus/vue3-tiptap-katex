@@ -1,6 +1,6 @@
 {
   "name": "vue-tiptap-katex",
-  "version": "2.2.22",
+  "version": "2.2.23",
   "description": "tiptap editor with katex in vue",
   "main": "index.js",
   "keywords": [
