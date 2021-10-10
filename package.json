@@ -55,7 +55,7 @@
     "postcss-loader": "^4.2.0",
     "sass-loader": "^10.1.1",
     "tiptap-extensions": "^1.35.2",
-    "tiptap-text-direction-extension": "^1.0.1",
+    "tiptap-text-direction-extension": "^1.0.2",
     "turndown": "^7.0.0",
     "vue": "^2.6.11",
     "vue-drag-resize": "^1.5.4",
