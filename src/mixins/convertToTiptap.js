@@ -140,6 +140,8 @@ const mixinConvertToTiptap = {
         convertHTMLKatexToInteractive(string) {
             string = string.replaceAll('\\[ ', '\\[')
             string = string.replaceAll(' \\]', ' \\]')
+            string = string.replaceAll(' $', '$')
+            string = string.replaceAll('$ ', '$')
 
             let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gms;
             string = string.replace(regex, (match) => {
