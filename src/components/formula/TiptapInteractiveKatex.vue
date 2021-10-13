@@ -138,7 +138,7 @@ export default {
             },
           });
       const EXTRA_KEYBOARD_LAYER = {
-        'extra-keyboard-layer': {
+        'others-keyboard-layer': {
           styles: '',
           rows: [
             [
@@ -383,6 +383,10 @@ export default {
               {
                 class: 'keycap tex',
                 insert: '$$\\xrightarrow{#@}$$',
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\xrightarrow[under]{#@}$$',
               },
               {
                 class: 'keycap tex',
@@ -864,24 +868,97 @@ export default {
               },
             ],
           ]
-        }
+        },
+        'extra-keyboard-layer': {
+          styles: '',
+          rows: [
+            [
+              {
+                class: 'keycap tex',
+                insert: '$$\\overgroup{#@}$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\lgroup$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\rgroup$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\%$$'
+              },
+              {class: 'separator w5'},
+              {
+                class: 'keycap  w30',
+                insert: '$$\\begin{rcases} a &\\text{if } b \\\\ c &\\text{if } d \\end{rcases}$$'
+              },
+              {
+                class: 'keycap  w30',
+                insert: '$$\\begin{alignat}{2}10x+ 3y = 2 \\\\3x+13y = 4\\end{alignat}$$'
+              },
+              {class: 'separator w5'},
+              {
+                class: 'keycap tex',
+                insert: '$${n \\choose k}$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$${n\\brace k}$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$${n\\brack k}$$'
+              },
+              {class: 'separator w5'},
+              {
+                class: 'keycap tex',
+                insert: '$$\\thicksim$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\cong$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\checkmark$$'
+              },
+            ],
+            [
+              {
+                class: 'keycap tex',
+                insert: '$$\\Biggm$$'
+              },
+              {
+                class: 'keycap tex',
+                insert: '$$\\overbrace{#@}^{text}$$'
+              }
+            ]
+          ]
+        },
       };
       const EXTRA_KEYBOARD = {
-        'extra-keyboard': {
+        'others-keyboard': {
           'label': 'Others', // Label displayed in the Virtual Keyboard Switcher
           'tooltip': 'High School Level', // Tooltip when hovering over the label
-          'layer': 'extra-keyboard-layer'
+          'layer': 'others-keyboard-layer'
         },
         'matrix-keyboard': {
           'label': 'Matrix', // Label displayed in the Virtual Keyboard Switcher
           'tooltip': 'Matrix Keyboard', // Tooltip when hovering over the label
           'layer': 'matrix-keyboard-layer'
+        },
+        'extra-keyboard': {
+          'label': 'Extra',
+          'tooltip': '',
+          'layer': 'extra-keyboard-layer'
         }
       };
       mf.setOptions({
         'customVirtualKeyboardLayers': EXTRA_KEYBOARD_LAYER,
         'customVirtualKeyboards': EXTRA_KEYBOARD,
-        'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard extra-keyboard',
+        'virtualKeyboards': 'numeric functions symbols roman  greek matrix-keyboard others-keyboard extra-keyboard',
         mathModeSpace: '\\:'
       });
       // console.log(mf.getOption())
