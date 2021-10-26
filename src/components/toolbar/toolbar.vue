@@ -761,7 +761,11 @@
       },
       options: {
         type: Object,
-        default: () => {}
+        default: () => {
+          return {
+            poem: false
+          }
+        }
       }
     },
     computed: {
@@ -876,7 +880,6 @@
 
         let regex = /((\\\[((?! ).){1}((?!\$).)*?((?! ).){1}\\\])|(\$((?! ).){1}((?!\$).)*?((?! ).){1}\$))/gms;
         string = string.replace(regex, (match) => {
-          console.log(match)
           let finalMatch
           if (match.includes('$$')) {
             finalMatch = match.slice(2, -2)

@@ -22,6 +22,7 @@
       >
         <slot name="toolbar">
           <toolbar
+            v-if="editorOptions"
             :editor="editor"
             :access-token="accessToken"
             :upload-url="uploadUrl"
@@ -31,7 +32,7 @@
       </v-card-title>
       <v-card-text class="pa-0">
         <bubble-menu
-          v-if="editorOptions.bubbleMenu"
+          v-if="editorOptions && editorOptions.bubbleMenu"
           class="bubble-menu"
           :tippy-options="{ duration: 100, showOnCreate: false }"
           :editor="editor"
@@ -39,7 +40,7 @@
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-          v-if="editorOptions.floatingMenu"
+          v-if="editorOptions && editorOptions.floatingMenu"
           class="floating-menu"
           :tippy-options="{ duration: 100 }"
           :editor="editor"
@@ -144,7 +145,6 @@
       }
     },
     mounted() {
-      console.log('ine', TextAlign)
       this.editor = new Editor({
         content: this.value,
         parseOptions: {
