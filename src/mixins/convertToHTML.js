@@ -6,7 +6,22 @@ const mixinConvertToHTML = {
             string = this.convertInteractiveImagesToHTML(string)
             string = this.convertInteractiveIKatexToHTML(string)
             string = this.convertInteractiveReadingToHTML(string)
+            string = this.tableColWidthStyle(string)
+
             return string
+        },
+        tableColWidthStyle (string) {
+            var wrapper = document.createElement('div')
+            wrapper.innerHTML = string
+            let tableCellsWithColWidth = wrapper.querySelectorAll('table tr td[colwidth]')
+            tableCellsWithColWidth.forEach(cell => {
+                const colwidth = cell.attributes.getNamedItem( 'colwidth')
+                if (colwidth) {
+                    cell.style.width = colwidth.nodeValue + 'px'
+                }
+            })
+
+            return wrapper.innerHTML
         },
         convertInteractiveReadingToHTML(string) {
             var wrapper = document.createElement('div')

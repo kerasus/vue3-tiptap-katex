@@ -1,49 +1,49 @@
 <template>
   <div :class="{ 'tiptap-plus-container': true }">
     <v-overlay
-      v-if="loading"
-      absolute
-      :value="loading"
-      opacity="0.5"
+        v-if="loading"
+        absolute
+        :value="loading"
+        opacity="0.5"
     />
     <v-progress-circular
-      v-if="loading"
-      :size="50"
-      color="#fff"
-      indeterminate
+        v-if="loading"
+        :size="50"
+        color="#fff"
+        indeterminate
     />
     <v-card
-      elevation="3"
-      class="tiptap-plus"
+        elevation="3"
+        class="tiptap-plus"
     >
       <v-card-title
-        v-if="editor"
-        class="tiptap-header"
+          v-if="editor"
+          class="tiptap-header"
       >
         <slot name="toolbar">
           <toolbar
-            v-if="editorOptions"
-            :editor="editor"
-            :access-token="accessToken"
-            :upload-url="uploadUrl"
-            :options="editorOptions"
+              v-if="editorOptions"
+              :editor="editor"
+              :access-token="accessToken"
+              :upload-url="uploadUrl"
+              :options="editorOptions"
           />
         </slot>
       </v-card-title>
       <v-card-text class="pa-0">
         <bubble-menu
-          v-if="editorOptions && editorOptions.bubbleMenu"
-          class="bubble-menu"
-          :tippy-options="{ duration: 100, showOnCreate: false }"
-          :editor="editor"
+            v-if="editorOptions && editorOptions.bubbleMenu"
+            class="bubble-menu"
+            :tippy-options="{ duration: 100, showOnCreate: false }"
+            :editor="editor"
         >
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-          v-if="editorOptions && editorOptions.floatingMenu"
-          class="floating-menu"
-          :tippy-options="{ duration: 100 }"
-          :editor="editor"
+            v-if="editorOptions && editorOptions.floatingMenu"
+            class="floating-menu"
+            :tippy-options="{ duration: 100 }"
+            :editor="editor"
         >
           <slot-floating-menu :editor="editor" />
         </floating-menu>
@@ -54,162 +54,163 @@
 </template>
 
 <script>
-  import toolbar from './components/toolbar/toolbar'
-  import SlotBubbleMenu from './components/SlotBubbleMenu'
-  import SlotFloatingMenu from './components/SlotFloatingMenu'
-  import TiptapInteractiveKatex from './components/formula/extention'
-  import TiptapInteractiveKatexInline from './components/formula/entensionInline'
-  import TiptapInteractiveImageUpload from './components/ImageUpload/extension';
-  import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline';
-  import TiptapInteractivePoem from './components/poem/extension';
-  import TiptapInteractiveReading from './components/reading/extension';
-  import StarterKit from '@tiptap/starter-kit'
-  import Table from '@tiptap/extension-table'
-  import TableRow from '@tiptap/extension-table-row'
-  import TableCell from '@tiptap/extension-table-cell'
-  import TableHeader from '@tiptap/extension-table-header'
-  import TextAlign from '@tiptap/extension-text-align'
-  import TextDirection from 'tiptap-text-direction-extension';
-  import Highlight from '@tiptap/extension-highlight'
-  import Underline from '@tiptap/extension-underline'
-  import Paragraph from '@tiptap/extension-paragraph'
-  import Text from '@tiptap/extension-text'
-  import Document from '@tiptap/extension-document'
-  import Heading from '@tiptap/extension-heading'
-  import ImageAlign from './extension/ImageAlign/ImageAlign'
-  // import Focus from '@tiptap/extension-focus'
-  import ThinSpace from './extension/ThinSpace/ThinSpace';
-  // import Paper from './Drawing/Paper.js'
+import toolbar from './components/toolbar/toolbar'
+import SlotBubbleMenu from './components/SlotBubbleMenu'
+import SlotFloatingMenu from './components/SlotFloatingMenu'
+import TiptapInteractiveKatex from './components/formula/extention'
+import TiptapInteractiveKatexInline from './components/formula/entensionInline'
+import TiptapInteractiveImageUpload from './components/ImageUpload/extension';
+import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline';
+import TiptapInteractivePoem from './components/poem/extension';
+import TiptapInteractiveReading from './components/reading/extension';
+import StarterKit from '@tiptap/starter-kit'
+import Table from '@tiptap/extension-table'
+import TableRow from '@tiptap/extension-table-row'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TextAlign from '@tiptap/extension-text-align'
+import TextDirection from 'tiptap-text-direction-extension';
+import Highlight from '@tiptap/extension-highlight'
+import Underline from '@tiptap/extension-underline'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import Document from '@tiptap/extension-document'
+import Heading from '@tiptap/extension-heading'
+import ImageAlign from './extension/ImageAlign/ImageAlign'
+// import Focus from '@tiptap/extension-focus'
+import ThinSpace from './extension/ThinSpace/ThinSpace';
+// import Paper from './Drawing/Paper.js'
 
-  import {
-    Editor,
+import {
+  Editor,
+  EditorContent,
+  BubbleMenu,
+  FloatingMenu
+} from '@tiptap/vue-2'
+
+import mixinConvertToHTML from './mixins/convertToHTML';
+import mixinConvertToTiptap from './mixins/convertToTiptap';
+// import {EditorView} from "prosemirror-view";
+// import {EditorState} from "prosemirror-state";
+// import {posToDOMRect} from "@tiptap/core";
+
+export default {
+  name: 'VueTiptapKatex',
+  mixins: [mixinConvertToHTML, mixinConvertToTiptap],
+  components: {
     EditorContent,
     BubbleMenu,
-    FloatingMenu
-  } from '@tiptap/vue-2'
-
-  import mixinConvertToHTML from './mixins/convertToHTML';
-  import mixinConvertToTiptap from './mixins/convertToTiptap';
-  // import {EditorView} from "prosemirror-view";
-  // import {EditorState} from "prosemirror-state";
-  // import {posToDOMRect} from "@tiptap/core";
-
-  export default {
-    name: 'VueTiptapKatex',
-    mixins: [mixinConvertToHTML, mixinConvertToTiptap],
-    components: {
-      EditorContent,
-      BubbleMenu,
-      FloatingMenu,
-      toolbar,
-      SlotBubbleMenu,
-      SlotFloatingMenu
+    FloatingMenu,
+    toolbar,
+    SlotBubbleMenu,
+    SlotFloatingMenu
+  },
+  props: {
+    accessToken: {
+      type: String,
+      default: ''
     },
-    props: {
-      accessToken: {
-        type: String,
-        default: ''
+    uploadUrl: {
+      type: String,
+      default: ''
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    options: {
+      type: Object,
+      required: false,
+      default () {
+        return {}
+      }
+    }
+  },
+  data() {
+    return {
+      editor: null
+    }
+  },
+  computed: {
+    editorOptions () {
+      const options = {
+        bubbleMenu: true,
+        floatingMenu: true,
+        poem: false,
+        reading: false
+      }
+      Object.assign(options, this.options)
+      return options
+    }
+  },
+  mounted() {
+    this.editor = new Editor({
+      editable: true,
+      content: this.value,
+      parseOptions: {
+        preserveWhitespace: true
       },
-      uploadUrl: {
-        type: String,
-        default: ''
+      extensions: [
+        StarterKit,
+        TextAlign.configure({
+          types: ['heading', 'paragraph', 'TiptapInteractiveImageUpload', 'TiptapInteractiveReading'],
+          defaultAlignment: ''
+        }),
+        TextDirection,
+        Highlight,
+        Underline,
+        Paragraph.configure({
+          HTMLAttributes: { dir: 'auto' },
+        }),
+        Heading,
+        Document,
+        Text,
+        Table.configure({
+          resizable: true,
+        }),
+        TableRow,
+        TableHeader,
+        TableCell,
+        TiptapInteractiveKatex,
+        TiptapInteractiveKatexInline,
+        TiptapInteractiveImageUpload,
+        TiptapInteractiveImageUploadInline,
+        TiptapInteractivePoem,
+        TiptapInteractiveReading,
+        ImageAlign,
+        // Focus.configure({
+        //   className: 'has-focus',
+        //   mode: 'all',
+        // }),
+        ThinSpace
+      ],
+      // triggered on every change
+      onUpdate() {
       },
-      loading: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      options: {
-        type: Object,
-        required: false,
-        default () {
-          return {}
-        }
+    })
+  },
+  beforeDestroy() {
+    this.editor.destroy()
+  },
+  methods: {
+    setContent(pureHTML) {
+      let string = this.convertToTiptap(pureHTML)
+      if (string.length) {
+        this.editor.commands.setContent(string)
+        this.poems.forEach((poem, index) => {
+          let poemString = '<ol><li><table class="poem"><tr class="beit">' +
+              '<td class="mesra1">' + poem.poem1 + '</td><td class="mesra2">' + poem.poem2 + '</td>' +
+              '</tr></table></li></ol>'
+          this.insertPoem(this.editor, poemString, index)
+        })
       }
     },
-    data() {
-      return {
-        editor: null,
-      }
+    getContent() {
+      return this.convertToPureHTML(this.editor.getHTML())
     },
-    computed: {
-      editorOptions () {
-        const options = {
-          bubbleMenu: true,
-          floatingMenu: true,
-          poem: false,
-          reading: false
-        }
-        Object.assign(options, this.options)
-        return options
-      }
-    },
-    mounted() {
-      this.editor = new Editor({
-        content: this.value,
-        parseOptions: {
-          preserveWhitespace: true
-        },
-        extensions: [
-          StarterKit,
-          TextAlign.configure({
-            types: ['heading', 'paragraph', 'TiptapInteractiveImageUpload', 'TiptapInteractiveReading'],
-            defaultAlignment: ''
-          }),
-          TextDirection,
-          Highlight,
-          Underline,
-          Paragraph.configure({
-            HTMLAttributes: { dir: 'auto' },
-          }),
-          Heading,
-          Document,
-          Text,
-          Table.configure({
-            resizable: true,
-          }),
-          TableRow,
-          TableHeader,
-          TableCell,
-          TiptapInteractiveKatex,
-          TiptapInteractiveKatexInline,
-          TiptapInteractiveImageUpload,
-          TiptapInteractiveImageUploadInline,
-          TiptapInteractivePoem,
-          TiptapInteractiveReading,
-          ImageAlign,
-          // Focus.configure({
-          //   className: 'has-focus',
-          //   mode: 'all',
-          // }),
-          ThinSpace
-        ],
-        // triggered on every change
-        onUpdate() {
-        },
-      })
-    },
-    beforeDestroy() {
-      this.editor.destroy()
-    },
-    methods: {
-      setContent(pureHTML) {
-        let string = this.convertToTiptap(pureHTML)
-        if (string.length) {
-          this.editor.commands.setContent(string)
-          this.poems.forEach((poem, index) => {
-            let poemString = '<ol><li><table class="poem"><tr class="beit">' +
-                '<td class="mesra1">' + poem.poem1 + '</td><td class="mesra2">' + poem.poem2 + '</td>' +
-                '</tr></table></li></ol>'
-            this.insertPoem(this.editor, poemString, index)
-          })
-        }
-      },
-      getContent() {
-        return this.convertToPureHTML(this.editor.getHTML())
-      },
-    },
-  }
+  },
+}
 </script>
 
 <style>
@@ -237,158 +238,158 @@
   white-space: nowrap;
 }
 
-  .ProseMirror {
-    outline: none;
-    padding: 20px;
-  }
+.ProseMirror {
+  outline: none;
+  padding: 20px;
+}
 
-  .tiptap-plus-container .v-card__title {
-    border-bottom: solid 1px #dedede;
-  }
+.tiptap-plus-container .v-card__title {
+  border-bottom: solid 1px #dedede;
+}
 
-  .tiptap-plus-container {
-    width: 100%;
-    margin: 0;
-    border-radius: 10px;
-    position: relative;
-  }
+.tiptap-plus-container {
+  width: 100%;
+  margin: 0;
+  border-radius: 10px;
+  position: relative;
+}
 
-  .tiptap-plus-container .v-progress-circular {
-    position: absolute;
-    z-index: 10;
-    left: calc(50% - 25px);
-    top: calc(50% - 25px);
-  }
+.tiptap-plus-container .v-progress-circular {
+  position: absolute;
+  z-index: 10;
+  left: calc(50% - 25px);
+  top: calc(50% - 25px);
+}
 
-  .tiptap-plus .tiptap-header {
-    background-color: #e9ecf4;
-    padding: 8px;
-  }
+.tiptap-plus .tiptap-header {
+  background-color: #e9ecf4;
+  padding: 8px;
+}
 </style>
 
 <style lang="scss">
-  /* Basic editor styles */
-  .ProseMirror {
-    /*white-space: normal !important;*/
+/* Basic editor styles */
+.ProseMirror {
+  /*white-space: normal !important;*/
 
-    > * + * {
-      margin-top: 0.75em;
-    }
+  > * + * {
+    margin-top: 0.75em;
+  }
 
-    ul,
-    ol {
-      padding: 0 1rem;
-    }
+  ul,
+  ol {
+    padding: 0 1rem;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      line-height: 1.1;
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #0D0D0D;
+    color: #FFF;
+    font-family: 'JetBrainsMono', monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
 
     code {
-      background-color: rgba(#616161, 0.1);
-      color: #616161;
-    }
-
-    pre {
-      background: #0D0D0D;
-      color: #FFF;
-      font-family: 'JetBrainsMono', monospace;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-
-      code {
-        color: inherit;
-        padding: 0;
-        background: none;
-        font-size: 0.8rem;
-      }
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    blockquote {
-      padding-left: 1rem;
-      border-left: 2px solid rgba(#0D0D0D, 0.1);
-    }
-
-    hr {
-      border: none;
-      border-top: 2px solid rgba(#0D0D0D, 0.1);
-      margin: 2rem 0;
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
     }
   }
 
-  /* Table-specific styling */
-  .ProseMirror {
-    table {
-      border-collapse: collapse;
-      table-layout: fixed;
-      width: 100%;
-      margin: 0;
-      overflow: hidden;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
-      td,
-      th {
-        min-width: 1em;
-        border: 2px solid #ced4da;
-        padding: 3px 5px;
-        vertical-align: top;
-        box-sizing: border-box;
-        position: relative;
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0D0D0D, 0.1);
+  }
 
-        > * {
-          margin-bottom: 0;
-        }
-      }
+  hr {
+    border: none;
+    border-top: 2px solid rgba(#0D0D0D, 0.1);
+    margin: 2rem 0;
+  }
+}
 
-      th {
-        font-weight: bold;
-        text-align: left;
-        background-color: #f1f3f5;
-      }
+/* Table-specific styling */
+.ProseMirror {
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
 
-      .selectedCell:after {
-        z-index: 2;
-        position: absolute;
-        content: "";
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: rgba(200, 200, 255, 0.4);
-        pointer-events: none;
-      }
+    td,
+    th {
+      min-width: 1em;
+      border: 2px solid #ced4da;
+      padding: 3px 5px;
+      vertical-align: top;
+      box-sizing: border-box;
+      position: relative;
 
-      .column-resize-handle {
-        position: absolute;
-        right: -2px;
-        top: 0;
-        bottom: -2px;
-        width: 4px;
-        background-color: #adf;
-        pointer-events: none;
+      > * {
+        margin-bottom: 0;
       }
     }
-  }
 
-  .tableWrapper {
-    overflow-x: auto;
+    th {
+      font-weight: bold;
+      text-align: left;
+      background-color: #f1f3f5;
+    }
 
-    table {
-      float: left;
+    .selectedCell:after {
+      z-index: 2;
+      position: absolute;
+      content: "";
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(200, 200, 255, 0.4);
+      pointer-events: none;
+    }
+
+    .column-resize-handle {
+      position: absolute;
+      right: -2px;
+      top: 0;
+      bottom: -2px;
+      width: 4px;
+      background-color: #adf;
+      pointer-events: none;
     }
   }
+}
 
-  .resize-cursor {
-    cursor: ew-resize;
-    cursor: col-resize;
+.tableWrapper {
+  overflow-x: auto;
+
+  table {
+    float: left;
   }
+}
+
+.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
 </style>
