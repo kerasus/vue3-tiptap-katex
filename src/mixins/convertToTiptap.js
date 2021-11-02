@@ -37,7 +37,8 @@ const mixinConvertToTiptap = {
                 }
             }
 
-            const { doc, tr } = state;
+
+            const { /*doc,*/ tr } = state;
             let trx = tr;
 
             trx = trx.insertText('',findIndex,findIndex + 5)

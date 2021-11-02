@@ -1,20 +1,7 @@
 <template>
-  <v-btn-toggle
-    v-model="bubbleMenuItems"
-    dense
-    background-color="primary"
-    dark
-    multiple
-  >
-    <v-btn
-      v-for="item in computedBubbleMenuItems"
-      :key="'DynamicTable_'+item.name"
-      :value="item.name"
-      @click="editor.chain().focus()[item.name]().run()"
-    >
-      <v-icon>{{ item.icon }}</v-icon>
-    </v-btn>
-  </v-btn-toggle>
+  <div>
+    DynamicTable
+  </div>
 <!--    <button @click="editor.chain().focus().mergeOrSplit().run()" :disabled="!editor.can().mergeOrSplit()">-->
 <!--        mergeOrSplit-->
 <!--    </button>-->

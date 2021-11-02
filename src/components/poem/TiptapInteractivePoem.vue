@@ -3,33 +3,19 @@
     class="vue-component"
     data-drag-handle
   >
-    <node-view-content as="table" class="content" dir="auto" ref="test" id="test"/>
-<!--    <v-row>-->
-<!--      <v-col :cols="6">-->
-<!--        <v-textarea-->
-<!--          v-model="poem1"-->
-<!--          outlined-->
-<!--          dense-->
-<!--          label="مصراع 1"-->
-<!--          @change="update"-->
-<!--        />-->
-<!--      </v-col>-->
-<!--      <v-col :cols="6">-->
-<!--        <v-text-field-->
-<!--          v-model="poem2"-->
-<!--          outlined-->
-<!--          dense-->
-<!--          label="مصراع 2"-->
-<!--          @change="update"-->
-<!--        />-->
-<!--      </v-col>-->
-<!--    </v-row>-->
+    <node-view-content
+      id="test"
+      ref="test"
+      as="table"
+      class="content"
+      dir="auto"
+    />
   </node-view-wrapper>
 </template>
 
 <script>
 
-import {NodeViewWrapper, NodeViewContent, nodeViewProps} from '@tiptap/vue-2'
+import {NodeViewWrapper, NodeViewContent, nodeViewProps} from '@tiptap/vue-3'
 export default {
   name: 'TiptapInteractivePoem',
   components: {

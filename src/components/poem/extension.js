@@ -1,5 +1,5 @@
 import { Node, mergeAttributes } from '@tiptap/core'
-import { VueNodeViewRenderer } from '@tiptap/vue-2'
+import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import TiptapInteractivePoem from './TiptapInteractivePoem';
 
 export default Node.create({

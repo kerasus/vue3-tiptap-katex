@@ -1,10 +1,6 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import Test from './test'
-import vuetify from './plugins/vuetify' // path to vuetify export
 
-Vue.config.productionTip = false
+export const eventBus = createApp(Test)
 
-new Vue({
-  vuetify,
-  render: h => h(Test),
-}).$mount('#app')
+createApp(Test).mount('#app')

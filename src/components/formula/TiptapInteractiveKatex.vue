@@ -3,60 +3,27 @@
     :class="{ 'vue-component': true, 'inline': node.attrs.inline }"
     data-drag-handle
   >
-    <div
-      v-if="editMode"
-      id="mathfield"
-      ref="mathfield"
-      dir="ltr"
-      locale="fa"
-      :class="{ 'editable': editMode }"
-    >
-      {{ katex }}
-    </div>
-    <div
-      v-if="!editMode"
-      v-katex:auto
-      class="converted"
-      dir="ltr"
-      @click="editMode = true"
-      v-html="computedKatex"
-    />
-    <v-btn
-      v-if="!editMode"
-      icon
-      color="blue"
-      @click="editMode = true"
-    >
-      <v-icon>mdi-pencil</v-icon>
-    </v-btn>
-    <v-btn
-      v-if="editMode"
-      icon
-      color="green"
-      @click="toggleEdit"
-    >
-      <v-icon>mdi-check</v-icon>
-    </v-btn>
+    TiptapInteractiveKatex
   </node-view-wrapper>
 </template>
 
 <script>
-import Vue from 'vue'
-import VueKatex from 'vue-katex'
-import 'katex/dist/katex.min.css'
+// import Vue from 'vue'
+// import VueKatex from 'vue-katex'
+// import 'katex/dist/katex.min.css'
+//
+// Vue.use(VueKatex, {
+//   globalOptions: {
+//     delimiters: [
+//       {left: '$$', right: '$$', display: true},
+//       {left: '\\[', right: '\\]', display: true},
+//       {left: '$', right: '$', display: false},
+//       {left: '\\(', right: '\\)', display: false}
+//     ]
+//   }
+// });
 
-Vue.use(VueKatex, {
-  globalOptions: {
-    delimiters: [
-      {left: '$$', right: '$$', display: true},
-      {left: '\\[', right: '\\]', display: true},
-      {left: '$', right: '$', display: false},
-      {left: '\\(', right: '\\)', display: false}
-    ]
-  }
-});
-
-import {NodeViewWrapper, nodeViewProps} from '@tiptap/vue-2'
+import {NodeViewWrapper, nodeViewProps} from '@tiptap/vue-3'
 import 'mathlive/dist/mathlive-fonts.css'
 import 'mathlive/dist/mathlive-static.css'
 import '@mdi/font/css/materialdesignicons.css'
