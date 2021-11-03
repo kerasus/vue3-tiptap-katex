@@ -15,7 +15,7 @@ const mixinConvertToTiptap = {
             return element
         },
         insertPoem({ state, view }, value, index) {
-            const { selection } = state
+            // const { selection } = state
             const element = this.elementFromString(value)
             const slice = DOMParser.fromSchema(state.schema).parseSlice(element)
 

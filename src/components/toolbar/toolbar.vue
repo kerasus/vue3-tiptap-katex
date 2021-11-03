@@ -1,9 +1,15 @@
 <template>
   <div
     v-if="editor"
-    class=""
+    class="tiptap-toolbar"
   >
-    toolbar
+<!--    https://github.com/Akryum/v-tooltip        tooltip package ToDo-->
+    <ul>
+      <li><div>Button</div></li>
+      <li><div>Button</div></li>
+      <li><div>Button</div></li>
+      <li><div>Button</div></li>
+    </ul>
   </div>
 </template>
 
@@ -190,7 +196,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .vl {
   border-left: 1px dotted gray;
@@ -212,4 +218,32 @@
     .formula-menu .v-list {
       padding: 0;
     }
+.tiptap-toolbar {
+  ul {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline-block;
+      div {
+        color: rgba(0,0,0,.54);
+        display: block;
+        line-height: 50px;
+        padding: 0 30px;
+        text-decoration: none;
+      }
+    }
+  }
+  ul li div:hover {
+    background: rgba(102, 102, 102, 0.54);
+    border-radius: 25px;
+  }
+  ul li div,
+  ul li div:after,
+  ul li div:before {
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+  }
+}
 </style>
