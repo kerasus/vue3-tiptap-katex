@@ -3,12 +3,312 @@
     v-if="editor"
     class="tiptap-toolbar"
   >
-<!--    https://github.com/Akryum/v-tooltip        tooltip package ToDo-->
+    <!--    <mdicon name="react" />-->
+
+    <!--    https://github.com/Akryum/v-tooltip        tooltip package ToDo-->
     <ul>
-      <li><div>Button</div></li>
-      <li><div>Button</div></li>
-      <li><div>Button</div></li>
-      <li><div>Button</div></li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().setParagraph().run()"
+        >
+          <span
+            class="mdi mdi-format-paragraph toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+        >
+          <span
+            class="mdi mdi-format-header-1 toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+        >
+          <span
+            class="mdi mdi-format-header-2 toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+        >
+          <span
+            class="mdi mdi-format-header-3 toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+        >
+          <span
+            class="mdi mdi-format-header-4 toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
+        >
+          <span
+            class="mdi mdi-format-header-5 toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
+        >
+          <span
+            class="mdi mdi-format-header-6 toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li><div class="vl" /></li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleBold().run()"
+        >
+          <span
+            class="mdi mdi-format-bold toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleItalic().run()"
+        >
+          <span
+            class="mdi mdi-format-italic toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleUnderline().run()"
+        >
+          <span
+            class="mdi mdi-format-underline toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleStrike().run()"
+        >
+          <span
+            class="mdi mdi-format-strikethrough toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleHighlight().run()"
+        >
+          <span
+            class="mdi mdi-format-color-highlight toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li><div class="vl" /></li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="justify('right')"
+        >
+          <span
+            class="mdi mdi-format-align-right toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="justify('center')"
+        >
+          <span
+            class="mdi mdi-format-align-center toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="justify('left')"
+        >
+          <span
+            class="mdi mdi-format-align-left toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().setTextAlign('justify').run()"
+        >
+          <span
+            class="mdi mdi-format-align-justify toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li><div class="vl" /></li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().setTextDirection('rtl').run()"
+        >
+          <span
+            class="mdi mdi-format-textdirection-r-to-l toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().setTextDirection('ltr').run()"
+        >
+          <span
+            class="mdi mdi-format-textdirection-l-to-r toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li><div class="vl" /></li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleBulletList().run()"
+        >
+          <span
+            class="mdi mdi-format-list-bulleted toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().toggleOrderedList().run()"
+        >
+          <span
+            class="mdi mdi-format-list-numbered toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li><div class="vl" /></li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().setHardBreak().run()"
+        >
+          <span
+            class="mdi mdi-arrow-expand-down toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().setHorizontalRule().run()"
+        >
+          <span
+            class="mdi mdi-arrow-split-horizontal toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li><div class="vl" /></li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()"
+        >
+          <span
+            class="mdi mdi-table-plus toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <!--      <v-tooltip
+      v-if="editor.can().mergeCells()"
+      top
+      ToDo
+    >-->
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().mergeCells().run()"
+        >
+          <span
+            class="mdi mdi-sigma  toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div
+          class="toolbar-item"
+          @click="editor.chain().focus().splitCell().run()"
+        >
+          <span
+            class="mdi mdi-image toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <!--      <v-tooltip
+      v-if="editor.can().addColumnAfter()"
+      top
+      ToDo
+    >-->
+      <li><div class="vl" /></li>
+      <li>
+        <div class="toolbar-item">
+          <span
+            class="mdi mdi-redo toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div class="toolbar-item">
+          <span
+            class="mdi mdi-undo toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div class="toolbar-item">
+          <span
+            class="mdi mdi-content-paste toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div class="toolbar-item">
+          <span
+            class="mdi mdi-format-columns toolbar-item-icon"
+          />
+        </div>
+      </li>
+      <li>
+        <div class="toolbar-item">
+          <span
+            class="mdi mdi-eye-off toolbar-item-icon"
+          />
+        </div>
+      </li>
     </ul>
   </div>
 </template>
@@ -202,6 +502,8 @@
   border-left: 1px dotted gray;
   white-space: nowrap;
   display: inline;
+  margin-right: 12px ;
+  margin-left: 12px ;
 }
 
     button:not(.v-btn) {
@@ -226,24 +528,29 @@
     padding: 0;
     li {
       display: inline-block;
-      div {
+      div.toolbar-item {
         color: rgba(0,0,0,.54);
         display: block;
-        line-height: 50px;
-        padding: 0 30px;
+        line-height: 30px;
         text-decoration: none;
+        padding: 6px 5px 0;
       }
     }
   }
-  ul li div:hover {
+  ul li div.toolbar-item:hover {
     background: rgba(102, 102, 102, 0.54);
     border-radius: 25px;
   }
-  ul li div,
-  ul li div:after,
-  ul li div:before {
+  ul li div.toolbar-item,
+  ul li div.toolbar-item:after,
+  ul li div.toolbar-item:before {
     -webkit-transition: all 300ms ease-in-out;
     transition: all 300ms ease-in-out;
+  }
+  .toolbar-item{
+    .toolbar-item-icon {
+      font-size: 24px;
+    }
   }
 }
 </style>
