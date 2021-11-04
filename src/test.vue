@@ -5,8 +5,9 @@
       :options="{ poem: true, reading: true, bubbleMenu: false, floatingMenu: false }"
     />
     <div
-        class="tiptap-click-btn btn-16"
-        @click="temp">
+      class="tiptap-click-btn btn-16"
+      @click="temp"
+    >
       click
     </div>
     <div v-html="test" />
