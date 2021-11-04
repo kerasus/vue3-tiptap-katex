@@ -40,6 +40,7 @@
 </template>
 
 <script>
+
   import toolbar from './components/toolbar/toolbar'
   import SlotBubbleMenu from './components/SlotBubbleMenu'
   import SlotFloatingMenu from './components/SlotFloatingMenu'
@@ -76,6 +77,7 @@
 
   import mixinConvertToHTML from './mixins/convertToHTML';
   import mixinConvertToTiptap from './mixins/convertToTiptap';
+  // import Test from './test';
   // import {EditorView} from "prosemirror-view";
   // import {EditorState} from "prosemirror-state";
   // import {posToDOMRect} from "@tiptap/core";

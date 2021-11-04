@@ -11,6 +11,7 @@
         <div
           class="toolbar-item"
           @click="editor.chain().focus().setParagraph().run()"
+          v-tooltip="'Paragraph'"
         >
           <span
             class="mdi mdi-format-paragraph toolbar-item-icon"
@@ -314,8 +315,16 @@
 </template>
 
 <script>
-    // import DynamicTable from "./dynamicTools/DynamicTable"
-
+    import {
+      // Directives
+      VTooltip,
+      VClosePopper,
+      // Components
+      Dropdown,
+      Tooltip,
+      Menu
+    } from 'v-tooltip'
+    import 'v-tooltip/dist/v-tooltip.css'
     import { DOMParser } from 'prosemirror-model'
 
     function elementFromString(value) {
@@ -338,7 +347,17 @@
   export default {
     name: 'Toolbar',
     components: {
+      // eslint-disable-next-line vue/no-unused-components
+      Dropdown,
+      // eslint-disable-next-line vue/no-unused-components
+      Tooltip,
+      // eslint-disable-next-line vue/no-reserved-component-names,vue/no-unused-components
+      Menu
       // DynamicTable,
+    },
+    directives :{
+      'tooltip' : VTooltip ,
+      'close-popper' : VClosePopper
     },
     data () {
       return {
@@ -504,6 +523,8 @@
   display: inline;
   margin-right: 12px ;
   margin-left: 12px ;
+  padding-top: 12px;
+  padding-bottom: 3px;
 }
 
     button:not(.v-btn) {
