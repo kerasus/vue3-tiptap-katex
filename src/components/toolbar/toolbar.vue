@@ -459,6 +459,7 @@ import {
   Menu
 } from 'v-tooltip'
 import 'v-tooltip/dist/v-tooltip.css'
+import '@/css/toolbar-Item.scss'
 import {DOMParser} from 'prosemirror-model'
 
 function elementFromString(value) {
@@ -675,44 +676,5 @@ button:not(.v-btn) {
 .formula-menu .v-list-item,
 .formula-menu .v-list {
   padding: 0;
-}
-
-.tiptap-toolbar {
-  ul {
-    display: block;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    li {
-      display: inline-block;
-
-      div.toolbar-item {
-        color: rgba(0, 0, 0, .54);
-        display: block;
-        line-height: 30px;
-        text-decoration: none;
-        padding: 6px 5px 0;
-      }
-    }
-  }
-
-  ul li div.toolbar-item:hover {
-    background: rgba(102, 102, 102, 0.54);
-    border-radius: 25px;
-  }
-
-  ul li div.toolbar-item,
-  ul li div.toolbar-item:after,
-  ul li div.toolbar-item:before {
-    -webkit-transition: all 300ms ease-in-out;
-    transition: all 300ms ease-in-out;
-  }
-
-  .toolbar-item {
-    .toolbar-item-icon {
-      font-size: 24px;
-    }
-  }
 }
 </style>
