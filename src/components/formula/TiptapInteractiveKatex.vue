@@ -23,12 +23,16 @@
 //   }
 // });
 
+// eslint-disable-next-line vue/one-component-per-file
+
 import {NodeViewWrapper, nodeViewProps} from '@tiptap/vue-3'
 import 'mathlive/dist/mathlive-fonts.css'
 import 'mathlive/dist/mathlive-static.css'
 import '@mdi/font/css/materialdesignicons.css'
+
 import MathLive from 'mathlive'
 
+// eslint-disable-next-line vue/one-component-per-file
 export default {
   components: {
     NodeViewWrapper,
