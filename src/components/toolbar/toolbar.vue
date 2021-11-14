@@ -459,7 +459,7 @@ import {
   Menu
 } from 'v-tooltip'
 import 'v-tooltip/dist/v-tooltip.css'
-import '@/css/toolbar-Item.scss'
+import '../../css/toolbar-Item.scss'
 import {DOMParser} from 'prosemirror-model'
 
 function elementFromString(value) {
