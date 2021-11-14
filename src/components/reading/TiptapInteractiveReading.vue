@@ -36,6 +36,7 @@
                 required: true,
             },
             editor: {
+                default: () => {return {}},
                 type: Object
             }
         },

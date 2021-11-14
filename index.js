@@ -1,5 +1,5 @@
 'use strict';
 
-import VueTiptapKatex from './src/vue-tiptap-katex'
+import VueTiptapKatex from '@/vue3-tiptap-katex'
 
 export default VueTiptapKatex

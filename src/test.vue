@@ -6,27 +6,43 @@
     />
     <div
       class="tiptap-click-btn btn-16"
-      @click="temp"
+      @click="getContent"
     >
-      click
+      get content
     </div>
-    <div v-html="test" />
+    <div
+      ref="printdiv"
+      v-html="content"
+    />
   </div>
 </template>
 
 <script>
-import VueTiptapKatex from '@/vue-tiptap-katex';
+import renderMathInElement from 'katex/dist/contrib/auto-render.js'
+import 'katex/dist/katex.min.css'
+import VueTiptapKatex from '@/vue3-tiptap-katex';
 export default {
   name: 'Test',
   components: {VueTiptapKatex},
-  methods: {
-    temp () {
-      this.test = this.$refs.tiptap.getContent()
-    }
-  },
   data () {
     return {
-      test: ''
+      content: ''
+    }
+  },
+  methods: {
+    getContent () {
+      this.content = this.$refs.tiptap.getContent()
+      this.$nextTick(() => {
+        renderMathInElement(this.$refs.printdiv, {
+          throwOnError: false,
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false}
+          ]
+        })
+      });
     }
   }
 }

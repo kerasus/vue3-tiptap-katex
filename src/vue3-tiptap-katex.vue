@@ -1,9 +1,6 @@
 <template>
   <div :class="{ 'tiptap-plus-container': true }">
-    <div
-      elevation="3"
-      class="tiptap-plus"
-    >
+    <div class="tiptap-plus">
       <div
         v-if="editor"
         class="tiptap-header"

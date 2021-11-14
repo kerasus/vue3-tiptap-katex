@@ -33,6 +33,7 @@ export default {
       required: true,
     },
     editor: {
+      default: () => {return {}},
       type: Object
     }
   },

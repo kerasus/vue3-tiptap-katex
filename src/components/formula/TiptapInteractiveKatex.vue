@@ -3,11 +3,48 @@
     :class="{ 'vue-component': true, 'inline': node.attrs.inline }"
     data-drag-handle
   >
-    TiptapInteractiveKatex
+    <div
+      v-if="editMode"
+      id="mathfield"
+      ref="mathfield"
+      dir="ltr"
+      locale="fa"
+      :class="{ 'editable': editMode }"
+    >
+      {{ katex }}
+    </div>
+    <div
+      v-if="!editMode"
+      class="converted"
+      dir="ltr"
+      @click="editMode = true"
+      v-html="computedKatex"
+    />
+    <div
+      v-if="!editMode"
+      ref="printdiv"
+      icon
+      color="blue"
+      @click="editMode = true"
+    >
+      mdi-pencil
+    </div>
+    <div
+      v-if="editMode"
+      icon
+      color="green"
+      @click="toggleEdit"
+    >
+      mdi-check
+    </div>
   </node-view-wrapper>
 </template>
 
 <script>
+import renderMathInElement from 'katex/dist/contrib/auto-render.js'
+import 'katex/dist/katex.min.css'
+
+// import katex from 'katex';
 // import Vue from 'vue'
 // import VueKatex from 'vue-katex'
 // import 'katex/dist/katex.min.css'
@@ -48,6 +85,7 @@ export default {
       required: true,
     },
     editor: {
+      default: () => {return {}},
       type: Object
     }
   },
@@ -67,6 +105,17 @@ export default {
   watch: {
     editMode(newValue) {
       if (!newValue) {
+        this.$nextTick(() => {
+          renderMathInElement(this.$refs.printdiv, {
+            throwOnError: false,
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '\\[', right: '\\]', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false}
+            ]
+          })
+        })
         return
       }
       this.$nextTick(() => {
@@ -98,6 +147,9 @@ export default {
       return mf.getValue().replaceAll('\\mleft', '\\left').replaceAll('\\mright', '\\right')
     },
     loadMathLive() {
+      // if (!this.$refs.mathfield) {
+      //   return
+      // }
       // this.katex = this.markdown.render(this.katex)
       let that = this
       const mf = MathLive.makeMathField(
