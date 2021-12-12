@@ -44,7 +44,7 @@
 import renderMathInElement from 'katex/dist/contrib/auto-render.js'
 import 'katex/dist/katex.min.css'
 
-// import katex from 'katex';
+import katex from 'katex';
 // import Vue from 'vue'
 // import VueKatex from 'vue-katex'
 // import 'katex/dist/katex.min.css'
@@ -132,7 +132,9 @@ export default {
   },
   computed: {
     computedKatex() {
-      return '$' + this.node.attrs.katex + '$'
+      return katex.renderToString(this.node.attrs.katex, {
+        throwOnError: false
+      });
     }
   },
   created() {
