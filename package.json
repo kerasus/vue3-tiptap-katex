@@ -58,7 +58,6 @@
     "tiptap-text-direction-extension": "^1.0.2",
     "turndown": "^7.0.0",
     "v-tooltip": "^4.0.0-beta.2",
-    "vue": "^3.2.20",
     "vue-drag-resize": "^1.5.4",
     "vue-upload-component": "^2.8.22",
     "webpack": "<=4"
@@ -70,7 +69,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^7.20.0",
-    "vue-template-compiler": "^2.6.14"
+    "vue-template-compiler": "^2.6.14",
+    "vue": "^3.2.20"
   },
   "eslintConfig": {
     "root": true,
