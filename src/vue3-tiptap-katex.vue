@@ -38,9 +38,9 @@
 
 <script>
 
-  import toolbar from './components/toolbar/toolbar'
-  import SlotBubbleMenu from './components/SlotBubbleMenu'
-  import SlotFloatingMenu from './components/SlotFloatingMenu'
+  import toolbar from 'vue-tiptap-katex-core/components/toolbar/toolbar'
+  import SlotBubbleMenu from 'vue-tiptap-katex-core/components/SlotBubbleMenu'
+  import SlotFloatingMenu from 'vue-tiptap-katex-core/components/SlotFloatingMenu'
   import TiptapInteractiveKatex from './components/formula/extention'
   import TiptapInteractiveKatexInline from './components/formula/entensionInline'
   import TiptapInteractiveImageUpload from './components/ImageUpload/extension';
@@ -60,9 +60,9 @@
   import Text from '@tiptap/extension-text'
   import Document from '@tiptap/extension-document'
   import Heading from '@tiptap/extension-heading'
-  import ImageAlign from './extension/ImageAlign/ImageAlign'
+  import ImageAlign from 'vue-tiptap-katex-core/extension/ImageAlign/ImageAlign'
   // import Focus from '@tiptap/extension-focus'
-  import ThinSpace from './extension/ThinSpace/ThinSpace';
+  import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace';
   // import Paper from './Drawing/Paper.js'
 
   import {
@@ -72,8 +72,8 @@
     FloatingMenu
   } from '@tiptap/vue-3'
 
-  import mixinConvertToHTML from './mixins/convertToHTML';
-  import mixinConvertToTiptap from './mixins/convertToTiptap';
+  import mixinConvertToHTML from 'vue-tiptap-katex-core/mixins/convertToHTML';
+  import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap';
   // import Test from './test';
   // import {EditorView} from "prosemirror-view";
   // import {EditorState} from "prosemirror-state";
