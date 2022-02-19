@@ -50,6 +50,9 @@
     "core-js": "^3.6.5",
     "cropperjs": "^1.5.11",
     "css-loader": "^3.6.0",
+    "filepond": "^4.30.3",
+    "filepond-plugin-file-validate-type": "^1.2.6",
+    "filepond-plugin-image-preview": "^4.6.10",
     "katex": "^0.15.1",
     "mathlive": "^0.58.0",
     "node-sass": "^6.0.0",
@@ -59,8 +62,10 @@
     "turndown": "^7.0.0",
     "v-tooltip": "^4.0.0-beta.2",
     "vue-drag-resize": "^1.5.4",
+    "vue-filepond": "^7.0.2",
     "vue-tiptap-katex-core": "^1.0.3",
     "vue-upload-component": "^2.8.22",
+    "vue3-draggable-resizable": "^1.6.1",
     "webpack": "<=4"
   },
   "devDependencies": {

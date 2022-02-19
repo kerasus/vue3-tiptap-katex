@@ -19,21 +19,14 @@
       v-html="computedKatex"
     />
     <div
-      v-if="!editMode"
-      ref="printdiv"
-      icon
-      color="blue"
-      @click="editMode = true"
-    >
-      mdi-pencil
-    </div>
-    <div
       v-if="editMode"
       icon
       color="green"
       @click="toggleEdit"
     >
-      mdi-check
+      <span
+          class="mdi mdi-check"
+      />
     </div>
   </node-view-wrapper>
 </template>
@@ -69,7 +62,27 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+.mdi-check {
+  color: #4caf50;
+  cursor: pointer;
+  font-size: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), background-color 0.3s;
+  margin-right: 10px;
+}
+
+.mdi-check:hover {
+  background-color: rgba(76, 175, 80, 0.3);
+}
 
 .katex {
   direction: ltr;
