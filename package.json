@@ -2,32 +2,12 @@
   "name": "vue3-tiptap-katex",
   "version": "1.0.2",
   "description": "tiptap editor with katex in vue 3",
-  "main": "index.js",
-  "keywords": [
-    "vue",
-    "tiptap",
-    "katex",
-    "vue3-tiptap-katex"
-  ],
-  "contributors": [
-    {
-      "name": "Ali Esmaeeli",
-      "email": "aliesmaeeli20@gmail.com",
-      "url": "https://github.com/kerasus/vue-tiptap-katex"
-    },
-    {
-      "name": "Mostafa Kazemi",
-      "email": "neo.kazemi168@gmail.com",
-      "url": "https://github.com/neokazemi/vue-tiptap-katex"
-    }
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/kerasus/vue-tiptap-katex",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint src"
   },
+  "main": "index.js",
   "dependencies": {
     "@mdi/font": "^5.8.55",
     "@tiptap/core": "^2.0.0-beta.102",
@@ -61,6 +41,7 @@
     "tiptap-text-direction-extension": "^1.0.2",
     "turndown": "^7.0.0",
     "v-tooltip": "^4.0.0-beta.2",
+    "vue-class-component": "^8.0.0-0",
     "vue-drag-resize": "^1.5.4",
     "vue-filepond": "^7.0.2",
     "vue-tiptap-katex-core": "^1.0.3",
@@ -69,12 +50,17 @@
     "webpack": "<=4"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-eslint": "^4.5.15",
+    "@vue/cli-plugin-typescript": "~4.5.15",
     "@vue/cli-service": "^4.5.15",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^7.20.0",
+    "typescript": "~4.1.5",
     "vue": "^3.2.20",
     "vue-template-compiler": "^2.6.14"
   },
@@ -85,10 +71,11 @@
     },
     "extends": [
       "plugin:vue/strongly-recommended",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@vue/typescript"
     ],
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@typescript-eslint/parser"
     },
     "rules": {
       "vue/attributes-order": "warn",
@@ -115,5 +102,25 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "contributors": [
+    {
+      "name": "Ali Esmaeeli",
+      "email": "aliesmaeeli20@gmail.com",
+      "url": "https://github.com/kerasus/vue-tiptap-katex"
+    },
+    {
+      "name": "Mostafa Kazemi",
+      "email": "neo.kazemi168@gmail.com",
+      "url": "https://github.com/neokazemi/vue-tiptap-katex"
+    }
+  ],
+  "homepage": "https://github.com/kerasus/vue-tiptap-katex",
+  "keywords": [
+    "vue",
+    "tiptap",
+    "katex",
+    "vue3-tiptap-katex"
+  ],
+  "license": "MIT"
 }
