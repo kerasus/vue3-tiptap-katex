@@ -25,7 +25,7 @@
       @click="toggleEdit"
     >
       <span
-          class="mdi mdi-check"
+        class="mdi mdi-check"
       />
     </div>
   </node-view-wrapper>

@@ -15,9 +15,7 @@
       :files="files"
       @processfile="onFileUpload"
     />
-    <Vue3DraggableResizable
-
-    >
+    <Vue3DraggableResizable>
       This is a test example
     </Vue3DraggableResizable>
   </node-view-wrapper>
