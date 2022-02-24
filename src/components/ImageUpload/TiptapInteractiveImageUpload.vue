@@ -13,6 +13,7 @@
   // import FileUpload from 'vue-upload-component'
   // import Vue from 'vue'
   // import VueDragResize from 'vue-drag-resize'
+
   import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 
   // Vue.component('VueDragResize', VueDragResize)
