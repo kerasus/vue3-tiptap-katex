@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper
-    :class="{ 'vue-component': true, 'inline': node.attrs.inline }"
+    :class="{ 'vue-component': true, 'inline': node.attrs.inline, 'uploading': !node.attrs.url }"
     data-drag-handle
   >
     <file-pond
@@ -11,13 +11,28 @@
       label-idle="Drop files here..."
       accepted-file-types="image/jpeg, image/png"
       chunk-uploads="true"
-      :server="{ url: '/api/v1/question/upload/620e09bd2079aa7c1b00cf8d', headers: { Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiYjJjYThmNTQ5YTRiYThjODBkMjBmYzVhMDNjN2Y3MjJjNzhjY2NiMjI2NTIyNzRmMzQzYWVhYWRlNGRlY2E0ODBiZjk0OWQ5OTRiNGZiNGYiLCJpYXQiOjE2NDI2NzQ1MzYuNzAxNDcyLCJuYmYiOjE2NDI2NzQ1MzYuNzAxNDc1LCJleHAiOjE2NzQyMTA1MzYuNzAwMTg3LCJzdWIiOiIxNjYzMDIiLCJzY29wZXMiOltdfQ.MTKkljpODVJVP7JyhJgC7wK7wObtjK0aEZOYgDHPB5qLDecay-Nc6zQ7If3R8qmjxlRO7qDBtZZZ-z7Y0w0ZKHNpSb64AkSoMKvAFEzvZzb3-rYHR-aNVqI5L3o6LHbi_l5fusd6z90lPjdKh7qLbgkzW4H97iAMcEfJ1MA5aItgeJQvrKZI1ex4R3OoQnvLKIUtfAmCVSyY-hc3_Kh9wDDcWKmWL42CMOAmqxDduPXb09h1v_3JbMzgzR_gQU0omvNmIeEymMONRdYjUUTTNeSCsQ4uUICpXP5Z1KBPhYePbHDGtuIG-ZTK5RVha5PJkPbm6Kegw3uLpUSDgcR-5mLqQRxnrzvyLTv_YWyO4K542uoQNqMCCzJSOA1iMrXlOZSw-VkFsC1WJ-w46a6GuBDa2r3JSaoKhPOAwAw1nH8fdmmF-TfmjuZsogTzvPohIMphkqV4Sp3up7QIq_Die8IoBsag8mMfcl7IcKWLqr0yP3MfSya2Fhy_sMrr7CKAkA0I0oWEIyD0uEckT6nYDS-cJ35wLmX6_MHFG0P_DTtcvnRR2bHKRLBz2GaCfeLCdqGxIi1shytwu2FknChKkbo7QgqxH89Fu1mG2h6qxV5s9yHAGSIk0OWsXOvHFN94SbH0NVu8uFYtyC0O28444bOg9F8ht0B97pJKzMNYUxs' } }"
+      :server="editor.editorOptions.uploadServer"
       :files="files"
       @processfile="onFileUpload"
     />
-    <Vue3DraggableResizable>
-      This is a test example
-    </Vue3DraggableResizable>
+    <div
+      v-else-if="naturalHeight && naturalWidth"
+      class="resizer-container"
+      :style="{ height: node.attrs.height + 'px', width: node.attrs.width + 'px', marginBottom: node.attrs.vertical + 'px', marginTop: -1 * node.attrs.vertical + 'px' }"
+    >
+      <span class="mdi mdi-drag" :style="{ top: node.attrs.vertical + 'px', height: node.attrs.height + 'px' }" />
+      <vue-drag-resize
+        :w="naturalWidth"
+        :h="naturalHeight"
+        :aspect-ratio="true"
+        :sticks="['br']"
+        axis="y"
+        @resizestop="resizeEnd"
+        @dragstop="dragEnd"
+      >
+        <img :src="node.attrs.url">
+      </vue-drag-resize>
+    </div>
   </node-view-wrapper>
 </template>
 
@@ -33,17 +48,18 @@
       FilePondPluginImagePreview
   );
 
-  import Vue3DraggableResizable from 'vue3-draggable-resizable'
-  import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+  import VueDragResize from 'vue3-drag-resize'
+  import MixinComponentImageUpload from 'vue-tiptap-katex-core/components/ImageUpload/mixin'
 
   import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 
 
   export default {
+    mixins: [MixinComponentImageUpload],
     components: {
       NodeViewWrapper,
       FilePond,
-      Vue3DraggableResizable
+      VueDragResize
     },
     props: {
       nodeViewProps,
@@ -56,37 +72,22 @@
         required: true,
       },
     },
-    data() {
-      return {
-        files: []
-      }
-    },
-    computed: {
-      accessToken () {
-        return this.node.attrs.token
-      },
-      headers () {
-        return {
-          Authorization: 'Bearer ' + this.accessToken
-        }
-      },
-    },
-    created() {
-
-    },
-    methods: {
-      onFileUpload (err, file) {
-        if (!err) {
-          this.updateAttributes({
-            url: JSON.parse(file.serverId).url
-          })
-        }
-      }
-    }
   }
 </script>
 
 <style>
+.vue-component.inline {
+  display: inline-block;
+}
+
+.inline.uploading {
+  width: 500px;
+}
+
+.inline .resizer-container {
+  margin: 0 24px;
+}
+
 .filepond--credits {
   display: none;
 }
@@ -98,4 +99,31 @@
 .filepond--file-status-sub {
   display: none;
 }
+
+.resizer-container {
+  position: relative;
+  cursor: grab;
+  display: flex;
+  margin-right: 32px;
+}
+
+.resizer-container .mdi-drag {
+  background: #e6e6e6;
+  position: absolute;
+  left: -16px;
+}
+
+.resizer-container .mdi-drag::before {
+  position: relative;
+  top: calc(50% - 10px);
+}
+
+.vdr {
+  position: relative !important;
+}
+
+.resizer-container img {
+  height: 100% !important;
+}
+
 </style>
