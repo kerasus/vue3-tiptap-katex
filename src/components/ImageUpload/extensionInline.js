@@ -23,12 +23,6 @@ export default Node.create({
             height: {
                 default: 0
             },
-            token: {
-                default: ''
-            },
-            upload: {
-                default: ''
-            },
             justify: {
                 default: 'center'
             },
@@ -40,6 +34,9 @@ export default Node.create({
             },
             horizontal: {
                 default: 0
+            },
+            server: {
+                default: {}
             }
         }
     },

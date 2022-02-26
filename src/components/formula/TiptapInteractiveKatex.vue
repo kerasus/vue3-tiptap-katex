@@ -10,9 +10,7 @@
       dir="ltr"
       locale="fa"
       :class="{ 'editable': editMode }"
-    >
-      {{ katex }}
-    </div>
+    />
     <div
       v-if="!editMode"
       class="converted"
@@ -21,57 +19,108 @@
       v-html="computedKatex"
     />
     <div
-      v-if="!editMode"
-      ref="printdiv"
-      icon
-      color="blue"
-      @click="editMode = true"
-    >
-      mdi-pencil
-    </div>
-    <div
       v-if="editMode"
       icon
       color="green"
       @click="toggleEdit"
     >
-      mdi-check
+      <span
+        class="mdi mdi-check"
+      />
     </div>
   </node-view-wrapper>
 </template>
 
 <script>
-import 'katex/dist/katex.min.css'
+import MixinComponentFormula from 'vue-tiptap-katex-core/components/formula/mixin'
 
+import 'katex/dist/katex.min.css'
+// eslint-disable-next-line no-unused-vars
 import {NodeViewWrapper, nodeViewProps} from '@tiptap/vue-3'
-import 'mathlive/dist/mathlive-fonts.css'
-import 'mathlive/dist/mathlive-static.css'
 import '@mdi/font/css/materialdesignicons.css'
 
-import {MixinComponentFormula} from 'vue-tiptap-katex-core'
 
-// eslint-disable-next-line vue/one-component-per-file
+
+// ------------------- Mathlive ---------------------
+
+// import 'mathlive/dist/mathlive-fonts.css'
+// import 'mathlive/dist/mathlive-static.css'
+// import { MathfieldElement } from 'mathlive';
+
+
+import 'vue-tiptap-katex-core/Mathlive/mathlive-fonts.css'
+import 'vue-tiptap-katex-core/Mathlive/mathlive-static.css'
+
+// --------------------------------------------------
+
+
 export default {
   components: {
     NodeViewWrapper,
   },
-  mixins: [MixinComponentFormula],
-  props: {
-    nodeViewProps
-  }
+  mixins: [MixinComponentFormula]
 }
 </script>
 
 <style lang="scss" scoped>
 
+.mdi-check {
+  color: #4caf50;
+  cursor: pointer;
+  font-size: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), background-color 0.3s;
+  margin-right: 10px;
+}
+
+.mdi-check:hover {
+  background-color: rgba(76, 175, 80, 0.3);
+}
+
 .katex {
   direction: ltr;
   display: inline-block;
 
+  .colorbox {
+    background-color: transparent !important;
+  }
+
   .katex-html {
     .accent {
-      background-color: unset !important;
-      border-color: unset !important;
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+    .overline {
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      letter-spacing: inherit !important;
+      line-height: inherit !important;
+      text-transform: inherit !important;
+      font-family: inherit !important;
+    }
+  }
+}
+
+.ML__fieldcontainer {
+  .ML__fieldcontainer__field {
+    .accent {
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+    .overline {
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      letter-spacing: inherit !important;
+      line-height: inherit !important;
+      text-transform: inherit !important;
+      font-family: inherit !important;
     }
   }
 }
@@ -143,5 +192,23 @@ export default {
 
 .ML__keyboard div .rows > ul > .w30 {
   width: 200px;
+}
+
+.ML__keyboard div .rows > ul > .h80 {
+  height: 80px;
+}
+
+.ML__keyboard div .rows > ul > .h100 {
+  height: 100px;
+}
+
+.ML__keyboard div .rows>ul>li aside {
+  color: #fff !important;
+}
+
+@media only screen and (min-width: 1025px) {
+  .ML__keyboard div .rows>ul {
+    height: fit-content !important;
+  }
 }
 </style>

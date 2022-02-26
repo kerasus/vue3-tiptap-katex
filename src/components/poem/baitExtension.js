@@ -1,27 +1,27 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import TiptapInteractivePoem from './TiptapInteractivePoem';
+import mesra from './mesra';
 
 export default Node.create({
-    name: 'TiptapInteractivePoem',
+    name: 'mesra',
 
     group: 'block',
 
-    content: 'block+',
+    content: 'inline*',
 
     parseHTML() {
         return [
             {
-                tag: 'tiptap-interactive-poem',
+                tag: 'mesra',
             },
         ]
     },
 
     renderHTML({ HTMLAttributes }) {
-        return ['tiptap-interactive-poem', mergeAttributes(HTMLAttributes), 0]
+        return ['mesra', mergeAttributes(HTMLAttributes), 0]
     },
 
     addNodeView() {
-        return VueNodeViewRenderer(TiptapInteractivePoem)
+        return VueNodeViewRenderer(mesra)
     },
 })
