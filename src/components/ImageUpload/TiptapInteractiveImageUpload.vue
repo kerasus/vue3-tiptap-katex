@@ -20,7 +20,10 @@
       class="resizer-container"
       :style="{ height: node.attrs.height + 'px', width: node.attrs.width + 'px', marginBottom: node.attrs.vertical + 'px', marginTop: -1 * node.attrs.vertical + 'px' }"
     >
-      <span class="mdi mdi-drag" :style="{ top: node.attrs.vertical + 'px', height: node.attrs.height + 'px' }" />
+      <span
+        class="mdi mdi-drag"
+        :style="{ top: node.attrs.vertical + 'px', height: node.attrs.height + 'px' }"
+      />
       <vue-drag-resize
         :w="naturalWidth"
         :h="naturalHeight"
