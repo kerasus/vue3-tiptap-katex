@@ -121,7 +121,8 @@
           poem: false,
           reading: false,
           persianKeyboard: false,
-          mathliveOptions: {}
+          mathliveOptions: {},
+          onResizeEnd: null
         }
         Object.assign(options, this.options)
         return options
