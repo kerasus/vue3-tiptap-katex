@@ -77,25 +77,38 @@ vue-tiptap-katex accepts plain text and HTML as input and exports text as HTML.
 Note that all props are optional.
 
 
-| Name             | Type    | Default                                                                                                           | Description                       |
-| ---------------- |---------|-------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| accessToken      | String  | Null                                                                                                              | Access Token for uploading images |
-| uploadUrl        | String  | Null                                                                                                              | URL for uploading images          |
-| loading          | Boolean | false                                                                                                             | Loading overlay                   |
-| options          | Object  | { bubbleMenu: true, floatingMenu: true, poem: false, reading: false, persianKeyboard: false, mathliveOptions: {}} | See [Options Prop](#options-prop) |
-
+| Name         | Type    | Default                           | Description                 |
+|--------------|---------|-----------------------------------|-----------------------------|
+| loading      | Boolean | false                             | Loading overlay             |
+| options      | Object  | See [Options Prop](#options-prop) | Editor Options              |
 
 ### Options Prop
 
 All options are optional:
 
-| Name            | Type    | Default | Description                                                                                         |
-|-----------------|---------|---------|-----------------------------------------------------------------------------------------------------|
-| bubbleMenu      | Boolean | true    | Whether to show Bubble Menu or not                                                                  |
-| floatingMenu    | Boolean | true    | Whether to show Floating Menu or not                                                                |
-| poem            | Boolean | false   | Whether to show Poem Button in toolbar or not (This feature is designed for Arabic based languages) |
-| persianKeyboard | Boolean | false   | Adding Persian keyboard to Mathlive                                                                 |
-| mathliveOptions | Object  | {}      | This Object is passed directly to Mathlive instance                                                 |
+| Name            | Type     | Default | Description                                                                                         |
+|-----------------|----------|---------|-----------------------------------------------------------------------------------------------------|
+| bubbleMenu      | Boolean  | true    | Whether to show Bubble Menu or not                                                                  |
+| floatingMenu    | Boolean  | true    | Whether to show Floating Menu or not                                                                |
+| poem            | Boolean  | false   | Whether to show Poem Button in toolbar or not (This feature is designed for Arabic based languages) |
+| persianKeyboard | Boolean  | false   | Adding Persian keyboard to Mathlive                                                                 |
+| mathliveOptions | Object   | {}      | This Object is passed directly to Mathlive instance                                                 |
+| uploadServer    | Object   | {}      | Upload image request config                                                                         |
+| onResizeEnd     | Function | null    | Gets called after resizing image                                                                    |
+
+
+####uploadServer example:
+    { url: upload.com/image, headers: { Authentication: "token" }}
+
+####onResizeEnd:
+Arguments: url, width, height
+Return value: url
+
+Example:
+
+    onResizeEnd (url, width, height) {
+        return url.split('?w=')[0] + '?w=' + width + '&h=' + height
+    }
 
 ## Develop and build
 
