@@ -287,6 +287,7 @@
     margin: 0;
     border-radius: 10px;
     position: relative;
+    background: white;
   }
 
   .tiptap-plus-container .v-progress-circular {
