@@ -1,6 +1,6 @@
 {
   "name": "vue3-tiptap-katex",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "tiptap editor with katex in vue 3",
   "main": "index.js",
   "keywords": [
@@ -63,7 +63,7 @@
     "v-tooltip": "^4.0.0-beta.2",
     "vue-drag-resize": "^1.5.4",
     "vue-filepond": "^7.0.2",
-    "vue-tiptap-katex-core": "^1.0.11",
+    "vue-tiptap-katex-core": "^1.0.12",
     "vue-upload-component": "^2.8.22",
     "vue3-drag-resize": "^2.0.5",
     "webpack": "<=4"
