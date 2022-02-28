@@ -11,7 +11,10 @@
           :options="editorOptions"
         />
       </div>
-      <div class="pa-0">
+      <div
+        v-if="editor"
+        class="pa-0"
+      >
         <bubble-menu
           v-if="editorOptions && editorOptions.bubbleMenu"
           class="bubble-menu"
