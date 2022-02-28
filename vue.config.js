@@ -1,4 +1,9 @@
 module.exports = {
+    pages: {
+        index: {
+            entry: 'src/main.ts'
+        }
+    },
     devServer: {
         proxy: {
             '^/api': {
