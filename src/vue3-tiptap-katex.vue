@@ -58,10 +58,6 @@
   import TextDirection from 'tiptap-text-direction-extension';
   import Highlight from '@tiptap/extension-highlight'
   import Underline from '@tiptap/extension-underline'
-  import Paragraph from '@tiptap/extension-paragraph'
-  import Text from '@tiptap/extension-text'
-  import Document from '@tiptap/extension-document'
-  import Heading from '@tiptap/extension-heading'
   import ImageAlign from 'vue-tiptap-katex-core/extension/ImageAlign/ImageAlign'
   import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys';
   import {DOMParser} from 'prosemirror-model';
@@ -142,7 +138,11 @@
             className: 'has-focus',
             mode: 'all',
           }),
-          StarterKit,
+          StarterKit.configure({
+            paragraph: {
+              HTMLAttributes: { dir: 'auto' },
+            }
+          }),
           TextAlign.configure({
             types: ['heading', 'paragraph', 'TiptapInteractiveImageUpload', 'TiptapInteractiveReading'],
             defaultAlignment: ''
@@ -150,12 +150,6 @@
           TextDirection,
           Highlight,
           Underline,
-          Paragraph.configure({
-            HTMLAttributes: { dir: 'auto' },
-          }),
-          Heading,
-          Document,
-          Text,
           Table.configure({
             resizable: true,
           }),
@@ -171,10 +165,6 @@
           TiptapInteractiveReading,
           ImageAlign,
           Shortkeys,
-          // Focus.configure({
-          //   className: 'has-focus',
-          //   mode: 'all',
-          // }),
           ThinSpace
         ],
         // triggered on every change
@@ -287,6 +277,7 @@
     margin: 0;
     border-radius: 10px;
     position: relative;
+    background: white;
   }
 
   .tiptap-plus-container .v-progress-circular {
