@@ -43,13 +43,9 @@ import '@mdi/font/css/materialdesignicons.css'
 
 // ------------------- Mathlive ---------------------
 
-// import 'mathlive/dist/mathlive-fonts.css'
-// import 'mathlive/dist/mathlive-static.css'
-// import { MathfieldElement } from 'mathlive';
+import 'mathlive/dist/mathlive-fonts.css'
+import 'mathlive/dist/mathlive-static.css'
 
-
-import 'vue-tiptap-katex-core/Mathlive/mathlive-fonts.css'
-import 'vue-tiptap-katex-core/Mathlive/mathlive-static.css'
 
 // --------------------------------------------------
 
