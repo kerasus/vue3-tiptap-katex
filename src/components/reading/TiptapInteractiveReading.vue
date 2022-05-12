@@ -17,56 +17,45 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
+import {NodeViewWrapper, NodeViewContent, nodeViewProps} from '@tiptap/vue-3'
+import MixinComponentReading from 'vue-tiptap-katex-core/components/reading/mixin'
 
-    import {NodeViewWrapper, NodeViewContent, nodeViewProps} from '@tiptap/vue-3'
-    export default {
-        name: 'TiptapInteractiveReading',
-        components: {
-            NodeViewWrapper,
-            NodeViewContent
-        },
-        props: {
-            nodeViewProps,
-            node: {
-                type: Object,
-                required: true
-            },
-            updateAttributes: {
-                type: Function,
-                required: true,
-            },
-            editor: {
-                type: Object
-            }
-        },
-    }
+export default {
+  name: 'TiptapInteractiveReading',
+  mixins: [MixinComponentReading],
+  components: {
+    NodeViewWrapper,
+    NodeViewContent
+  },
+}
 </script>
 
 <style scoped>
-  .vue-component {
-    border: 2px dashed #0D0D0D60;
-    border-radius: 0.5rem;
-    margin: 1rem 0;
-    position: relative;
-  }
+.vue-component {
+  border: 2px dashed #0D0D0D60;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  position: relative;
+}
 
-  .label {
-    margin-left: 1rem;
-    background-color: #0D0D0D60;
-    font-size: 0.6rem;
-    letter-spacing: 1px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #fff;
-    position: absolute;
-    top: 0;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0 0 0.5rem 0.5rem;
-  }
+.label {
+  margin-left: 1rem;
+  background-color: #0D0D0D60;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
 
-  .content {
-    margin: 2.5rem 1rem 1rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-  }
+.content {
+  margin: 2.5rem 1rem 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
 </style>

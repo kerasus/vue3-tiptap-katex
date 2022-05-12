@@ -20,6 +20,9 @@ export default Node.create({
             },
             inline: {
                 default: true
+            },
+            editMode: {
+                default: false
             }
         }
     },
