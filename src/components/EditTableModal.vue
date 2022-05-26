@@ -23,28 +23,28 @@
           <div class="selector-ui">
             <div
               class="border-top-selector selector"
-              @click="selectBorder('top')"
               :class="{ 'selected': isSelected('top') }"
+              @click="selectBorder('top')"
             />
             <div
               class="border-right-selector selector"
-              @click="selectBorder('right')"
               :class="{ 'selected': isSelected('right') }"
+              @click="selectBorder('right')"
             />
             <div
               class="border-left-selector selector"
-              @click="selectBorder('left')"
               :class="{ 'selected': isSelected('left') }"
+              @click="selectBorder('left')"
             />
             <div
               class="border-bottom-selector selector"
-              @click="selectBorder('bottom')"
               :class="{ 'selected': isSelected('bottom') }"
+              @click="selectBorder('bottom')"
             />
             <div
               class="background-selector selector"
-              @click="selectBackground"
               :class="{ 'selected': isSelected('background') }"
+              @click="selectBackground"
             />
           </div>
           <div
@@ -62,23 +62,76 @@
                   class="select"
                   style="width: 200px;"
                 >
-                  <select :value="currentOptions[selected[0]].cellBorderType" @input="changeAttribute($event, 'cellBorderType')">
+                  <select
+                    :value="currentOptions[selected[0]].cellBorderType"
+                    @input="changeAttribute($event, 'cellBorderType')"
+                  >
                     <option
                       disabled
                       value=""
                     >
                       Please select a type
                     </option>
-                    <option @click="changeAttribute({data: 'none'}, 'cellBorderType')" value="none">none</option>
-                    <option @click="changeAttribute({data: 'dotted'}, 'cellBorderType')" value="dotted">dotted</option>
-                    <option @click="changeAttribute({data: 'dashed'}, 'cellBorderType')" value="dashed">dashed</option>
-                    <option @click="changeAttribute({data: 'solid'}, 'cellBorderType')" value="solid">solid</option>
-                    <option @click="changeAttribute({data: 'double'}, 'cellBorderType')" value="double">double</option>
-                    <option @click="changeAttribute({data: 'groove'}, 'cellBorderType')" value="groove">groove</option>
-                    <option @click="changeAttribute({data: 'ridge'}, 'cellBorderType')" value="ridge">ridge</option>
-                    <option @click="changeAttribute({data: 'inset'}, 'cellBorderType')" value="inset">inset</option>
-                    <option @click="changeAttribute({data: 'outset'}, 'cellBorderType')" value="outset">outset</option>
-                    <option @click="changeAttribute({data: 'mix'}, 'cellBorderType')" value="mix">mix</option>
+                    <option
+                      value="none"
+                      @click="changeAttribute({data: 'none'}, 'cellBorderType')"
+                    >
+                      none
+                    </option>
+                    <option
+                      value="dotted"
+                      @click="changeAttribute({data: 'dotted'}, 'cellBorderType')"
+                    >
+                      dotted
+                    </option>
+                    <option
+                      value="dashed"
+                      @click="changeAttribute({data: 'dashed'}, 'cellBorderType')"
+                    >
+                      dashed
+                    </option>
+                    <option
+                      value="solid"
+                      @click="changeAttribute({data: 'solid'}, 'cellBorderType')"
+                    >
+                      solid
+                    </option>
+                    <option
+                      value="double"
+                      @click="changeAttribute({data: 'double'}, 'cellBorderType')"
+                    >
+                      double
+                    </option>
+                    <option
+                      value="groove"
+                      @click="changeAttribute({data: 'groove'}, 'cellBorderType')"
+                    >
+                      groove
+                    </option>
+                    <option
+                      value="ridge"
+                      @click="changeAttribute({data: 'ridge'}, 'cellBorderType')"
+                    >
+                      ridge
+                    </option>
+                    <option
+                      value="inset"
+                      @click="changeAttribute({data: 'inset'}, 'cellBorderType')"
+                    >
+                      inset
+                    </option>
+                    <option
+                      value="outset"
+                      @click="changeAttribute({data: 'outset'}, 'cellBorderType')"
+                    >
+                      outset
+                    </option>
+                    <option
+                      value="mix"
+                      @click="changeAttribute({data: 'mix'}, 'cellBorderType')"
+                    >
+                      mix
+                    </option>
                   </select>
                   <svg viewBox="0 0 24 24">
                     <path
@@ -91,17 +144,20 @@
               <div class="cell-border-width">
                 <input
                   :value="currentOptions[selected[0]].cellBorderWidth"
-                  @input="changeAttribute($event, 'cellBorderWidth')"
                   type="number"
+                  @input="changeAttribute($event, 'cellBorderWidth')"
                 >
               </div>
             </div>
             <div
               class="border-color-picker"
             >
-              <sketch-picker :value="currentOptions[selected[0]].color" @input="changeAttribute($event, 'color')" />
+              <Sketch
+                v-model="computedBackgroundColor"
+              />
             </div>
           </div>
+
           <div
             v-else-if="selected.length && selected.includes('background')"
             class="background-color-picker-parent"
@@ -109,7 +165,9 @@
             <div
               class="background-color-picker"
             >
-              <sketch-picker :value="currentOptions.background" @input="changeAttribute($event, 'color')" />
+              <Sketch
+                v-model="computedBackgroundColor"
+              />
             </div>
           </div>
         </div>
@@ -127,12 +185,13 @@
 <script>
 import VueModal from '@kouts/vue-modal'
 import '@kouts/vue-modal/dist/vue-modal.css'
-import { Sketch } from 'vue-color'
+import { Sketch } from '@ckpack/vue-color';
+
 export default {
   name: 'EditTableModal',
   components: {
     'CustomModal': VueModal,
-    'sketch-picker': Sketch,
+     Sketch,
   },
   props: {
     showModal: {
@@ -145,29 +204,29 @@ export default {
   emits: [
     'update:showDialog'
   ],
-  data(){
+  data() {
     return {
       colors: '',
-      currentOptions : {
+      currentOptions: {
         top: {
           cellBorderWidth: '2',
-          cellBorderType:'solid',
-          color:'rgba(114, 114, 114, 1)'
+          cellBorderType: 'solid',
+          color: 'rgba(114, 114, 114, 1)'
         },
         right: {
           cellBorderWidth: '2',
-          cellBorderType:'solid',
-          color:'rgba(114, 114, 114, 1)'
+          cellBorderType: 'solid',
+          color: 'rgba(114, 114, 114, 1)'
         },
         left: {
           cellBorderWidth: '2',
-          cellBorderType:'solid',
-          color:'rgba(114, 114, 114, 1)'
+          cellBorderType: 'solid',
+          color: 'rgba(114, 114, 114, 1)'
         },
         bottom: {
           cellBorderWidth: '2',
-          cellBorderType:'solid',
-          color:'rgba(114, 114, 114, 1)'
+          cellBorderType: 'solid',
+          color: 'rgba(114, 114, 114, 1)'
         },
         background: {
           color: 'rgba(255, 255, 255, 1)'
@@ -175,7 +234,7 @@ export default {
       },
       selected: [],
       borderStyle: '',
-      checked:false
+      checked: false
     }
   },
   computed: {
@@ -187,7 +246,7 @@ export default {
         this.$emit('update:showDialog', value)
       }
     },
-    getBorderStyle () {
+    getBorderStyle() {
       return (dir) => {
         if (this.currentOptions[dir].cellBorderType !== 'none') {
           const border = this.currentOptions[dir]
@@ -197,26 +256,32 @@ export default {
       }
     },
     computedBackgroundColor: {
-      get () {
-        return (this.currentOptions.backgroundColor)? this.currentOptions.backgroundColor : 'none'
+      get() {
+        return (this.currentOptions.background.color) ? this.currentOptions.background.color : 'none'
       },
-      set (value) {
-        const computedVal = 'rgba(' + value.rgba.r+', '+ value.rgba.g+', '+  value.rgba.b+', '+  value.rgba.a+')'
-        if (this.selected && this.selected !== 'backgroundColor') {
-          this.currentOptions[this.selected].cellBorderColor = computedVal
-          return
+      set(value) {
+        const computedVal = 'rgba(' + value.rgba.r + ', ' + value.rgba.g + ', ' + value.rgba.b + ', ' + value.rgba.a + ')'
+        if (this.selected != 'background') {
+            this.selected.forEach(item => {
+            this.currentOptions[item].color = computedVal
+          })
         }
-        this.currentOptions.backgroundColor = computedVal
+        else this.currentOptions.background.color = computedVal
+
+        // if (this.selected != 'background') {
+        //   this.currentOptions[this.selected].color = computedVal
+        //   return
+        // }
       }
     },
-    isSelected () {
+    isSelected() {
       return (direction) => {
         return this.selected.includes(direction)
       }
     }
   },
   methods: {
-    changeAttribute (data, field) {
+    changeAttribute(data, field) {
       console.log(data, field)
       this.selected.forEach(item => {
         if (field === 'color') {
@@ -228,10 +293,10 @@ export default {
         }
       })
     },
-    setTableNewStyles () {
+    setTableNewStyles() {
       this.$emit('cellBordersUpdated', this.currentOptions)
     },
-    selectBorder (direction) {
+    selectBorder(direction) {
       this.selected = this.selected.filter(item => item !== 'background')
       if (this.selected.includes(direction)) {
         this.selected = this.selected.filter(item => item !== direction)
@@ -239,7 +304,7 @@ export default {
         this.selected.push(direction)
       }
     },
-    selectBackground () {
+    selectBackground() {
       if (this.selected.includes('background')) {
         this.selected = []
       } else {
@@ -251,17 +316,19 @@ export default {
 </script>
 
 <style lang="scss">
-  .edit-table-modal-wrapper {
-    display: flex;
-    align-items: center;
-    .vm {
-      top: auto;
-      border-radius: 20px;
-    }
-    .vm-titlebar {
-      border-bottom: none;
-    }
+.edit-table-modal-wrapper {
+  display: flex;
+  align-items: center;
+
+  .vm {
+    top: auto;
+    border-radius: 20px;
   }
+
+  .vm-titlebar {
+    border-bottom: none;
+  }
+}
 
 </style>
 <style scoped lang="scss">
@@ -272,6 +339,7 @@ export default {
     height: 160px;
     width: 160px;
     display: inline-block;
+
     *:not(span) {
       position: absolute;
     }
@@ -376,6 +444,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+
   .edit-box {
     width: 100%;
     padding-right: 16px;
@@ -401,11 +470,13 @@ export default {
       //align-items: center;
       //
     }
+
     .current-options {
       margin-bottom: 14px;
       display: flex;
       justify-content: center;
     }
+
     .cell-border-type {
       .border-types-title {
         font-style: normal;
@@ -413,8 +484,10 @@ export default {
         font-size: 18px;
         line-height: 28px;
       }
+
       margin-bottom: 14px;
     }
+
     .cell-border-width {
       input[type="number"] {
         background-color: #f2f2f2;
@@ -426,6 +499,7 @@ export default {
       }
     }
   }
+
   .cell-demo-panel {
     display: flex;
     flex-direction: column;
@@ -438,6 +512,7 @@ export default {
     background-color: #F4F5F6;
     margin-bottom: 14px;
     border-radius: 10px;
+
     .cell-box {
       width: 120px;
       height: 30px;
@@ -449,80 +524,84 @@ export default {
   }
 }
 
-  .Update-btn {
-    border: none;
-    font-size: 14px;
-    color: inherit;
-    background: none;
-    cursor: pointer;
-    padding: 25px 80px;
-    display: inline-block;
-    margin: 15px 30px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    outline: none;
+.Update-btn {
+  border: none;
+  font-size: 14px;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 25px 80px;
+  display: inline-block;
+  margin: 15px 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.Update-btn {
+  background: #3AB549;
+  color: #fff;
+  margin: 0;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.Update-btn:hover {
+  background: #27ae60;
+}
+
+.Update-btn:active {
+  background: #27ae60;
+  top: 2px;
+}
+
+.Update-btn:before {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  line-height: 3;
+  font-size: 140%;
+  width: 60px;
+}
+
+.selector-dropdown {
+  .select {
     position: relative;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-  }
-  .Update-btn {
-    background:  #3AB549;
-    color: #fff;
-    margin: 0;
-    border-radius: 10px;
-    padding: 8px 10px;
-  }
 
-  .Update-btn:hover {
-    background: #27ae60;
-  }
+    select {
+      -webkit-appearance: none;
+      outline: 0;
+      border: 0;
+      display: block;
+      width: 100%;
+      padding: 0px 15px;
+      height: 3rem;
+      font-size: 1rem;
+      font-weight: 400;
+      background: #F2F2F2;
+      border-radius: 16px;
+    }
 
-  .Update-btn:active {
-    background: #27ae60;
-    top: 2px;
-  }
-
-  .Update-btn:before {
-    position: absolute;
-    height: 100%;
-    left: 0;
-    top: 0;
-    line-height: 3;
-    font-size: 140%;
-    width: 60px;
-  }
-  .selector-dropdown {
-    .select {
-      position: relative;
-      select {
-        -webkit-appearance: none;
-        outline: 0;
-        border: 0;
-        display: block;
-        width: 100%;
-        padding: 0px 15px;
-        height: 3rem;
-        font-size: 1rem;
-        font-weight: 400;
-        background: #F2F2F2;
-        border-radius: 16px;
-      }
-
-      svg {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        bottom: 0;
-        margin: auto;
-        height: 1.5rem;
-        width: 1.5rem;
-        fill: #757577;
-        pointer-events: none;
-      }
+    svg {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      bottom: 0;
+      margin: auto;
+      height: 1.5rem;
+      width: 1.5rem;
+      fill: #757577;
+      pointer-events: none;
     }
   }
+}
+
 @media only screen and (max-width: 520px) {
   .none-background {
     flex-direction: column;

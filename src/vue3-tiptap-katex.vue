@@ -1,5 +1,12 @@
 <template>
   <div :class="{ 'tiptap-plus-container': true }">
+    <div class="test">
+      <edit-table-modal
+        :show-modal="showDialog"
+        @update:showDialog="setShowDialog"
+        @cellBordersUpdated="updateTableStyle"
+      />
+    </div>
     <div class="tiptap-plus">
       <div
         v-if="editor"
@@ -7,8 +14,10 @@
       >
         <toolbar
           v-if="editorOptions"
+          ref="toolbar"
           :editor="editor"
           :options="editorOptions"
+          @show-edit-table-modal="showDialog = !showDialog"
         />
       </div>
       <div
@@ -38,6 +47,7 @@
 </template>
 
 <script>
+  import EditTableModal from './components/EditTableModal';
   import toolbar from 'vue-tiptap-katex-core/components/toolbar/toolbar'
   import Focus from '@tiptap/extension-focus'
   import SlotBubbleMenu from 'vue-tiptap-katex-core/components/SlotBubbleMenu'
@@ -49,6 +59,7 @@
   import TiptapInteractivePoem from './components/poem/extension';
   import TiptapInteractiveReading from './components/reading/extension';
   import mesra from './components/poem/baitExtension'
+  import cell from './components/table/cellExtension'
   import StarterKit from '@tiptap/starter-kit'
   import Table from '@tiptap/extension-table'
   import TableRow from '@tiptap/extension-table-row'
@@ -82,6 +93,7 @@
     name: 'VueTiptapKatex',
     mixins: [mixinConvertToHTML, mixinConvertToTiptap],
     components: {
+      EditTableModal,
       EditorContent,
       BubbleMenu,
       FloatingMenu,
@@ -110,6 +122,7 @@
     data() {
       return {
         editor: null,
+        showDialog: false
       }
     },
     computed: {
@@ -125,7 +138,7 @@
         }
         Object.assign(options, this.options)
         return options
-      }
+      },
     },
     mounted() {
       this.editor = new Editor({
@@ -188,6 +201,52 @@
       this.editor.destroy()
     },
     methods: {
+      updateTableStyle (data) {
+        console.log('data', data)
+        console.log(this.test(data.background.color.rgba))
+        this.editor.commands.setCellAttribute('backgroundColor', this.test(data.background.color.rgba))
+        this.editor.commands.setCellAttribute('borderBottom', this.convertTableStyleToCss(data.bottom))
+        this.editor.commands.setCellAttribute('borderLeft', this.convertTableStyleToCss(data.left))
+        this.editor.commands.setCellAttribute('borderRight', this.convertTableStyleToCss(data.right))
+        this.editor.commands.setCellAttribute('borderTop', this.convertTableStyleToCss(data.top))
+      },
+      test (value){
+        return  'rgba(' + value.r + ', ' + value.g + ', ' + value.b + ', ' + value.a + ')'
+      },
+      convertTableStyleToCss (data) {
+        if (data.cellBorderType === 'none') {
+          return 'none'
+        }
+        return `${data.cellBorderWidth}px ${data.cellBorderType} ${data.color}`
+      },
+      setShowDialog (val){
+        this.showDialog = val
+      },
+      getTableDirection() {
+        let selectedPartOfTable = []
+        let row = []
+        const consoleArray = []
+        let table = cell.parentElement.parentElement
+        for (let i = 0; i < table.children.length; i++) {
+          const tableRow = table.children[i]
+          const cellsOfRow = tableRow.children
+          for (let j = 0; j < cellsOfRow.length; j++) {
+            document.querySelectorAll('.selectedCell').forEach(cell => {
+              if (cell === cellsOfRow[j]) {
+                console.log(row, i)
+                row.push({i, j})
+                consoleArray.push({tableRow, cellsOfRow})
+              }
+            })
+          }
+          if (row.length) {
+            selectedPartOfTable.push(row)
+            row = []
+          }
+        }
+        console.log(selectedPartOfTable)
+        console.log(consoleArray)
+      },
       elementFromString(value) {
         const element = document.createElement('div')
         element.innerHTML = value.trim()
