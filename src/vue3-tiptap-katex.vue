@@ -262,6 +262,15 @@
         trx = trx.insert(state.doc.content.size, slice.content)
         view.dispatch(trx)
       },
+      setContent(pureHTML) {
+        let string = this.convertToTiptap(pureHTML)
+        if (string.length) {
+          this.editor.commands.setContent(string)
+        }
+      },
+      getContent() {
+        return this.editor.getHTML()
+      },
     },
   }
 </script>
