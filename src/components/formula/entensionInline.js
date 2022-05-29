@@ -1,4 +1,4 @@
-import { Node, mergeAttributes } from '@tiptap/core'
+import { Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import TiptapInteractiveKatex from './TiptapInteractiveKatex'
 
@@ -17,6 +17,7 @@ export default Node.create({
         return {
             katex: {
                 default: 'x=\\frac{-4b\\pm \\sqrt{b^2-4ac}}{2a}',
+                parseHTML: element => element.innerHTML.split('$')[1],
             },
             inline: {
                 default: true
@@ -30,13 +31,14 @@ export default Node.create({
     parseHTML() {
         return [
             {
-                tag: 'tiptap-interactive-katex-inline',
+                tag: 'span',
+                getAttrs: element => element.hasAttribute('data-katex')
             },
         ]
     },
 
     renderHTML({ HTMLAttributes }) {
-        return ['tiptap-interactive-katex-inline', mergeAttributes(HTMLAttributes)]
+        return ['span', {'data-katex': true}, `$${HTMLAttributes.katex}$`]
     },
 
     addNodeView() {

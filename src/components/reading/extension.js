@@ -1,4 +1,4 @@
-import { Node, mergeAttributes } from '@tiptap/core'
+import { Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import TiptapInteractiveReading from './TiptapInteractiveReading';
 
@@ -12,13 +12,14 @@ export default Node.create({
     parseHTML() {
         return [
             {
-                tag: 'tiptap-interactive-reading',
-            },
+                tag: 'div',
+                getAttrs: element => element.getAttribute('class') === 'reading-duplicate'
+            }
         ]
     },
 
-    renderHTML({ HTMLAttributes }) {
-        return ['tiptap-interactive-reading', mergeAttributes(HTMLAttributes), 0]
+    renderHTML() {
+        return ['div', { class: 'reading-duplicate' }, 0]
     },
 
     addNodeView() {
