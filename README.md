@@ -8,6 +8,11 @@ For Vue 3 support see [vue-tiptap-katex](https://www.npmjs.com/package/vue-tipta
 
     npm install --save vue-tiptap-katex
 
+## Changelog
+- add support for v-model
+- add support for custom table cells
+
+
 ## Demo
 
     git clone https://github.com/kerasus/vue-tiptap-katex
@@ -70,8 +75,12 @@ At main Vue configuration, this will make the component available to all templat
         ...
     }
 
-###Note:
+### Note:
 vue-tiptap-katex accepts plain text and HTML as input and exports text as HTML.
+
+## Alternative option: v-model:
+
+    <vue-tiptap-katex v-model="text" />
 
 ## Props
 Note that all props are optional.

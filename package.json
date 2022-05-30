@@ -29,6 +29,8 @@
     "lint": "vue-cli-service lint src"
   },
   "dependencies": {
+    "@ckpack/vue-color": "^1.1.9",
+    "@kouts/vue-modal": "^3.0.3",
     "@mdi/font": "^5.8.55",
     "@tiptap/core": "^2.0.0-beta.102",
     "@tiptap/extension-document": "^2.0.0-beta.13",
@@ -63,7 +65,8 @@
     "v-tooltip": "^4.0.0-beta.2",
     "vue-drag-resize": "^1.5.4",
     "vue-filepond": "^7.0.2",
-    "vue-tiptap-katex-core": "^1.0.20",
+    "vue-tiptap-katex": "^2.3.16",
+    "vue-tiptap-katex-core": "^1.0.23",
     "vue-upload-component": "^2.8.22",
     "vue3-drag-resize": "^2.0.5",
     "webpack": "<=4"

@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper
-    :class="{ 'vue-component': true, 'inline': node.attrs.inline, 'uploading': !node.attrs.url }"
+    :class="{ 'vue-component': true, 'inline': true, 'uploading': !node.attrs.url }"
     data-drag-handle
   >
     <file-pond

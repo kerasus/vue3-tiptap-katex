@@ -1,4 +1,4 @@
-import { Node, mergeAttributes } from '@tiptap/core'
+import { Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import TiptapInteractivePoem from './TiptapInteractivePoem';
 
@@ -12,13 +12,14 @@ export default Node.create({
     parseHTML() {
         return [
             {
-                tag: 'tiptap-interactive-poem',
+                tag: 'div',
+                getAttrs: element => element.getAttribute('class') === 'beit'
             },
         ]
     },
 
-    renderHTML({ HTMLAttributes }) {
-        return ['tiptap-interactive-poem', mergeAttributes(HTMLAttributes), 0]
+    renderHTML() {
+        return ['div', { class: 'beit' }, 0]
     },
 
     addNodeView() {

@@ -16,6 +16,12 @@ export default Node.create({
         return {
             url: {
                 default: '',
+                parseHTML: element => element.getAttribute('src'),
+                renderHTML: attributes => {
+                    return {
+                        src: attributes.url
+                    }
+                }
             },
             width: {
                 default: 0
@@ -24,19 +30,32 @@ export default Node.create({
                 default: 0
             },
             justify: {
-                default: 'center'
-            },
-            inline: {
-                default: true
+                default: 'center',
+                renderHTML: () => {
+                    return {}
+                }
             },
             vertical: {
-                default: 0
+                default: 0,
+                parseHTML: element => {
+                    const vertical = parseInt(element.getAttribute('data-vertical'))
+                    if (isNaN(vertical)) {
+                        return 0
+                    }
+                    return vertical
+                },
+                renderHTML: attributes => {
+                    return {
+                        'data-vertical': attributes.vertical,
+                        style: `vertical-align: ${-1 * attributes.vertical}px`
+                    }
+                }
             },
             horizontal: {
-                default: 0
-            },
-            server: {
-                default: {}
+                default: 0,
+                renderHTML: () => {
+                    return {}
+                }
             }
         }
     },
@@ -44,13 +63,13 @@ export default Node.create({
     parseHTML() {
         return [
             {
-                tag: 'tiptap-interactive-image-upload-inline',
+                tag: 'img',
             },
         ]
     },
 
     renderHTML({ HTMLAttributes }) {
-        return ['tiptap-interactive-image-upload-inline', mergeAttributes(HTMLAttributes)]
+        return ['img', mergeAttributes(HTMLAttributes)]
     },
 
     addNodeView() {
