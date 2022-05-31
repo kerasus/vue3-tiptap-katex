@@ -6,6 +6,11 @@ A rich-text and math editor for Vue.js v3 powered by [Tiptap](https://www.npmjs.
 
     npm install --save vue3-tiptap-katex
 
+## Changelog
+- add support for v-model
+- add support for custom table cells
+
+
 ## Demo
 
     git clone https://github.com/kerasus/vue3-tiptap-katex
@@ -68,8 +73,12 @@ At main Vue configuration, this will make the component available to all templat
         ...
     }
 
-###Note:
+### Note:
 vue-tiptap-katex accepts plain text and HTML as input and exports text as HTML.
+
+## Alternative option: v-model:
+
+    <vue-tiptap-katex v-model="text" />
 
 ## Props
 Note that all props are optional.
