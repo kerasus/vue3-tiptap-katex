@@ -118,6 +118,11 @@
         default: ''
       }
     },
+    watch: {
+      modelValue (newContent) {
+        this.setContent(newContent)
+      }
+    },
     data() {
       return {
         editor: null,

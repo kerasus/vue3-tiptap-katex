@@ -24,6 +24,9 @@ export default {
       content: 'test'
     }
   },
+  mounted() {
+    this.content = 'test 123'
+  },
   methods: {
     onResizeEnd (url, width, height) {
       return url.split('?w=')[0] + '?w=' + width + '&h=' + height
