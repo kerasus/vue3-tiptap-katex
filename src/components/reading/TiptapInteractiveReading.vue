@@ -18,7 +18,7 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import {NodeViewWrapper, NodeViewContent, nodeViewProps} from '@tiptap/vue-3'
+import { NodeViewWrapper, NodeViewContent, nodeViewProps } from '@tiptap/vue-3'
 import MixinComponentReading from 'vue-tiptap-katex-core/components/reading/mixin'
 
 export default {
@@ -26,7 +26,7 @@ export default {
   mixins: [MixinComponentReading],
   components: {
     NodeViewWrapper,
-    NodeViewContent
+    NodeViewContent,
   },
 }
 </script>

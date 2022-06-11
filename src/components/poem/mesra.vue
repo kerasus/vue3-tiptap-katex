@@ -16,7 +16,6 @@
 import { NodeViewWrapper, NodeViewContent, nodeViewProps } from '@tiptap/vue-3'
 import MixinComponentPoemMesra from 'vue-tiptap-katex-core/components/poem/mixin-mesra'
 
-
 export default {
   name: 'Mesra',
   components: {
@@ -24,7 +23,7 @@ export default {
     NodeViewContent,
   },
   props: nodeViewProps,
-  mixins: [MixinComponentPoemMesra]
+  mixins: [MixinComponentPoemMesra],
 }
 </script>
 

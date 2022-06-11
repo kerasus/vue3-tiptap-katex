@@ -1,28 +1,28 @@
 import { Node } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import TiptapInteractivePoem from './TiptapInteractivePoem';
+import TiptapInteractivePoem from './TiptapInteractivePoem.vue'
 
 export default Node.create({
-    name: 'TiptapInteractivePoem',
+  name: 'TiptapInteractivePoem',
 
-    group: 'block',
+  group: 'block',
 
-    content: 'block+',
+  content: 'block+',
 
-    parseHTML() {
-        return [
-            {
-                tag: 'div',
-                getAttrs: element => element.getAttribute('class') === 'beit'
-            },
-        ]
-    },
+  parseHTML() {
+    return [
+      {
+        tag: 'div',
+        getAttrs: (element) => element.getAttribute('class') === 'beit',
+      },
+    ]
+  },
 
-    renderHTML() {
-        return ['div', { class: 'beit' }, 0]
-    },
+  renderHTML() {
+    return ['div', { class: 'beit' }, 0]
+  },
 
-    addNodeView() {
-        return VueNodeViewRenderer(TiptapInteractivePoem)
-    },
+  addNodeView() {
+    return VueNodeViewRenderer(TiptapInteractivePoem)
+  },
 })

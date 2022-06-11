@@ -134,10 +134,12 @@
                     </option>
                   </select>
                   <svg viewBox="0 0 24 24">
+                    <!-- eslint-disable max-len -->
                     <path
                       xmlns="http://www.w3.org/2000/svg"
                       d="M10 12.458Q9.833 12.458 9.677 12.396Q9.521 12.333 9.375 12.188L5.604 8.417Q5.354 8.167 5.375 7.792Q5.396 7.417 5.625 7.188Q5.896 6.917 6.25 6.927Q6.604 6.938 6.854 7.188L10 10.354L13.167 7.188Q13.417 6.938 13.76 6.938Q14.104 6.938 14.375 7.208Q14.625 7.458 14.625 7.823Q14.625 8.188 14.375 8.438L10.625 12.188Q10.479 12.333 10.323 12.396Q10.167 12.458 10 12.458Z"
                     />
+                    <!-- eslint-enable max-len -->
                   </svg>
                 </div>
               </div>
@@ -185,24 +187,24 @@
 <script>
 import VueModal from '@kouts/vue-modal'
 import '@kouts/vue-modal/dist/vue-modal.css'
-import { Sketch } from '@ckpack/vue-color';
+import { Sketch } from '@ckpack/vue-color'
 
 export default {
   name: 'EditTableModal',
   components: {
-    'CustomModal': VueModal,
-     Sketch,
+    CustomModal: VueModal,
+    Sketch,
   },
   props: {
     showModal: {
       type: Boolean,
       default() {
         return false
-      }
-    }
+      },
+    },
   },
   emits: [
-    'update:showDialog'
+    'update:showDialog',
   ],
   data() {
     return {
@@ -211,30 +213,30 @@ export default {
         top: {
           cellBorderWidth: '2',
           cellBorderType: 'solid',
-          color: 'rgba(114, 114, 114, 1)'
+          color: 'rgba(114, 114, 114, 1)',
         },
         right: {
           cellBorderWidth: '2',
           cellBorderType: 'solid',
-          color: 'rgba(114, 114, 114, 1)'
+          color: 'rgba(114, 114, 114, 1)',
         },
         left: {
           cellBorderWidth: '2',
           cellBorderType: 'solid',
-          color: 'rgba(114, 114, 114, 1)'
+          color: 'rgba(114, 114, 114, 1)',
         },
         bottom: {
           cellBorderWidth: '2',
           cellBorderType: 'solid',
-          color: 'rgba(114, 114, 114, 1)'
+          color: 'rgba(114, 114, 114, 1)',
         },
         background: {
-          color: 'rgba(255, 255, 255, 1)'
-        }
+          color: 'rgba(255, 255, 255, 1)',
+        },
       },
       selected: [],
       borderStyle: '',
-      checked: false
+      checked: false,
     }
   },
   computed: {
@@ -244,7 +246,7 @@ export default {
       },
       set(value) {
         this.$emit('update:showDialog', value)
-      }
+      },
     },
     getBorderStyle() {
       return (dir) => {
@@ -260,30 +262,26 @@ export default {
         return (this.currentOptions.background.color) ? this.currentOptions.background.color : 'none'
       },
       set(value) {
-        const computedVal = 'rgba(' + value.rgba.r + ', ' + value.rgba.g + ', ' + value.rgba.b + ', ' + value.rgba.a + ')'
-        if (this.selected != 'background') {
-            this.selected.forEach(item => {
+        const computedVal = `rgba(${value.rgba.r}, ${value.rgba.g}, ${value.rgba.b}, ${value.rgba.a})`
+        if (this.selected !== 'background') {
+          this.selected.forEach((item) => {
             this.currentOptions[item].color = computedVal
           })
-        }
-        else this.currentOptions.background.color = computedVal
+        } else this.currentOptions.background.color = computedVal
 
         // if (this.selected != 'background') {
         //   this.currentOptions[this.selected].color = computedVal
         //   return
         // }
-      }
+      },
     },
     isSelected() {
-      return (direction) => {
-        return this.selected.includes(direction)
-      }
-    }
+      return (direction) => this.selected.includes(direction)
+    },
   },
   methods: {
     changeAttribute(data, field) {
-      console.log(data, field)
-      this.selected.forEach(item => {
+      this.selected.forEach((item) => {
         if (field === 'color') {
           this.currentOptions[item][field] = `rgba(${data.rgba.r}, ${data.rgba.b}, ${data.rgba.b}, ${data.rgba.a})`
         } else if (!data.data) {
@@ -297,9 +295,9 @@ export default {
       this.$emit('cellBordersUpdated', this.currentOptions)
     },
     selectBorder(direction) {
-      this.selected = this.selected.filter(item => item !== 'background')
+      this.selected = this.selected.filter((item) => item !== 'background')
       if (this.selected.includes(direction)) {
-        this.selected = this.selected.filter(item => item !== direction)
+        this.selected = this.selected.filter((item) => item !== direction)
       } else {
         this.selected.push(direction)
       }
@@ -310,7 +308,7 @@ export default {
       } else {
         this.selected = ['background']
       }
-    }
+    },
   },
 }
 </script>
@@ -460,7 +458,6 @@ export default {
         justify-content: center;
       }
     }
-
 
     .none-background {
       display: inline-flex;
