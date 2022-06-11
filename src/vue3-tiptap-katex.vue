@@ -120,13 +120,17 @@
     },
     watch: {
       modelValue (newContent) {
+        if (this.newModelValue === newContent) {
+          return
+        }
         this.setContent(newContent)
       }
     },
     data() {
       return {
         editor: null,
-        showDialog: false
+        showDialog: false,
+        newModelValue: null
       }
     },
     computed: {
@@ -145,6 +149,7 @@
       },
     },
     created () {
+      this.newModelValue = this.convertToTiptap(this.modelValue)
       this.$emit('update:modelValue', this.convertToTiptap(this.modelValue))
     },
     mounted () {
@@ -193,6 +198,7 @@
         // triggered on every change
         onUpdate({ editor }) {
           vueTiptapKatexInstance.$emit('update:modelValue', editor.getHTML())
+          vueTiptapKatexInstance.newModelValue = vueTiptapKatexInstance.convertToTiptap(editor.getHTML())
         },
         editorProps: {
           handleKeyDown: (view, event) => {
