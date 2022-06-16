@@ -36,25 +36,21 @@ import MixinComponentFormula from 'vue-tiptap-katex-core/components/formula/mixi
 
 import 'katex/dist/katex.min.css'
 // eslint-disable-next-line no-unused-vars
-import {NodeViewWrapper, nodeViewProps} from '@tiptap/vue-3'
+import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import '@mdi/font/css/materialdesignicons.css'
-
-
 
 // ------------------- Mathlive ---------------------
 
 import 'mathlive/dist/mathlive-fonts.css'
 import 'mathlive/dist/mathlive-static.css'
 
-
 // --------------------------------------------------
-
 
 export default {
   components: {
     NodeViewWrapper,
   },
-  mixins: [MixinComponentFormula]
+  mixins: [MixinComponentFormula],
 }
 </script>
 

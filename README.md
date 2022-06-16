@@ -2,16 +2,19 @@
 
 A rich-text and math editor for Vue.js v3 powered by [Tiptap](https://www.npmjs.com/package/tiptap) and [Mathlive](https://www.npmjs.com/package/mathlive).
 
-For Vue 3 support see [vue-tiptap-katex](https://www.npmjs.com/package/vue-tiptap-katex)
-
 ## Installation
 
-    npm install --save vue-tiptap-katex
+    npm install --save vue3-tiptap-katex
+
+## Changelog
+- add support for v-model
+- add support for custom table cells
+
 
 ## Demo
 
-    git clone https://github.com/kerasus/vue-tiptap-katex
-    cd vue-tiptap-katex
+    git clone https://github.com/kerasus/vue3-tiptap-katex
+    cd vue3-tiptap-katex
     npm install
     npm run serve
 
@@ -31,7 +34,7 @@ something like this
 
 In the same template file, at `<script>` part, this will make the component available only to the template in this file
 
-    import VueTiptapKatex from 'vue-tiptap-katex'
+    import VueTiptapKatex from 'vue3-tiptap-katex'
     ...
     export default {
       ...
@@ -48,7 +51,7 @@ In the same template file, at `<script>` part, this will make the component avai
 At main Vue configuration, this will make the component available to all templates in your app
 
     import Vue from 'vue'
-    import VueTiptapKatex from 'vue-tiptap-katex'
+    import VueTiptapKatex from 'vue3-tiptap-katex'
     ...
     Vue.component('vue-tiptap-katex', VueTiptapKatex)
 
@@ -70,8 +73,12 @@ At main Vue configuration, this will make the component available to all templat
         ...
     }
 
-###Note:
+### Note:
 vue-tiptap-katex accepts plain text and HTML as input and exports text as HTML.
+
+## Alternative option: v-model:
+
+    <vue-tiptap-katex v-model="text" />
 
 ## Props
 Note that all props are optional.

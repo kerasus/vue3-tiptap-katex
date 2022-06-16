@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper
-    :class="{ 'vue-component': true, 'inline': node.attrs.inline, 'uploading': !node.attrs.url }"
+    :class="{ 'vue-component': true, 'inline': true, 'uploading': !node.attrs.url }"
     data-drag-handle
   >
     <file-pond
@@ -18,7 +18,12 @@
     <div
       v-else-if="naturalHeight && naturalWidth"
       class="resizer-container"
-      :style="{ height: node.attrs.height + 'px', width: node.attrs.width + 'px', marginBottom: node.attrs.vertical + 'px', marginTop: -1 * node.attrs.vertical + 'px' }"
+      :style="{
+        height: node.attrs.height + 'px',
+        width: node.attrs.width + 'px',
+        marginBottom: node.attrs.vertical + 'px',
+        marginTop: -1 * node.attrs.vertical + 'px'
+      }"
     >
       <span
         class="mdi mdi-drag"
@@ -41,42 +46,41 @@
 </template>
 
 <script>
-  import vueFilePond from 'vue-filepond';
-  import 'filepond/dist/filepond.min.css';
-  import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-  import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-  import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import vueFilePond from 'vue-filepond'
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
-  const FilePond = vueFilePond(
-      FilePondPluginFileValidateType,
-      FilePondPluginImagePreview
-  );
+import VueDragResize from 'vue3-drag-resize'
+import MixinComponentImageUpload from 'vue-tiptap-katex-core/components/ImageUpload/mixin'
 
-  import VueDragResize from 'vue3-drag-resize'
-  import MixinComponentImageUpload from 'vue-tiptap-katex-core/components/ImageUpload/mixin'
+import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 
-  import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview,
+)
 
-
-  export default {
-    mixins: [MixinComponentImageUpload],
-    components: {
-      NodeViewWrapper,
-      FilePond,
-      VueDragResize
+export default {
+  mixins: [MixinComponentImageUpload],
+  components: {
+    NodeViewWrapper,
+    FilePond,
+    VueDragResize,
+  },
+  props: {
+    nodeViewProps,
+    node: {
+      type: Object,
+      required: true,
     },
-    props: {
-      nodeViewProps,
-      node: {
-        type: Object,
-        required: true
-      },
-      updateAttributes: {
-        type: Function,
-        required: true,
-      },
+    updateAttributes: {
+      type: Function,
+      required: true,
     },
-  }
+  },
+}
 </script>
 
 <style>

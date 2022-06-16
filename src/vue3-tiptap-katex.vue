@@ -1,5 +1,12 @@
 <template>
   <div :class="{ 'tiptap-plus-container': true }">
+    <div class="test">
+      <edit-table-modal
+        :show-modal="showDialog"
+        @update:showDialog="setShowDialog"
+        @cellBordersUpdated="updateTableStyle"
+      />
+    </div>
     <div class="tiptap-plus">
       <div
         v-if="editor"
@@ -7,8 +14,10 @@
       >
         <toolbar
           v-if="editorOptions"
+          ref="toolbar"
           :editor="editor"
           :options="editorOptions"
+          @show-edit-table-modal="showDialog = !showDialog"
         />
       </div>
       <div
@@ -38,204 +47,243 @@
 </template>
 
 <script>
-  import toolbar from 'vue-tiptap-katex-core/components/toolbar/toolbar'
-  import Focus from '@tiptap/extension-focus'
-  import SlotBubbleMenu from 'vue-tiptap-katex-core/components/SlotBubbleMenu'
-  import SlotFloatingMenu from 'vue-tiptap-katex-core/components/SlotFloatingMenu'
-  import TiptapInteractiveKatex from './components/formula/extention'
-  import TiptapInteractiveKatexInline from './components/formula/entensionInline'
-  import TiptapInteractiveImageUpload from './components/ImageUpload/extension';
-  import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline';
-  import TiptapInteractivePoem from './components/poem/extension';
-  import TiptapInteractiveReading from './components/reading/extension';
-  import mesra from './components/poem/baitExtension'
-  import StarterKit from '@tiptap/starter-kit'
-  import Table from '@tiptap/extension-table'
-  import TableRow from '@tiptap/extension-table-row'
-  import TableCell from '@tiptap/extension-table-cell'
-  import TableHeader from '@tiptap/extension-table-header'
-  import TextAlign from '@tiptap/extension-text-align'
-  import TextDirection from 'tiptap-text-direction-extension';
-  import Highlight from '@tiptap/extension-highlight'
-  import Underline from '@tiptap/extension-underline'
-  import ImageAlign from 'vue-tiptap-katex-core/extension/ImageAlign/ImageAlign'
-  import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys';
-  import {DOMParser} from 'prosemirror-model';
-  // import Focus from '@tiptap/extension-focus'
-  import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace';
-  // import Paper from './Drawing/Paper.js'
+import toolbar from 'vue-tiptap-katex-core/components/toolbar/toolbar.vue'
+import Focus from '@tiptap/extension-focus'
+import SlotBubbleMenu from 'vue-tiptap-katex-core/components/SlotBubbleMenu.vue'
+import SlotFloatingMenu from 'vue-tiptap-katex-core/components/SlotFloatingMenu.vue'
+import StarterKit from '@tiptap/starter-kit'
+import Table from '@tiptap/extension-table'
+import TableRow from '@tiptap/extension-table-row'
+import TableCell from 'vue-tiptap-katex-core/extension/table'
+import TextAlign from '@tiptap/extension-text-align'
+import TextDirection from 'tiptap-text-direction-extension'
+import Highlight from '@tiptap/extension-highlight'
+import Underline from '@tiptap/extension-underline'
+import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys'
+import { DOMParser } from 'prosemirror-model'
+// import Focus from '@tiptap/extension-focus'
+import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace'
+// import Paper from './Drawing/Paper.js'
 
-  import {
-    Editor,
+import {
+  Editor,
+  EditorContent,
+  BubbleMenu,
+  FloatingMenu,
+} from '@tiptap/vue-3'
+
+import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap'
+import mesra from './components/poem/mesra'
+import TiptapInteractiveReading from './components/reading/extension'
+import TiptapInteractivePoem from './components/poem/bait'
+import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline'
+import TiptapInteractiveKatexInline from './components/formula/entensionInline'
+import EditTableModal from './components/EditTableModal.vue'
+// import {EditorView} from "prosemirror-view";
+// import {EditorState} from "prosemirror-state";
+// import {posToDOMRect} from "@tiptap/core";
+
+export default {
+  name: 'VueTiptapKatex',
+  mixins: [mixinConvertToTiptap],
+  components: {
+    EditTableModal,
     EditorContent,
     BubbleMenu,
-    FloatingMenu
-  } from '@tiptap/vue-3'
-
-  import mixinConvertToHTML from 'vue-tiptap-katex-core/mixins/convertToHTML';
-  import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap';
-  // import {EditorView} from "prosemirror-view";
-  // import {EditorState} from "prosemirror-state";
-  // import {posToDOMRect} from "@tiptap/core";
-
-  export default {
-    name: 'VueTiptapKatex',
-    mixins: [mixinConvertToHTML, mixinConvertToTiptap],
-    components: {
-      EditorContent,
-      BubbleMenu,
-      FloatingMenu,
-      toolbar,
-      SlotBubbleMenu,
-      SlotFloatingMenu
+    FloatingMenu,
+    toolbar,
+    SlotBubbleMenu,
+    SlotFloatingMenu,
+  },
+  props: {
+    uploadServer: {
+      type: Object,
+      default: () => {},
     },
-    props: {
-      uploadServer: {
-        type: Object,
-        default: () => {}
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    options: {
+      type: Object,
+      required: false,
+      default() {
+        return {}
       },
-      loading: {
-        type: Boolean,
-        required: false,
-        default: false
+    },
+    modelValue: {
+      type: String,
+      required: false,
+      default: '',
+    },
+  },
+  watch: {
+    modelValue(newContent) {
+      if (this.newModelValue === newContent) {
+        return
+      }
+      this.setContent(newContent)
+    },
+  },
+  data() {
+    return {
+      editor: null,
+      showDialog: false,
+      newModelValue: null,
+    }
+  },
+  computed: {
+    editorOptions() {
+      const options = {
+        bubbleMenu: true,
+        floatingMenu: true,
+        poem: false,
+        reading: false,
+        persianKeyboard: false,
+        mathliveOptions: {},
+        onResizeEnd: null,
+      }
+      Object.assign(options, this.options)
+      return options
+    },
+  },
+  created() {
+    this.newModelValue = this.convertToTiptap(this.modelValue)
+    this.$emit('update:modelValue', this.convertToTiptap(this.modelValue))
+  },
+  mounted() {
+    const vueTiptapKatexInstance = this
+    this.editor = new Editor({
+      content: this.modelValue,
+      parseOptions: {
+        preserveWhitespace: true,
       },
-      options: {
-        type: Object,
-        required: false,
-        default () {
-          return {}
-        }
-      }
-    },
-    data() {
-      return {
-        editor: null,
-      }
-    },
-    computed: {
-      editorOptions () {
-        const options = {
-          bubbleMenu: true,
-          floatingMenu: true,
-          poem: false,
-          reading: false,
-          persianKeyboard: false,
-          mathliveOptions: {},
-          onResizeEnd: null
-        }
-        Object.assign(options, this.options)
-        return options
-      }
-    },
-    mounted() {
-      this.editor = new Editor({
-        content: this.value,
-        parseOptions: {
-          preserveWhitespace: true
-        },
-        extensions: [
-          Focus.configure({
-            className: 'has-focus',
-            mode: 'all',
-          }),
-          StarterKit.configure({
-            paragraph: {
-              HTMLAttributes: { dir: 'auto' },
-            }
-          }),
-          TextAlign.configure({
-            types: ['heading', 'paragraph', 'TiptapInteractiveImageUpload', 'TiptapInteractiveReading'],
-            defaultAlignment: ''
-          }),
-          TextDirection,
-          Highlight,
-          Underline,
-          Table.configure({
-            resizable: true,
-          }),
-          TableRow,
-          TableHeader,
-          TableCell,
-          TiptapInteractiveKatex,
-          TiptapInteractiveKatexInline,
-          TiptapInteractiveImageUpload,
-          TiptapInteractiveImageUploadInline,
-          TiptapInteractivePoem,
-          mesra,
-          TiptapInteractiveReading,
-          ImageAlign,
-          Shortkeys,
-          ThinSpace
-        ],
-        // triggered on every change
-        onUpdate() {
-        },
-        editorProps: {
-          handleKeyDown: (view, event) => {
-            if (event.key === 'Enter' && document.querySelector('.mesra.has-focus')) {
-              console.log(document.querySelector('.mesra.has-focus'))
-              event.preventDefault()
-              this.insertPoem(this.editor, '<tiptap-interactive-poem><mesra></mesra><mesra></mesra></tiptap-interactive-poem>')
-              return true
-            }
-            return false
+      extensions: [
+        Focus.configure({
+          className: 'has-focus',
+          mode: 'all',
+        }),
+        StarterKit.configure({
+          paragraph: {
+            HTMLAttributes: { dir: 'auto' },
+          },
+        }),
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+          defaultAlignment: '',
+        }),
+        TextDirection,
+        Highlight,
+        Underline,
+        Table.configure({
+          resizable: true,
+          HTMLAttributes: {
+            class: 'tiptap-table',
+            style: 'border-collapse: collapse !important',
+          },
+        }),
+        TableRow.extend({
+          content: 'tableCell*',
+        }),
+        TableCell,
+        TiptapInteractiveKatexInline,
+        TiptapInteractiveImageUploadInline,
+        TiptapInteractivePoem,
+        mesra,
+        TiptapInteractiveReading,
+        Shortkeys,
+        ThinSpace,
+      ],
+      // triggered on every change
+      onUpdate({ editor }) {
+        vueTiptapKatexInstance.$emit('update:modelValue', editor.getHTML())
+        vueTiptapKatexInstance.newModelValue = vueTiptapKatexInstance
+          .convertToTiptap(editor.getHTML())
+      },
+      editorProps: {
+        handleKeyDown: (view, event) => {
+          if (event.key === 'Enter' && document.querySelector('.mesra.has-focus')) {
+            event.preventDefault()
+            this.insertPoem(this.editor, '<div class="beit"><div class="mesra"></div><div class="mesra"></div></div>')
+            return true
           }
-        }
-      })
-      this.editor.editorOptions = this.editorOptions
+          return false
+        },
+      },
+    })
+    this.editor.editorOptions = this.editorOptions
+  },
+  beforeDestroy() {
+    this.editor.destroy()
+  },
+  methods: {
+    updateTableStyle(data) {
+      this.editor.commands.setCellAttribute('backgroundColor', data.background.color)
+      this.editor.commands.setCellAttribute('borderBottom', this.convertTableStyleToCss(data.bottom))
+      this.editor.commands.setCellAttribute('borderLeft', this.convertTableStyleToCss(data.left))
+      this.editor.commands.setCellAttribute('borderRight', this.convertTableStyleToCss(data.right))
+      this.editor.commands.setCellAttribute('borderTop', this.convertTableStyleToCss(data.top))
     },
-    beforeDestroy() {
-      this.editor.destroy()
+    convertTableStyleToCss(data) {
+      if (data.cellBorderType === 'none') {
+        return 'none'
+      }
+      return `${data.cellBorderWidth}px ${data.cellBorderType} ${data.color}`
     },
-    methods: {
-      elementFromString(value) {
-        const element = document.createElement('div')
-        element.innerHTML = value.trim()
-
-        return element
-      },
-      insertPoem({ state, view }, value) {
-        const element = this.elementFromString(value)
-        const slice = DOMParser.fromSchema(state.schema).parseSlice(element)
-
-        // let reachedEnd = false
-        // let first = 0, last = 26
-        // let findIndex = -1
-        // console.log('text: ', state.doc.textBetween(0, state.doc.content.size))
-        // while (!reachedEnd) {
-        //   try {
-        //     const text = state.doc.textBetween(first, last)
-        //     if (text === '</tiptap-interactive-poem>') {
-        //       reachedEnd = true
-        //       findIndex = first
-        //     }
-        //     first++
-        //     last++
-        //   } catch {
-        //     console.log('poem not found')
-        //     break;
-        //   }
-        // }
-
-        const { tr } = state;
-        let trx = tr;
-
-        // trx = trx.insertText('',state.doc.content.size,state.doc.content.size + 1)
-
-        trx = trx.insert(state.doc.content.size, slice.content)
-        view.dispatch(trx)
-      },
-      setContent(pureHTML) {
-        let string = this.convertToTiptap(pureHTML)
-        if (string.length) {
-          this.editor.commands.setContent(string)
-        }
-      },
-      getContent() {
-        return this.convertToPureHTML(this.editor.getHTML())
-      },
+    setShowDialog(val) {
+      this.showDialog = val
     },
-  }
+    getTableDirection() {
+      // let selectedPartOfTable = []
+      // let row = []
+      // const consoleArray = []
+      // let table = cell.parentElement.parentElement
+      // for (let i = 0; i < table.children.length; i++) {
+      //   const tableRow = table.children[i]
+      //   const cellsOfRow = tableRow.children
+      //   for (let j = 0; j < cellsOfRow.length; j++) {
+      //     document.querySelectorAll('.selectedCell').forEach(cell => {
+      //       if (cell === cellsOfRow[j]) {
+      //         console.log(row, i)
+      //         row.push({i, j})
+      //         consoleArray.push({tableRow, cellsOfRow})
+      //       }
+      //     })
+      //   }
+      //   if (row.length) {
+      //     selectedPartOfTable.push(row)
+      //     row = []
+      //   }
+      // }
+      // console.log(selectedPartOfTable)
+      // console.log(consoleArray)
+    },
+    elementFromString(value) {
+      const element = document.createElement('div')
+      element.innerHTML = value.trim()
+
+      return element
+    },
+    insertPoem({ state, view }, value) {
+      const element = this.elementFromString(value)
+      const slice = DOMParser.fromSchema(state.schema).parseSlice(element)
+      const { tr } = state
+      let trx = tr
+      trx = trx.insert(state.doc.content.size, slice.content)
+      view.dispatch(trx)
+    },
+    setContent(pureHTML) {
+      const string = this.convertToTiptap(pureHTML)
+      if (string.length) {
+        this.editor.commands.setContent(string)
+      }
+    },
+    getContent() {
+      return this.editor.getHTML()
+    },
+  },
+}
 </script>
 
 <style>
