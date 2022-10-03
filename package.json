@@ -55,7 +55,7 @@
     "filepond": "^4.30.3",
     "filepond-plugin-file-validate-type": "^1.2.6",
     "filepond-plugin-image-preview": "^4.6.10",
-    "katex": "^0.15.1",
+    "katex": "^0.16.2",
     "mathlive": "^0.58.0",
     "node-sass": "^7.0.1",
     "postcss-loader": "^4.3.0",
