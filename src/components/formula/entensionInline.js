@@ -17,7 +17,7 @@ export default Node.create({
     return {
       katex: {
         // default: 'x=\\frac{-4b\\pm \\sqrt{b^2-4ac}}{2a}',
-        default: 'formula',
+        default: 'formulaEditPanel',
         parseHTML: (element) => element.innerHTML.split('$')[1],
       },
       inline: {

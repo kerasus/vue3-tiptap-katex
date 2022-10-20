@@ -3,6 +3,17 @@
     :class="{ 'vue-component': true, 'inline': node.attrs.inline }"
     data-drag-handle
   >
+<!--    ToDo : add FormulaBroken fix mode-->
+<!--    <div-->
+<!--        v-if="editMode && isFormulaBroken"-->
+<!--        icon-->
+<!--        color="green"-->
+<!--        @click="fixFormula"-->
+<!--    >-->
+<!--      <span-->
+<!--          class="mdi mdi-checkbox-multiple-marked"-->
+<!--      />-->
+<!--    </div>-->
     <div
       v-if="editMode"
       id="mathfield"
