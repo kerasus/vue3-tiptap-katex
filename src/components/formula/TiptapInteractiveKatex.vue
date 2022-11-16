@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper
-    :class="{ 'vue-component': true, 'inline': node.attrs.inline }"
+    :class="{ 'vue-component': true, 'inline': node.attrs.inline, 'editable': editMode }"
     data-drag-handle
   >
 <!--    ToDo : add FormulaBroken fix mode-->
@@ -143,6 +143,11 @@ export default {
 
 .vue-component.inline {
   display: inline-flex;
+  &.editable {
+    display: flex;
+    max-width: fit-content;
+    justify-content: flex-end;
+  }
 }
 
 .label {
