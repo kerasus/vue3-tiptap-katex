@@ -14,19 +14,34 @@
           headers: {
             Authorization: authorizationCode
           }
+        },
+        persianKeyboard: true,
+        mathliveOptions: {
+          locale: 'fa',
         }
       }"
     />
+    --------------------------------------------------------------------
+    <p>v-html:</p>
     <div
       ref="printdiv"
       v-html="content"
     />
+    --------------------------------------------------------------------
+    <p>computedKatex:</p>
+    <div
+        v-html="computedKatex"
+    />
+    --------------------------------------------------------------------
+    <p>html:</p>
+    {{content}}
   </div>
 </template>
 
 <script>
 // import renderMathInElement from 'katex/dist/contrib/auto-render.js'
 import 'katex/dist/katex.min.css'
+import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap'
 import VueTiptapKatex from './vue3-tiptap-katex.vue'
 
 export default {
@@ -39,13 +54,24 @@ export default {
     }
   },
   mounted() {
-    this.content = 'test 123'
+    /* eslint-disable */
+    this.content = '<p dir="auto" style="text-align: left"><span data-katex="true">$a\\ne d\\ne f$</span></p>'
   },
   methods: {
     onResizeEnd(url, width, height) {
       return `${url.split('?w=')[0]}?w=${width}&h=${height}`
     },
   },
+  computed: {
+    computedKatex() {
+      let string = this.content
+      if (string === null || typeof string === 'undefined') {
+        return ''
+      }
+      string = mixinConvertToTiptap.methods.renderKatexToHTML(string)
+      return string
+    },
+  }
 }
 </script>
 
