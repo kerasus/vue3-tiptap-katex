@@ -19,7 +19,6 @@
       id="mathfield"
       ref="mathfield"
       dir="ltr"
-      locale="fa"
       :class="{ 'editable': editMode }"
     />
     <div
@@ -189,6 +188,9 @@ export default {
 </style>
 
 <style>
+.ProseMirror [contenteditable="false"] [contenteditable="true"] {
+  white-space: normal !important;
+}
 .ML__mathlive .ML__base span span span span span span span svg {
   width: 300em !important;
   height: 0.5em !important;
