@@ -59,6 +59,8 @@ import TextAlign from '@tiptap/extension-text-align'
 import TextDirection from 'tiptap-text-direction-extension'
 import Highlight from '@tiptap/extension-highlight'
 import Underline from '@tiptap/extension-underline'
+import { Color } from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
 import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys'
 import { DOMParser } from 'prosemirror-model'
 // import Focus from '@tiptap/extension-focus'
@@ -73,6 +75,7 @@ import {
 } from '@tiptap/vue-3'
 
 import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap'
+import { Paragraph } from '@tiptap/extension-paragraph'
 import mesra from './components/poem/mesra'
 import TiptapInteractiveReading from './components/reading/extension'
 import TiptapInteractivePoem from './components/poem/bait'
@@ -173,8 +176,17 @@ export default {
           types: ['heading', 'paragraph'],
           defaultAlignment: '',
         }),
+        Color.configure({
+          types: ['textStyle'],
+        }),
+        TextStyle,
+        Document,
+        Paragraph,
+        Text,
         TextDirection,
-        Highlight,
+        Highlight.configure({
+          multicolor: true,
+        }),
         Underline,
         Table.configure({
           resizable: true,
