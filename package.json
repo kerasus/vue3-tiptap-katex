@@ -57,7 +57,6 @@
     "katex": "^0.16.4",
     "mathlive": "^0.86.0",
     "prosemirror-model": "^1.18.3",
-    "v-tooltip": "^2.1.3",
     "vue-drag-resize": "^1.5.4",
     "vue-filepond": "^7.0.3",
     "vue-tiptap-katex-core": "^1.0.44",
