@@ -441,7 +441,7 @@ export default {
       }
 
       .selectedCell:after {
-        z-index: 2;
+        z-index: 1;
         position: absolute;
         content: "";
         left: 0;
