@@ -75,7 +75,6 @@ import {
 } from '@tiptap/vue-3'
 
 import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap'
-import { Paragraph } from '@tiptap/extension-paragraph'
 import mesra from './components/poem/mesra'
 import TiptapInteractiveReading from './components/reading/extension'
 import TiptapInteractivePoem from './components/poem/bait'
@@ -181,7 +180,6 @@ export default {
         }),
         TextStyle,
         Document,
-        Paragraph,
         Text,
         TextDirection,
         Highlight.configure({
@@ -443,7 +441,7 @@ export default {
       }
 
       .selectedCell:after {
-        z-index: 2;
+        z-index: 1;
         position: absolute;
         content: "";
         left: 0;

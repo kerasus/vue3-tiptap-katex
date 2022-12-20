@@ -1,198 +1,210 @@
 <template>
   <div class="edit-table-modal">
-    <custom-modal
-      v-model="modal"
-      wrapper-class="edit-table-modal-wrapper"
+    <div
+        class="dialog-container"
+        id="my-dialog"
+        aria-hidden="true"
+        aria-labelledby="my-dialog-title"
+        aria-describedby="my-dialog-description"
     >
-      <div class="edit-cell-panel">
-        <div class="cell-demo-panel">
-          <div
-            class="cell-box"
-            :style="{
+      <div class="dialog-overlay" data-a11y-dialog-hide></div>
+      <div class="dialog-content" role="document">
+        <button
+            data-a11y-dialog-hide
+            class="dialog-close"
+            aria-label="Close this dialog window"
+        >
+          &times;
+        </button>
+        <div class="edit-cell-panel">
+          <div class="cell-demo-panel">
+            <div
+                class="cell-box"
+                :style="{
               'border-top': getBorderStyle('top'),
               'border-left': getBorderStyle('left'),
               'border-bottom': getBorderStyle('bottom'),
               'border-right': getBorderStyle('right'),
               'background-color': currentOptions.background.color
             }"
-          >
-            your cell
+            >
+              your cell
+            </div>
           </div>
-        </div>
-        <div class="edit-box">
-          <div class="selector-ui">
-            <div
-              class="border-top-selector selector"
-              :class="{ 'selected': isSelected('top') }"
-              @click="selectBorder('top')"
-            />
-            <div
-              class="border-right-selector selector"
-              :class="{ 'selected': isSelected('right') }"
-              @click="selectBorder('right')"
-            />
-            <div
-              class="border-left-selector selector"
-              :class="{ 'selected': isSelected('left') }"
-              @click="selectBorder('left')"
-            />
-            <div
-              class="border-bottom-selector selector"
-              :class="{ 'selected': isSelected('bottom') }"
-              @click="selectBorder('bottom')"
-            />
-            <div
-              class="background-selector selector"
-              :class="{ 'selected': isSelected('background') }"
-              @click="selectBackground"
-            />
-          </div>
-          <div
-            v-if="selected.length && !selected.includes('background')"
-            class="none-background"
-          >
-            <div class="type-width">
+          <div class="edit-box">
+            <div class="selector-ui">
               <div
-                class="cell-border-type selector-dropdown "
-              >
-                <div class="border-types-title">
-                  border types :
-                </div>
+                  class="border-top-selector selector"
+                  :class="{ 'selected': isSelected('top') }"
+                  @click="selectBorder('top')"
+              />
+              <div
+                  class="border-right-selector selector"
+                  :class="{ 'selected': isSelected('right') }"
+                  @click="selectBorder('right')"
+              />
+              <div
+                  class="border-left-selector selector"
+                  :class="{ 'selected': isSelected('left') }"
+                  @click="selectBorder('left')"
+              />
+              <div
+                  class="border-bottom-selector selector"
+                  :class="{ 'selected': isSelected('bottom') }"
+                  @click="selectBorder('bottom')"
+              />
+              <div
+                  class="background-selector selector"
+                  :class="{ 'selected': isSelected('background') }"
+                  @click="selectBackground"
+              />
+            </div>
+            <div
+                v-if="selected.length && !selected.includes('background')"
+                class="none-background"
+            >
+              <div class="type-width">
                 <div
-                  class="select"
-                  style="width: 200px;"
+                    class="cell-border-type selector-dropdown "
                 >
-                  <select
-                    :value="currentOptions[selected[0]].cellBorderType"
-                    @input="changeAttribute($event, 'cellBorderType')"
+                  <div class="border-types-title">
+                    border types :
+                  </div>
+                  <div
+                      class="select"
+                      style="width: 200px;"
                   >
-                    <option
-                      disabled
-                      value=""
+                    <select
+                        :value="currentOptions[selected[0]].cellBorderType"
+                        @input="changeAttribute($event, 'cellBorderType')"
                     >
-                      Please select a type
-                    </option>
-                    <option
-                      value="none"
-                      @click="changeAttribute({data: 'none'}, 'cellBorderType')"
-                    >
-                      none
-                    </option>
-                    <option
-                      value="dotted"
-                      @click="changeAttribute({data: 'dotted'}, 'cellBorderType')"
-                    >
-                      dotted
-                    </option>
-                    <option
-                      value="dashed"
-                      @click="changeAttribute({data: 'dashed'}, 'cellBorderType')"
-                    >
-                      dashed
-                    </option>
-                    <option
-                      value="solid"
-                      @click="changeAttribute({data: 'solid'}, 'cellBorderType')"
-                    >
-                      solid
-                    </option>
-                    <option
-                      value="double"
-                      @click="changeAttribute({data: 'double'}, 'cellBorderType')"
-                    >
-                      double
-                    </option>
-                    <option
-                      value="groove"
-                      @click="changeAttribute({data: 'groove'}, 'cellBorderType')"
-                    >
-                      groove
-                    </option>
-                    <option
-                      value="ridge"
-                      @click="changeAttribute({data: 'ridge'}, 'cellBorderType')"
-                    >
-                      ridge
-                    </option>
-                    <option
-                      value="inset"
-                      @click="changeAttribute({data: 'inset'}, 'cellBorderType')"
-                    >
-                      inset
-                    </option>
-                    <option
-                      value="outset"
-                      @click="changeAttribute({data: 'outset'}, 'cellBorderType')"
-                    >
-                      outset
-                    </option>
-                    <option
-                      value="mix"
-                      @click="changeAttribute({data: 'mix'}, 'cellBorderType')"
-                    >
-                      mix
-                    </option>
-                  </select>
-                  <svg viewBox="0 0 24 24">
-                    <!-- eslint-disable max-len -->
-                    <path
-                      xmlns="http://www.w3.org/2000/svg"
-                      d="M10 12.458Q9.833 12.458 9.677 12.396Q9.521 12.333 9.375 12.188L5.604 8.417Q5.354 8.167 5.375 7.792Q5.396 7.417 5.625 7.188Q5.896 6.917 6.25 6.927Q6.604 6.938 6.854 7.188L10 10.354L13.167 7.188Q13.417 6.938 13.76 6.938Q14.104 6.938 14.375 7.208Q14.625 7.458 14.625 7.823Q14.625 8.188 14.375 8.438L10.625 12.188Q10.479 12.333 10.323 12.396Q10.167 12.458 10 12.458Z"
-                    />
-                    <!-- eslint-enable max-len -->
-                  </svg>
+                      <option
+                          disabled
+                          value=""
+                      >
+                        Please select a type
+                      </option>
+                      <option
+                          value="none"
+                          @click="changeAttribute({data: 'none'}, 'cellBorderType')"
+                      >
+                        none
+                      </option>
+                      <option
+                          value="dotted"
+                          @click="changeAttribute({data: 'dotted'}, 'cellBorderType')"
+                      >
+                        dotted
+                      </option>
+                      <option
+                          value="dashed"
+                          @click="changeAttribute({data: 'dashed'}, 'cellBorderType')"
+                      >
+                        dashed
+                      </option>
+                      <option
+                          value="solid"
+                          @click="changeAttribute({data: 'solid'}, 'cellBorderType')"
+                      >
+                        solid
+                      </option>
+                      <option
+                          value="double"
+                          @click="changeAttribute({data: 'double'}, 'cellBorderType')"
+                      >
+                        double
+                      </option>
+                      <option
+                          value="groove"
+                          @click="changeAttribute({data: 'groove'}, 'cellBorderType')"
+                      >
+                        groove
+                      </option>
+                      <option
+                          value="ridge"
+                          @click="changeAttribute({data: 'ridge'}, 'cellBorderType')"
+                      >
+                        ridge
+                      </option>
+                      <option
+                          value="inset"
+                          @click="changeAttribute({data: 'inset'}, 'cellBorderType')"
+                      >
+                        inset
+                      </option>
+                      <option
+                          value="outset"
+                          @click="changeAttribute({data: 'outset'}, 'cellBorderType')"
+                      >
+                        outset
+                      </option>
+                      <option
+                          value="mix"
+                          @click="changeAttribute({data: 'mix'}, 'cellBorderType')"
+                      >
+                        mix
+                      </option>
+                    </select>
+                    <svg viewBox="0 0 24 24">
+                      <!-- eslint-disable max-len -->
+                      <path
+                          xmlns="http://www.w3.org/2000/svg"
+                          d="M10 12.458Q9.833 12.458 9.677 12.396Q9.521 12.333 9.375 12.188L5.604 8.417Q5.354 8.167 5.375 7.792Q5.396 7.417 5.625 7.188Q5.896 6.917 6.25 6.927Q6.604 6.938 6.854 7.188L10 10.354L13.167 7.188Q13.417 6.938 13.76 6.938Q14.104 6.938 14.375 7.208Q14.625 7.458 14.625 7.823Q14.625 8.188 14.375 8.438L10.625 12.188Q10.479 12.333 10.323 12.396Q10.167 12.458 10 12.458Z"
+                      />
+                      <!-- eslint-enable max-len -->
+                    </svg>
+                  </div>
+                </div>
+                <div class="cell-border-width">
+                  <input
+                      :value="currentOptions[selected[0]].cellBorderWidth"
+                      type="number"
+                      @input="changeAttribute($event, 'cellBorderWidth')"
+                  >
                 </div>
               </div>
-              <div class="cell-border-width">
-                <input
-                  :value="currentOptions[selected[0]].cellBorderWidth"
-                  type="number"
-                  @input="changeAttribute($event, 'cellBorderWidth')"
-                >
+              <div
+                  class="border-color-picker"
+              >
+                <Sketch
+                    v-model="computedBackgroundColor"
+                />
               </div>
             </div>
-            <div
-              class="border-color-picker"
-            >
-              <Sketch
-                v-model="computedBackgroundColor"
-              />
-            </div>
-          </div>
 
-          <div
-            v-else-if="selected.length && selected.includes('background')"
-            class="background-color-picker-parent"
-          >
             <div
-              class="background-color-picker"
+                v-else-if="selected.length && selected.includes('background')"
+                class="background-color-picker-parent"
             >
-              <Sketch
-                v-model="computedBackgroundColor"
-              />
+              <div
+                  class="background-color-picker"
+              >
+                <Sketch
+                    v-model="computedBackgroundColor"
+                />
+              </div>
             </div>
           </div>
         </div>
+        <button
+            class="Update-btn"
+            @click="setTableNewStyles"
+        >
+          Update
+        </button>
       </div>
-      <button
-        class="Update-btn"
-        @click="setTableNewStyles"
-      >
-        Update
-      </button>
-    </custom-modal>
+    </div>
   </div>
 </template>
 
 <script>
-import VueModal from '@kouts/vue-modal'
-import '@kouts/vue-modal/dist/vue-modal.css'
+import '../css/base-dialog.scss'
+import A11yDialog from 'a11y-dialog'
 import { Sketch } from '@ckpack/vue-color'
 
 export default {
   name: 'EditTableModal',
   components: {
-    CustomModal: VueModal,
     Sketch,
   },
   props: {
@@ -206,6 +218,13 @@ export default {
   emits: [
     'update:showDialog',
   ],
+  mounted() {
+    const dialogEl = document.getElementById('my-dialog')
+    this.dialogInstance = new A11yDialog(dialogEl)
+    this.dialogInstance.on('hide', () => {
+      this.modal = false
+    })
+  },
   data() {
     return {
       colors: '',
@@ -237,6 +256,7 @@ export default {
       selected: [],
       borderStyle: '',
       checked: false,
+      dialogInstance: null,
     }
   },
   computed: {
@@ -279,6 +299,15 @@ export default {
       return (direction) => this.selected.includes(direction)
     },
   },
+  watch: {
+    showModal(newVal) {
+      if (newVal) {
+        this.dialogInstance.show()
+      } else {
+        this.dialogInstance.hide()
+      }
+    },
+  },
   methods: {
     changeAttribute(data, field) {
       this.selected.forEach((item) => {
@@ -312,23 +341,6 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.edit-table-modal-wrapper {
-  display: flex;
-  align-items: center;
-
-  .vm {
-    top: auto;
-    border-radius: 20px;
-  }
-
-  .vm-titlebar {
-    border-bottom: none;
-  }
-}
-
-</style>
 <style scoped lang="scss">
 .edit-box {
 
