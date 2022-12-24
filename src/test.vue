@@ -16,9 +16,9 @@
           }
         },
         persianKeyboard: true,
-        mathliveOptions: {
-          locale: 'fa',
-        }
+        // mathliveOptions: {
+        //   locale: 'fa',
+        // }
       }"
     />
     --------------------------------------------------------------------
@@ -55,7 +55,7 @@ export default {
   },
   mounted() {
     /* eslint-disable */
-    this.content = '<p dir="auto" style="text-align: left"><span data-katex="true">$a\\ne d\\ne f$</span></p>'
+    this.content = ''
   },
   methods: {
     onResizeEnd(url, width, height) {
@@ -76,39 +76,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .beit {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-  }
-  .beit .mesra {
-    position: relative;
-    width: 100%;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-    -ms-flex-preferred-size: 0;
-    flex-basis: 0;
-    -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    max-width: 100%;
-    white-space: nowrap;
-  }
-
-  @media only screen and (max-width: 500px) {
-    .beit {
-      flex-direction: column;
-    }
-    .beit .mesra {
-      white-space: normal;
-      flex-basis: auto;
-    }
-  }
+  @import "vue-tiptap-katex-core/css/base.scss";
   .tiptap-click-btn{
     //width: 130px;
     height: 20px;
