@@ -1,13 +1,13 @@
 <template>
-  <div :class="{ 'tiptap-plus-container': true }">
-    <div class="test">
+  <div class="vue-tiptap-katex">
+    <div class="edit-table-modal">
       <edit-table-modal
         :show-modal="showDialog"
         @update:showDialog="setShowDialog"
         @cellBordersUpdated="updateTableStyle"
       />
     </div>
-    <div class="tiptap-plus">
+    <div class="tiptap-container">
       <div
         v-if="editor"
         class="tiptap-header"
@@ -296,184 +296,7 @@ export default {
 }
 </script>
 
-<style>
-.beit {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-.beit .mesra {
-  position: relative;
-  width: 100%;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
-  -ms-flex-preferred-size: 0;
-  flex-basis: 0;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  max-width: 100%;
-  white-space: nowrap;
-}
-
-  .ProseMirror {
-    outline: none;
-    padding: 20px;
-  }
-
-  .tiptap-plus-container .v-card__title {
-    border-bottom: solid 1px #dedede;
-  }
-
-  .tiptap-plus-container {
-    width: 100%;
-    margin: 0;
-    border-radius: 10px;
-    position: relative;
-    background: white;
-  }
-
-  .tiptap-plus-container .v-progress-circular {
-    position: absolute;
-    z-index: 10;
-    left: calc(50% - 25px);
-    top: calc(50% - 25px);
-  }
-
-  .tiptap-plus .tiptap-header {
-    background-color: #e9ecf4;
-    padding: 8px;
-  }
-</style>
-
 <style lang="scss">
   /* Basic editor styles */
-  .ProseMirror {
-    /*white-space: normal !important;*/
-
-    > * + * {
-      margin-top: 0.75em;
-    }
-
-    ul,
-    ol {
-      padding: 0 1rem;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      line-height: 1.1;
-    }
-
-    code {
-      background-color: rgba(#616161, 0.1);
-      color: #616161;
-    }
-
-    pre {
-      background: #0D0D0D;
-      color: #FFF;
-      font-family: 'JetBrainsMono', monospace;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-
-      code {
-        color: inherit;
-        padding: 0;
-        background: none;
-        font-size: 0.8rem;
-      }
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    blockquote {
-      padding-left: 1rem;
-      border-left: 2px solid rgba(#0D0D0D, 0.1);
-    }
-
-    hr {
-      border: none;
-      border-top: 2px solid rgba(#0D0D0D, 0.1);
-      margin: 2rem 0;
-    }
-  }
-
-  /* Table-specific styling */
-  .ProseMirror {
-    table {
-      border-collapse: collapse;
-      table-layout: fixed;
-      width: 100%;
-      margin: 0;
-      overflow: hidden;
-
-      td,
-      th {
-        min-width: 1em;
-        border: 2px solid #ced4da;
-        padding: 3px 5px;
-        vertical-align: top;
-        box-sizing: border-box;
-        position: relative;
-
-        > * {
-          margin-bottom: 0;
-        }
-      }
-
-      th {
-        font-weight: bold;
-        text-align: left;
-        background-color: #f1f3f5;
-      }
-
-      .selectedCell:after {
-        z-index: 1;
-        position: absolute;
-        content: "";
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: rgba(200, 200, 255, 0.4);
-        pointer-events: none;
-      }
-
-      .column-resize-handle {
-        position: absolute;
-        right: -2px;
-        top: 0;
-        bottom: -2px;
-        width: 4px;
-        background-color: #adf;
-        pointer-events: none;
-      }
-    }
-  }
-
-  .tableWrapper {
-    overflow-x: auto;
-
-    table {
-      float: left;
-    }
-  }
-
-  .resize-cursor {
-    cursor: ew-resize;
-    cursor: col-resize;
-  }
+  @import "src/css/base-editor-style";
 </style>
