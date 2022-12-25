@@ -1,5 +1,5 @@
 .vue-tiptap-katex {
-  @import "vue-tiptap-katex-core/css/base.scss";
+  @import "./node_modules/vue-tiptap-katex-core/css/base";
   width: 100%;
   margin: 0;
   border-radius: 10px;

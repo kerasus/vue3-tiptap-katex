@@ -298,5 +298,5 @@ export default {
 
 <style lang="scss">
   /* Basic editor styles */
-  @import "src/css/base-editor-style";
+  @import "css/base-editor-style";
 </style>

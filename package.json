@@ -66,7 +66,6 @@
     "tiptap-text-direction-extension": "^1.0.7",
     "vue-drag-resize": "^1.5.4",
     "vue-filepond": "^7.0.3",
-    "vue-tiptap-katex-core": "^1.0.47",
     "vue-upload-component": "^2.8.23",
     "vue3-drag-resize": "^2.0.5"
   },
@@ -90,6 +89,9 @@
     "vue": "^3.2.45",
     "vue-template-compiler": "^2.7.14",
     "webpack": "^5.75.0"
+  },
+  "peerDependencies": {
+    "vue-tiptap-katex-core": "^1.0.47"
   },
   "eslintConfig": {
     "root": true,
