@@ -22,7 +22,7 @@
       </div>
       <div
         v-if="editor"
-        class="pa-0"
+        class="editor-content"
       >
         <bubble-menu
           v-if="editorOptions && editorOptions.bubbleMenu"
@@ -298,5 +298,5 @@ export default {
 
 <style lang="scss">
   /* Basic editor styles */
-  @import "src/css/base-editor-style";
+  @import "css/base-editor-style";
 </style>
