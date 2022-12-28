@@ -1,3 +1,6 @@
-import VueTiptapKatex from './src/vue3-tiptap-katex'
+'use strict'
 
-export default VueTiptapKatex
+const VueTiptapKatex = require('./src/vue3-tiptap-katex.vue')
+
+module.exports = VueTiptapKatex
+module.exports.default = VueTiptapKatex
