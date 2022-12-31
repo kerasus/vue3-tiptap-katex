@@ -66,7 +66,7 @@
     "tiptap-text-direction-extension": "^1.0.7",
     "vue-drag-resize": "^1.5.4",
     "vue-filepond": "^7.0.3",
-    "vue-tiptap-katex-core": "^1.0.46",
+    "vue-tiptap-katex-core": "^1.0.50",
     "vue-upload-component": "^2.8.23",
     "vue3-drag-resize": "^2.0.5"
   },
@@ -88,8 +88,18 @@
     "postcss-loader": "^7.0.2",
     "sass-loader": "^13.2.0",
     "vue": "^3.2.45",
-    "vue-template-compiler": "^2.7.14",
-    "webpack": "^5.75.0"
+    "webpack": "^5.75.0",
+    "vue-template-compiler": "^2.5.17",
+    "prosemirror-commands": "^1.3.1",
+    "prosemirror-dropcursor": "1.5.0",
+    "prosemirror-gapcursor": "^1.3.1",
+    "prosemirror-history": "^1.3.0",
+    "prosemirror-keymap": "^1.2.0",
+    "prosemirror-schema-list": "^1.2.2",
+    "prosemirror-state": "^1.4.1",
+    "prosemirror-transform": "^1.7.0",
+    "prosemirror-view": "^1.28.2",
+    "typescript": "^4.9.4"
   },
   "eslintConfig": {
     "root": true,
