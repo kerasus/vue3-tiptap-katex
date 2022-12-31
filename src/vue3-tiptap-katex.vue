@@ -2,41 +2,41 @@
   <div class="vue-tiptap-katex">
     <div class="edit-table-modal">
       <edit-table-modal
-        :show-modal="showDialog"
-        @update:showDialog="setShowDialog"
-        @cellBordersUpdated="updateTableStyle"
+          :show-modal="showDialog"
+          @update:showDialog="setShowDialog"
+          @cellBordersUpdated="updateTableStyle"
       />
     </div>
     <div class="tiptap-container">
       <div
-        v-if="editor"
-        class="tiptap-header"
+          v-if="editor"
+          class="tiptap-header"
       >
         <toolbar
-          v-if="editorOptions"
-          ref="toolbar"
-          :editor="editor"
-          :options="editorOptions"
-          @show-edit-table-modal="showDialog = !showDialog"
+            v-if="editorOptions"
+            ref="toolbar"
+            :editor="editor"
+            :options="editorOptions"
+            @show-edit-table-modal="showDialog = !showDialog"
         />
       </div>
       <div
-        v-if="editor"
-        class="editor-content"
+          v-if="editor"
+          class="editor-content"
       >
         <bubble-menu
-          v-if="editorOptions && editorOptions.bubbleMenu"
-          class="bubble-menu"
-          :tippy-options="{ duration: 100, showOnCreate: false }"
-          :editor="editor"
+            v-if="editorOptions && editorOptions.bubbleMenu"
+            class="bubble-menu"
+            :tippy-options="{ duration: 100, showOnCreate: false }"
+            :editor="editor"
         >
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
         <floating-menu
-          v-if="editorOptions && editorOptions.floatingMenu"
-          class="floating-menu"
-          :tippy-options="{ duration: 100 }"
-          :editor="editor"
+            v-if="editorOptions && editorOptions.floatingMenu"
+            class="floating-menu"
+            :tippy-options="{ duration: 100 }"
+            :editor="editor"
         >
           <slot-floating-menu :editor="editor" />
         </floating-menu>
@@ -297,6 +297,6 @@ export default {
 </script>
 
 <style lang="scss">
-  /* Basic editor styles */
-  @import "css/base-editor-style";
+/* Basic editor styles */
+@import "css/base-editor-style";
 </style>
