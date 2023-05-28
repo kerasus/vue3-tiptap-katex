@@ -6,6 +6,7 @@ import { inject } from 'vue'
 export { usePageContext }
 export { setPageContext }
 
+// eslint-disable-next-line symbol-description
 const key = Symbol()
 
 function usePageContext() {

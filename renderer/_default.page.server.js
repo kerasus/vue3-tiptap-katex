@@ -1,19 +1,19 @@
-import { renderToString } from "vue/server-renderer";
-import { escapeInject, dangerouslySkipEscape } from "vite-plugin-ssr/server";
-import { createPageApp } from "./app";
+import { renderToString } from 'vue/server-renderer'
+import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server'
+import { createPageApp } from './app'
 // import "/assets/styles/index.css";
 import logoUrl from './favicon.ico'
 
 // By default we do not want to pre-render our pages.
 // This makes pre-rendering opt-in by adding `doNotPrerender = false` to pages.
-export const doNotPrerender = true;
+export const doNotPrerender = true
 
 export const passToClient = ['pageProps', 'urlPathname']
 
 export async function render(pageContext) {
-  const page = createPageApp(pageContext, false);
-  const pageHtml = pageContext.Page ? await renderToString(page) : "";
-  const title = pageContext.exports.title ? pageContext.exports.title : "tiptap katex editor";
+  const page = createPageApp(pageContext, false)
+  const pageHtml = pageContext.Page ? await renderToString(page) : ''
+  const title = pageContext.exports.title ? pageContext.exports.title : 'tiptap katex editor'
   const desc = pageContext.exports.description || 'tiptap editor using mathlive package to render katex in vue 3'
 
   return escapeInject`
@@ -36,5 +36,5 @@ export async function render(pageContext) {
 
       </body>
     </html>
-  `;
+  `
 }

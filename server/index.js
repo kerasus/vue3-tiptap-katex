@@ -5,6 +5,7 @@ const compression = require('compression')
 const { renderPage } = require('vite-plugin-ssr/server')
 
 const isProduction = process.env.NODE_ENV === 'production'
+// eslint-disable-next-line n/no-path-concat
 const root = `${__dirname}/..`
 
 startServer()
@@ -42,5 +43,6 @@ async function startServer() {
 
   const port = process.env.PORT || 3000
   app.listen(port)
+  // eslint-disable-next-line no-console
   console.log(`Server running at http://localhost:${port}`)
 }

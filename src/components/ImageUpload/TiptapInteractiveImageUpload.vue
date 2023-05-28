@@ -1,44 +1,34 @@
 <template>
-  <node-view-wrapper
-    :class="{ 'vue-component': true, 'inline': true, 'uploading': !node.attrs.url }"
-    data-drag-handle
-  >
-    <file-pond
-      v-if="!node.attrs.url"
-      instant-upload="false"
-      :style="{ maxWidth: '600px', margin: '0 auto' }"
-      name="file"
-      label-idle="Drop files here..."
-      accepted-file-types="image/jpeg, image/png"
-      chunk-uploads="true"
-      :server="editor.editorOptions.uploadServer"
-      :files="files"
-      @processfile="onFileUpload"
-    />
-    <div
-      v-else-if="naturalHeight && naturalWidth"
-      class="resizer-container"
-      :style="{
-        height: node.attrs.height + 'px',
-        width: node.attrs.width + 'px',
-        marginBottom: node.attrs.vertical + 'px',
-        marginTop: -1 * node.attrs.vertical + 'px'
-      }"
-    >
-      <span
-        class="mdi mdi-drag"
-        :style="{ top: node.attrs.vertical + 'px', height: node.attrs.height + 'px' }"
-      />
-      <vue-drag-resize
-        :w="naturalWidth"
-        :h="naturalHeight"
-        :aspect-ratio="true"
-        :sticks="['br']"
-        axis="y"
-        :y="node.attrs.vertical"
-        @resizestop="resizeEnd"
-        @dragstop="dragEnd"
-      >
+  <node-view-wrapper :class="{ 'vue-component': true, 'inline': true, 'uploading': !node.attrs.url }"
+                     data-drag-handle>
+    <file-pond v-if="!node.attrs.url"
+               instant-upload="false"
+               :style="{ maxWidth: '600px', margin: '0 auto' }"
+               name="file"
+               label-idle="Drop files here..."
+               accepted-file-types="image/jpeg, image/png"
+               chunk-uploads="true"
+               :server="editor.editorOptions.uploadServer"
+               :files="files"
+               @processfile="onFileUpload" />
+    <div v-else-if="naturalHeight && naturalWidth"
+         class="resizer-container"
+         :style="{
+           height: node.attrs.height + 'px',
+           width: node.attrs.width + 'px',
+           marginBottom: node.attrs.vertical + 'px',
+           marginTop: -1 * node.attrs.vertical + 'px'
+         }">
+      <span class="mdi mdi-drag"
+            :style="{ top: node.attrs.vertical + 'px', height: node.attrs.height + 'px' }" />
+      <vue-drag-resize :w="naturalWidth"
+                       :h="naturalHeight"
+                       :aspect-ratio="true"
+                       :sticks="['br']"
+                       axis="y"
+                       :y="node.attrs.vertical"
+                       @resizestop="resizeEnd"
+                       @dragstop="dragEnd">
         <img :src="node.attrs.url">
       </vue-drag-resize>
     </div>
@@ -59,27 +49,27 @@ import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
-  FilePondPluginImagePreview,
+  FilePondPluginImagePreview
 )
 
 export default {
-  mixins: [MixinComponentImageUpload],
   components: {
     NodeViewWrapper,
     FilePond,
-    VueDragResize,
+    VueDragResize
   },
+  mixins: [MixinComponentImageUpload],
   props: {
     nodeViewProps,
     node: {
       type: Object,
-      required: true,
+      required: true
     },
     updateAttributes: {
       type: Function,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 }
 </script>
 
