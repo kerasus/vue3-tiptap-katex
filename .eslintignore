@@ -1,0 +1,6 @@
+/dist
+/src-bex/www
+/node_modules
+/src-ssr
+babel.config.js
+/src/assets/js/Minio.js
