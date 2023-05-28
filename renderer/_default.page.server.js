@@ -5,7 +5,7 @@ export const passToClient = ['pageProps', 'urlPathname']
 import { renderToString as renderToString_ } from '@vue/server-renderer'
 import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server'
 import { createApp } from './app'
-import logoUrl from './logo.svg'
+import logoUrl from './favicon.ico'
 
 async function render(pageContext) {
   const { Page, pageProps } = pageContext
@@ -17,8 +17,8 @@ async function render(pageContext) {
 
   // See https://vite-plugin-ssr.com/head
   const { documentProps } = pageContext.exports
-  const title = (documentProps && documentProps.title) || 'Vite SSR app'
-  const desc = (documentProps && documentProps.description) || 'App using Vite + vite-plugin-ssr'
+  const title = (documentProps && documentProps.title) || 'tiptap katex editor'
+  const desc = (documentProps && documentProps.description) || 'tiptap editor using mathlive package to render katex in vue 3'
 
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en">
