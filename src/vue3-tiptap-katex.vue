@@ -1,5 +1,6 @@
 <template>
-  <div class="vue-tiptap-katex">
+  <div v-if="isPageMounted"
+      class="vue-tiptap-katex">
     <div class="edit-table-modal">
       <edit-table-modal
           :show-modal="showDialog"
@@ -56,7 +57,7 @@ import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from 'vue-tiptap-katex-core/extension/table'
 import TextAlign from '@tiptap/extension-text-align'
-import TextDirection from 'tiptap-text-direction-extension'
+import TextDirection from 'vue-tiptap-katex-core/extension/tiptap-text-direction-extension/index.mjs'
 import Highlight from '@tiptap/extension-highlight'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
@@ -75,11 +76,11 @@ import {
 } from '@tiptap/vue-3'
 
 import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap'
-import mesra from './components/poem/mesra'
-import TiptapInteractiveReading from './components/reading/extension'
-import TiptapInteractivePoem from './components/poem/bait'
-import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline'
-import TiptapInteractiveKatexInline from './components/formula/entensionInline'
+import mesra from './components/poem/mesra.mjs'
+import TiptapInteractiveReading from './components/reading/extension.mjs'
+import TiptapInteractivePoem from './components/poem/bait.mjs'
+import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline.mjs'
+import TiptapInteractiveKatexInline from './components/formula/entensionInline.mjs'
 import EditTableModal from './components/EditTableModal.vue'
 // import {EditorView} from "prosemirror-view";
 // import {EditorState} from "prosemirror-state";
@@ -133,6 +134,7 @@ export default {
       editor: null,
       showDialog: false,
       newModelValue: null,
+      isPageMounted: false
     }
   },
   computed: {
@@ -156,6 +158,7 @@ export default {
   },
   mounted() {
     const vueTiptapKatexInstance = this
+    this.isPageMounted = true
     this.editor = new Editor({
       content: this.modelValue,
       parseOptions: {

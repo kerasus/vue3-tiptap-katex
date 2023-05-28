@@ -1,28 +1,20 @@
-import { createSSRApp, h } from 'vue'
-import PageShell from './PageShell.vue'
-import { setPageContext } from './usePageContext'
+import { createSSRApp, createApp, h } from "vue"
+import PageShell from './app.vue'
 
-export { createApp }
+export function createPageApp(PageContext, clientOnly) {
+  const { Page: PageComponent, pageProps } = PageContext;
+  const createAppFunc = clientOnly ? createApp : createSSRApp;
 
-function createApp(Page, pageProps, pageContext) {
-  const PageWithLayout = {
+  const AppComponent = {
     render() {
-      return h(
-        PageShell,
-        {},
-        {
-          default() {
-            return h(Page, pageProps || {})
-          }
-        }
-      )
+      const renderLayoutSlot = () => h(PageComponent, pageProps || {})
+      return h(PageShell
+          , pageProps || {},
+          { default: renderLayoutSlot })
     }
-  }
+  };
 
-  const app = createSSRApp(PageWithLayout)
-
-  // We make pageContext available from any Vue component
-  setPageContext(app, pageContext)
-
-  return app
+  const page = createAppFunc(AppComponent)
+  page.provide("pageContext", PageContext)
+  return page;
 }
