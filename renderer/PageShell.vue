@@ -8,15 +8,20 @@
              width="64"
              alt="logo">
       </a>
-      <link href="/">Home</link>
-      <link href="/about">About</link>
+      <link-component href="/">Home</link-component>
+      <link-component href="/about">About</link-component>
     </div>
     <div class="content"><slot /></div>
   </div>
 </template>
 
-<script setup>
-import Link from './Link.vue'
+<script>
+import LinkComponent from './Link.vue'
+export default {
+  components: {
+    LinkComponent
+  }
+}
 </script>
 
 <style>
