@@ -69,8 +69,7 @@
     "sirv": "^2.0.3",
     "tiptap-text-direction-extension": "^1.0.7",
     "vite": "^4.3.9",
-    "vite-plugin-ssr": "^0.4.130",
-    "vue": "^3.2.47",
+    "vue": "^3.3.4",
     "vue-filepond": "^7.0.3",
     "vue-tiptap-katex-core": "^2.0.1",
     "vue3-drag-resize": "^2.0.5"
