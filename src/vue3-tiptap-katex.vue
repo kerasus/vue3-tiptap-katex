@@ -1,36 +1,43 @@
 <template>
-  <div v-if="isPageMounted"
-       class="vue-tiptap-katex">
-    <div class="edit-table-modal">
-      <edit-table-modal :show-modal="showDialog"
-                        @update:showDialog="setShowDialog"
-                        @cellBordersUpdated="updateTableStyle" />
-    </div>
-    <div class="tiptap-container">
-      <div v-if="editor"
-           class="tiptap-header">
-        <toolbar v-if="editorOptions"
-                 ref="toolbar"
-                 :editor="editor"
-                 :options="editorOptions"
-                 @show-edit-table-modal="showDialog = !showDialog" />
+  <div class="vue-tiptap-katex-container">
+    <div v-if="isPageMounted"
+         class="vue-tiptap-katex">
+      <div class="edit-table-modal">
+        <edit-table-modal :show-modal="showDialog"
+                          @update:showDialog="setShowDialog"
+                          @cellBordersUpdated="updateTableStyle" />
       </div>
-      <div v-if="editor"
-           class="editor-content">
-        <bubble-menu v-if="editorOptions && editorOptions.bubbleMenu"
-                     class="bubble-menu"
-                     :tippy-options="{ duration: 100, showOnCreate: false }"
-                     :editor="editor">
-          <slot-bubble-menu :editor="editor" />
-        </bubble-menu>
-        <floating-menu v-if="editorOptions && editorOptions.floatingMenu"
-                       class="floating-menu"
-                       :tippy-options="{ duration: 100 }"
+      <div class="tiptap-container">
+        <div v-if="editor"
+             class="tiptap-header">
+          <toolbar v-if="editorOptions"
+                   ref="toolbar"
+                   :editor="editor"
+                   :options="editorOptions"
+                   @show-edit-table-modal="showDialog = !showDialog" />
+        </div>
+        <div v-if="editor"
+             class="editor-content">
+          <bubble-menu v-if="editorOptions && editorOptions.bubbleMenu"
+                       class="bubble-menu"
+                       :tippy-options="{ duration: 100, showOnCreate: false }"
                        :editor="editor">
-          <slot-floating-menu :editor="editor" />
-        </floating-menu>
-        <editor-content :editor="editor" />
+            <slot-bubble-menu :editor="editor" />
+          </bubble-menu>
+          <floating-menu v-if="editorOptions && editorOptions.floatingMenu"
+                         class="floating-menu"
+                         :tippy-options="{ duration: 100 }"
+                         :editor="editor">
+            <slot-floating-menu :editor="editor" />
+          </floating-menu>
+          <editor-content :editor="editor" />
+        </div>
       </div>
+    </div>
+    <div v-else>
+      <slot name="editorLoading">
+        vue-tiptap-katex is loading ...
+      </slot>
     </div>
   </div>
 </template>
