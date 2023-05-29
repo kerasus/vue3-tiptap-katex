@@ -32,7 +32,8 @@
   "license": "MIT",
   "homepage": "https://github.com/kerasus/vue-tiptap-katex",
   "scripts": {
-    "dev": "npm run server",
+    "dev": "vite",
+    "ssr": "npm run server",
     "prod": "npm run build && npm run server:prod",
     "build": "vite build",
     "lint": "eslint --fix --ext .js,.vue ./",
@@ -69,7 +70,8 @@
     "sirv": "^2.0.3",
     "tiptap-text-direction-extension": "^1.0.7",
     "vite": "^4.3.9",
-    "vue": "^3.3.4",
+    "vite-plugin-ssr": "^0.4.130",
+    "vue": "^3.2.47",
     "vue-filepond": "^7.0.3",
     "vue-tiptap-katex-core": "^2.0.1",
     "vue3-drag-resize": "^2.0.5"
