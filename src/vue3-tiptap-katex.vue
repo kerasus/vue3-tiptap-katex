@@ -50,17 +50,17 @@ import SlotFloatingMenu from 'vue-tiptap-katex-core/components/SlotFloatingMenu.
 import StarterKit from '@tiptap/starter-kit'
 import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
-import TableCell from 'vue-tiptap-katex-core/extension/table'
+import TableCell from 'vue-tiptap-katex-core/extension/table.js'
 import TextAlign from '@tiptap/extension-text-align'
 import TextDirection from 'vue-tiptap-katex-core/extension/tiptap-text-direction-extension/index.mjs'
 import Highlight from '@tiptap/extension-highlight'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
-import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys'
+import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys.mjs'
 import { DOMParser } from 'prosemirror-model'
 // import Focus from '@tiptap/extension-focus'
-import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace'
+import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace.mjs'
 // import Paper from './Drawing/Paper.js'
 
 import {
@@ -70,7 +70,7 @@ import {
   FloatingMenu
 } from '@tiptap/vue-3'
 
-import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap'
+import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap.mjs'
 import mesra from './components/poem/mesra.mjs'
 import TiptapInteractiveReading from './components/reading/extension.mjs'
 import TiptapInteractivePoem from './components/poem/bait.mjs'
