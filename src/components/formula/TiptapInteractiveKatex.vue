@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import MixinComponentFormula from 'vue-tiptap-katex-core/components/formula/mixin'
+import MixinComponentFormula from 'vue-tiptap-katex-core/components/formula/mixin.js'
 
 import 'katex/dist/katex.min.css'
 // eslint-disable-next-line no-unused-vars

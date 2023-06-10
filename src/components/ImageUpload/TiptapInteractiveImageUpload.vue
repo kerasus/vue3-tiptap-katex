@@ -43,7 +43,7 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
 import VueDragResize from 'vue3-drag-resize'
-import MixinComponentImageUpload from 'vue-tiptap-katex-core/components/ImageUpload/mixin'
+import MixinComponentImageUpload from 'vue-tiptap-katex-core/components/ImageUpload/mixin.js'
 
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 
