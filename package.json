@@ -64,20 +64,20 @@
     "tiptap-text-direction-extension": "^1.0.7",
     "vue": "^3.2.47",
     "vue-filepond": "^7.0.3",
-    "vue-tiptap-katex-core": "file:../vue-tiptap-katex-core",
+    "vue-tiptap-katex-core": "^2.0.4",
     "vue3-drag-resize": "^2.0.5"
   },
   "devDependencies": {
-    "vite": "^4.3.9",
-    "@vitejs/plugin-vue": "^4.2.3",
     "@babel/eslint-parser": "^7.19.1",
+    "@vitejs/plugin-vue": "^4.2.3",
     "eslint": "8.22.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.9.0",
-    "sass": "^1.62.1"
+    "sass": "^1.62.1",
+    "vite": "^4.3.9"
   },
   "browserslist": [
     "last 10 Chrome versions",
