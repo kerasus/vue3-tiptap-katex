@@ -42,10 +42,10 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
-import VueDragResize from 'vue3-drag-resize'
 import MixinComponentImageUpload from 'vue-tiptap-katex-core/components/ImageUpload/mixin.js'
 
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
+import { defineAsyncComponent } from 'vue'
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
@@ -56,7 +56,14 @@ export default {
   components: {
     NodeViewWrapper,
     FilePond,
-    VueDragResize
+    VueDragResize: defineAsyncComponent(() => {
+      return new Promise((resolve) => {
+        import('vue3-drag-resize')
+          .then((response) => {
+            resolve(response.default)
+          })
+      })
+    })
   },
   mixins: [MixinComponentImageUpload],
   props: {

@@ -1,43 +1,35 @@
 <template>
-  <div class="vue-tiptap-katex-container">
-    <div v-if="isPageMounted"
-         class="vue-tiptap-katex">
-      <div class="edit-table-modal">
-        <edit-table-modal :show-modal="showDialog"
-                          @update:showDialog="setShowDialog"
-                          @cellBordersUpdated="updateTableStyle" />
-      </div>
-      <div class="tiptap-container">
-        <div v-if="editor"
-             class="tiptap-header">
-          <toolbar v-if="editorOptions"
-                   ref="toolbar"
-                   :editor="editor"
-                   :options="editorOptions"
-                   @show-edit-table-modal="showDialog = !showDialog" />
-        </div>
-        <div v-if="editor"
-             class="editor-content">
-          <bubble-menu v-if="editorOptions && editorOptions.bubbleMenu"
-                       class="bubble-menu"
-                       :tippy-options="{ duration: 100, showOnCreate: false }"
-                       :editor="editor">
-            <slot-bubble-menu :editor="editor" />
-          </bubble-menu>
-          <floating-menu v-if="editorOptions && editorOptions.floatingMenu"
-                         class="floating-menu"
-                         :tippy-options="{ duration: 100 }"
-                         :editor="editor">
-            <slot-floating-menu :editor="editor" />
-          </floating-menu>
-          <editor-content :editor="editor" />
-        </div>
-      </div>
+  <div class="vue-tiptap-katex">
+    <div class="edit-table-modal">
+      <edit-table-modal :show-modal="showDialog"
+                        @update:showDialog="setShowDialog"
+                        @cellBordersUpdated="updateTableStyle" />
     </div>
-    <div v-else>
-      <slot name="editorLoading">
-        vue-tiptap-katex is loading ...
-      </slot>
+    <div class="tiptap-container">
+      <div v-if="editor"
+           class="tiptap-header">
+        <toolbar v-if="editorOptions"
+                 ref="toolbar"
+                 :editor="editor"
+                 :options="editorOptions"
+                 @show-edit-table-modal="showDialog = !showDialog" />
+      </div>
+      <div v-if="editor"
+           class="editor-content">
+        <bubble-menu v-if="editorOptions && editorOptions.bubbleMenu"
+                     class="bubble-menu"
+                     :tippy-options="{ duration: 100, showOnCreate: false }"
+                     :editor="editor">
+          <slot-bubble-menu :editor="editor" />
+        </bubble-menu>
+        <floating-menu v-if="editorOptions && editorOptions.floatingMenu"
+                       class="floating-menu"
+                       :tippy-options="{ duration: 100 }"
+                       :editor="editor">
+          <slot-floating-menu :editor="editor" />
+        </floating-menu>
+        <editor-content :editor="editor" />
+      </div>
     </div>
   </div>
 </template>
@@ -74,8 +66,8 @@ import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap.m
 import mesra from './components/poem/mesra.mjs'
 import TiptapInteractiveReading from './components/reading/extension.mjs'
 import TiptapInteractivePoem from './components/poem/bait.mjs'
-import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline.mjs'
-import TiptapInteractiveKatexInline from './components/formula/entensionInline.mjs'
+import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionImageInline.mjs'
+import TiptapInteractiveKatexInline from './components/formula/extensionFormulaInline.mjs'
 import EditTableModal from './components/EditTableModal.vue'
 // import {EditorView} from "prosemirror-view";
 // import {EditorState} from "prosemirror-state";
@@ -153,8 +145,7 @@ export default {
   },
   mounted() {
     const vueTiptapKatexInstance = this
-    this.isPageMounted = true
-    this.editor = new Editor({
+    const editorConfig = {
       content: this.modelValue,
       parseOptions: {
         preserveWhitespace: true
@@ -219,7 +210,8 @@ export default {
           return false
         }
       }
-    })
+    }
+    this.editor = new Editor(editorConfig)
     this.editor.editorOptions = this.editorOptions
   },
   beforeUnmount() {
