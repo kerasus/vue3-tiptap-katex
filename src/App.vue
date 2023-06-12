@@ -1,13 +1,12 @@
 <template>
-  <div>App</div>
+  <div>
+    <test-page />
+  </div>
 </template>
 
 <script>
+import TestPage from './Test.vue'
 export default {
-  name: 'App'
+  components: { TestPage }
 }
 </script>
-
-<style scoped>
-
-</style>

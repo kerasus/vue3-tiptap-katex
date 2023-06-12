@@ -34,12 +34,10 @@
   "homepage": "https://github.com/kerasus/vue3-tiptap-katex",
   "scripts": {
     "dev": "vite",
-    "ssr": "npm run server",
-    "prod": "npm run build && npm run server:prod",
     "build": "vite build",
     "lint": "eslint --fix --ext .js,.vue ./",
-    "server": "node ./server",
-    "server:prod": "cross-env NODE_ENV=production node ./server"
+    "preview": "vite preview",
+    "format": "prettier --write src/"
   },
   "dependencies": {
     "@ckpack/vue-color": "^1.4.1",
@@ -55,14 +53,8 @@
     "@tiptap/extension-underline": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
     "@tiptap/vue-3": "^2.0.3",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "@vue/compiler-sfc": "^3.3.4",
-    "@vue/server-renderer": "^3.3.4",
     "a11y-dialog": "^7.5.2",
     "compression": "^1.7.4",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
     "filepond-plugin-file-validate-type": "^1.2.8",
     "filepond-plugin-image-preview": "^4.6.11",
     "katex": "^0.16.7",
@@ -70,14 +62,14 @@
     "prosemirror-model": "^1.19.2",
     "sirv": "^2.0.3",
     "tiptap-text-direction-extension": "^1.0.7",
-    "vite": "^4.3.9",
-    "vite-plugin-ssr": "^0.4.130",
     "vue": "^3.2.47",
     "vue-filepond": "^7.0.3",
-    "vue-tiptap-katex-core": "^2.0.1",
+    "vue-tiptap-katex-core": "file:../vue-tiptap-katex-core",
     "vue3-drag-resize": "^2.0.5"
   },
   "devDependencies": {
+    "vite": "^4.3.9",
+    "@vitejs/plugin-vue": "^4.2.3",
     "@babel/eslint-parser": "^7.19.1",
     "eslint": "8.22.0",
     "eslint-config-standard": "^17.0.0",

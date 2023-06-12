@@ -35,7 +35,7 @@
 <script>
 import 'katex/dist/katex.min.css'
 import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap.mjs'
-import VueTiptapKatex from 'src/vue3-tiptap-katex.vue'
+import VueTiptapKatex from './vue3-tiptap-katex.vue'
 
 export default {
   name: 'TestPage',
