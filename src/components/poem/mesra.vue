@@ -1,9 +1,7 @@
 <template>
   <node-view-wrapper class="mesra">
-    <div
-      contenteditable="false"
-      class="mesra-label"
-    >
+    <div contenteditable="false"
+         class="mesra-label">
       مصراع
     </div>
     <div>
@@ -20,10 +18,10 @@ export default {
   name: 'Mesra',
   components: {
     NodeViewWrapper,
-    NodeViewContent,
+    NodeViewContent
   },
-  props: nodeViewProps,
   mixins: [MixinComponentPoemMesra],
+  props: nodeViewProps
 }
 </script>
 

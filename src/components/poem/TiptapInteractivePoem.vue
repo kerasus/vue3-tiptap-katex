@@ -1,12 +1,8 @@
 <template>
-  <node-view-wrapper
-    class="poem ma-4"
-    data-drag-handle
-  >
-    <node-view-content
-      class="content"
-      dir="auto"
-    />
+  <node-view-wrapper class="poem ma-4"
+                     data-drag-handle>
+    <node-view-content class="content"
+                       dir="auto" />
   </node-view-wrapper>
 </template>
 
@@ -19,9 +15,9 @@ export default {
   name: 'TiptapInteractivePoem',
   components: {
     NodeViewWrapper,
-    NodeViewContent,
+    NodeViewContent
   },
-  mixins: [MixinComponentPoem],
+  mixins: [MixinComponentPoem]
 }
 </script>
 

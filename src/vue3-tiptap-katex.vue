@@ -1,43 +1,31 @@
 <template>
   <div class="vue-tiptap-katex">
     <div class="edit-table-modal">
-      <edit-table-modal
-          :show-modal="showDialog"
-          @update:showDialog="setShowDialog"
-          @cellBordersUpdated="updateTableStyle"
-      />
+      <edit-table-modal :show-modal="showDialog"
+                        @update:showDialog="setShowDialog"
+                        @cellBordersUpdated="updateTableStyle" />
     </div>
     <div class="tiptap-container">
-      <div
-          v-if="editor"
-          class="tiptap-header"
-      >
-        <toolbar
-            v-if="editorOptions"
-            ref="toolbar"
-            :editor="editor"
-            :options="editorOptions"
-            @show-edit-table-modal="showDialog = !showDialog"
-        />
+      <div v-if="editor"
+           class="tiptap-header">
+        <toolbar v-if="editorOptions"
+                 ref="toolbar"
+                 :editor="editor"
+                 :options="editorOptions"
+                 @show-edit-table-modal="showDialog = !showDialog" />
       </div>
-      <div
-          v-if="editor"
-          class="editor-content"
-      >
-        <bubble-menu
-            v-if="editorOptions && editorOptions.bubbleMenu"
-            class="bubble-menu"
-            :tippy-options="{ duration: 100, showOnCreate: false }"
-            :editor="editor"
-        >
+      <div v-if="editor"
+           class="editor-content">
+        <bubble-menu v-if="editorOptions && editorOptions.bubbleMenu"
+                     class="bubble-menu"
+                     :tippy-options="{ duration: 100, showOnCreate: false }"
+                     :editor="editor">
           <slot-bubble-menu :editor="editor" />
         </bubble-menu>
-        <floating-menu
-            v-if="editorOptions && editorOptions.floatingMenu"
-            class="floating-menu"
-            :tippy-options="{ duration: 100 }"
-            :editor="editor"
-        >
+        <floating-menu v-if="editorOptions && editorOptions.floatingMenu"
+                       class="floating-menu"
+                       :tippy-options="{ duration: 100 }"
+                       :editor="editor">
           <slot-floating-menu :editor="editor" />
         </floating-menu>
         <editor-content :editor="editor" />
@@ -54,32 +42,32 @@ import SlotFloatingMenu from 'vue-tiptap-katex-core/components/SlotFloatingMenu.
 import StarterKit from '@tiptap/starter-kit'
 import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
-import TableCell from 'vue-tiptap-katex-core/extension/table'
+import TableCell from 'vue-tiptap-katex-core/extension/table.js'
 import TextAlign from '@tiptap/extension-text-align'
-import TextDirection from 'tiptap-text-direction-extension'
+import TextDirection from 'vue-tiptap-katex-core/extension/tiptap-text-direction-extension/index.mjs'
 import Highlight from '@tiptap/extension-highlight'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
-import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys'
+import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys.mjs'
 import { DOMParser } from 'prosemirror-model'
 // import Focus from '@tiptap/extension-focus'
-import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace'
+import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace.mjs'
 // import Paper from './Drawing/Paper.js'
 
 import {
   Editor,
   EditorContent,
   BubbleMenu,
-  FloatingMenu,
+  FloatingMenu
 } from '@tiptap/vue-3'
 
-import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap'
-import mesra from './components/poem/mesra'
-import TiptapInteractiveReading from './components/reading/extension'
-import TiptapInteractivePoem from './components/poem/bait'
-import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionInline'
-import TiptapInteractiveKatexInline from './components/formula/entensionInline'
+import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap.mjs'
+import mesra from './components/poem/mesra.mjs'
+import TiptapInteractiveReading from './components/reading/extension.mjs'
+import TiptapInteractivePoem from './components/poem/bait.mjs'
+import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionImageInline.mjs'
+import TiptapInteractiveKatexInline from './components/formula/extensionFormulaInline.mjs'
 import EditTableModal from './components/EditTableModal.vue'
 // import {EditorView} from "prosemirror-view";
 // import {EditorState} from "prosemirror-state";
@@ -87,7 +75,6 @@ import EditTableModal from './components/EditTableModal.vue'
 
 export default {
   name: 'VueTiptapKatex',
-  mixins: [mixinConvertToTiptap],
   components: {
     EditTableModal,
     EditorContent,
@@ -95,44 +82,38 @@ export default {
     FloatingMenu,
     toolbar,
     SlotBubbleMenu,
-    SlotFloatingMenu,
+    SlotFloatingMenu
   },
+  mixins: [mixinConvertToTiptap],
   props: {
     uploadServer: {
       type: Object,
-      default: () => {},
+      default: () => {}
     },
     loading: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     options: {
       type: Object,
       required: false,
       default() {
         return {}
-      },
+      }
     },
     modelValue: {
       type: String,
       required: false,
-      default: '',
-    },
-  },
-  watch: {
-    modelValue(newContent) {
-      if (this.newModelValue === newContent) {
-        return
-      }
-      this.setContent(newContent)
-    },
+      default: ''
+    }
   },
   data() {
     return {
       editor: null,
       showDialog: false,
       newModelValue: null,
+      isPageMounted: false
     }
   },
   computed: {
@@ -144,11 +125,19 @@ export default {
         reading: false,
         persianKeyboard: false,
         mathliveOptions: {},
-        onResizeEnd: null,
+        onResizeEnd: null
       }
       Object.assign(options, this.options)
       return options
-    },
+    }
+  },
+  watch: {
+    modelValue(newContent) {
+      if (this.newModelValue === newContent) {
+        return
+      }
+      this.setContent(newContent)
+    }
   },
   created() {
     this.newModelValue = this.convertToTiptap(this.modelValue)
@@ -156,45 +145,45 @@ export default {
   },
   mounted() {
     const vueTiptapKatexInstance = this
-    this.editor = new Editor({
+    const editorConfig = {
       content: this.modelValue,
       parseOptions: {
-        preserveWhitespace: true,
+        preserveWhitespace: true
       },
       extensions: [
         Focus.configure({
           className: 'has-focus',
-          mode: 'all',
+          mode: 'all'
         }),
         StarterKit.configure({
           paragraph: {
-            HTMLAttributes: { dir: 'auto' },
-          },
+            HTMLAttributes: { dir: 'auto' }
+          }
         }),
         TextAlign.configure({
           types: ['heading', 'paragraph'],
-          defaultAlignment: '',
+          defaultAlignment: ''
         }),
         Color.configure({
-          types: ['textStyle'],
+          types: ['textStyle']
         }),
         TextStyle,
         Document,
         Text,
         TextDirection,
         Highlight.configure({
-          multicolor: true,
+          multicolor: true
         }),
         Underline,
         Table.configure({
           resizable: true,
           HTMLAttributes: {
             class: 'tiptap-table',
-            style: 'border-collapse: collapse !important',
-          },
+            style: 'border-collapse: collapse !important'
+          }
         }),
         TableRow.extend({
-          content: 'tableCell*',
+          content: 'tableCell*'
         }),
         TableCell,
         TiptapInteractiveKatexInline,
@@ -203,7 +192,7 @@ export default {
         mesra,
         TiptapInteractiveReading,
         Shortkeys,
-        ThinSpace,
+        ThinSpace
       ],
       // triggered on every change
       onUpdate({ editor }) {
@@ -219,12 +208,13 @@ export default {
             return true
           }
           return false
-        },
-      },
-    })
+        }
+      }
+    }
+    this.editor = new Editor(editorConfig)
     this.editor.editorOptions = this.editorOptions
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.editor.destroy()
   },
   methods: {
@@ -291,8 +281,8 @@ export default {
     },
     getContent() {
       return this.editor.getHTML()
-    },
-  },
+    }
+  }
 }
 </script>
 

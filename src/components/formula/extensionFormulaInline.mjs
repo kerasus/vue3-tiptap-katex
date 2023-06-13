@@ -18,14 +18,14 @@ export default Node.create({
       katex: {
         // default: 'x=\\frac{-4b\\pm \\sqrt{b^2-4ac}}{2a}',
         default: 'formulaEditPanel',
-        parseHTML: (element) => element.innerHTML.split('$')[1],
+        parseHTML: (element) => element.innerHTML.split('$')[1]
       },
       inline: {
-        default: true,
+        default: true
       },
       editMode: {
-        default: false,
-      },
+        default: false
+      }
     }
   },
 
@@ -33,8 +33,8 @@ export default Node.create({
     return [
       {
         tag: 'span',
-        getAttrs: (element) => element.hasAttribute('data-katex'),
-      },
+        getAttrs: (element) => element.hasAttribute('data-katex')
+      }
     ]
   },
 
@@ -44,5 +44,5 @@ export default Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(TiptapInteractiveKatex)
-  },
+  }
 })

@@ -13,8 +13,8 @@ export default Node.create({
     return [
       {
         tag: 'div',
-        getAttrs: (element) => element.getAttribute('class') === 'beit',
-      },
+        getAttrs: (element) => element.getAttribute('class') === 'beit'
+      }
     ]
   },
 
@@ -24,5 +24,5 @@ export default Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(TiptapInteractivePoem)
-  },
+  }
 })

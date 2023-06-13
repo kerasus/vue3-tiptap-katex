@@ -1,48 +1,40 @@
 <template>
-  <node-view-wrapper
-    :class="{ 'vue-component': true, 'inline': node.attrs.inline, 'editable': editMode }"
-    data-drag-handle
-  >
-<!--    ToDo : add FormulaBroken fix mode-->
-<!--    <div-->
-<!--        v-if="editMode && isFormulaBroken"-->
-<!--        icon-->
-<!--        color="green"-->
-<!--        @click="fixFormula"-->
-<!--    >-->
-<!--      <span-->
-<!--          class="mdi mdi-checkbox-multiple-marked"-->
-<!--      />-->
-<!--    </div>-->
-    <div
-      v-if="editMode"
-      id="mathfield"
-      ref="mathfield"
-      dir="ltr"
-      :class="{ 'editable': editMode }"
-    />
-    <div
-      v-if="!editMode"
-      class="converted"
-      dir="ltr"
-      @click="editMode = true"
-      v-html="computedKatex"
-    />
-    <div
-      v-if="editMode"
-      icon
-      color="green"
-      @click="toggleEdit"
-    >
-      <span
-        class="mdi mdi-check"
-      />
-    </div>
+  <node-view-wrapper :class="{ 'vue-component': true, 'inline': node.attrs.inline, 'editable': editMode }"
+                     data-drag-handle>
+    <!--    ToDo : add FormulaBroken fix mode-->
+    <!--    <div-->
+    <!--        v-if="editMode && isFormulaBroken"-->
+    <!--        icon-->
+    <!--        color="green"-->
+    <!--        @click="fixFormula"-->
+    <!--    >-->
+    <!--      <span-->
+    <!--          class="mdi mdi-checkbox-multiple-marked"-->
+    <!--      />-->
+    <!--    </div>-->
+    <template v-if="isElementReady">
+      <div v-if="editMode"
+           id="mathfield"
+           ref="mathfield"
+           dir="ltr"
+           :class="{ 'editable': editMode }" />
+      <div v-if="!editMode"
+           class="converted"
+           dir="ltr"
+           @click="editMode = true"
+           v-html="computedKatex" />
+      <div v-if="editMode"
+           icon
+           color="green"
+           @click="toggleEdit">
+        <span class="mdi mdi-check" />
+      </div>
+    </template>
   </node-view-wrapper>
 </template>
 
 <script>
-import MixinComponentFormula from 'vue-tiptap-katex-core/components/formula/mixin'
+import MixinComponentFormula from 'vue-tiptap-katex-core/components/formula/mixin.mjs'
 
 import 'katex/dist/katex.min.css'
 // eslint-disable-next-line no-unused-vars
@@ -57,10 +49,11 @@ import 'mathlive/dist/mathlive-static.css'
 // --------------------------------------------------
 
 export default {
+  name: 'TiptapInteractiveKatex',
   components: {
-    NodeViewWrapper,
+    NodeViewWrapper
   },
-  mixins: [MixinComponentFormula],
+  mixins: [MixinComponentFormula]
 }
 </script>
 

@@ -18,18 +18,18 @@ export default Node.create({
         default: '',
         parseHTML: (element) => element.getAttribute('src'),
         renderHTML: (attributes) => ({
-          src: attributes.url,
-        }),
+          src: attributes.url
+        })
       },
       width: {
-        default: 0,
+        default: 0
       },
       height: {
-        default: 0,
+        default: 0
       },
       justify: {
         default: 'center',
-        renderHTML: () => ({}),
+        renderHTML: () => ({})
       },
       vertical: {
         default: 0,
@@ -42,21 +42,21 @@ export default Node.create({
         },
         renderHTML: (attributes) => ({
           'data-vertical': attributes.vertical,
-          style: `vertical-align: ${-1 * attributes.vertical}px`,
-        }),
+          style: `vertical-align: ${-1 * attributes.vertical}px`
+        })
       },
       horizontal: {
         default: 0,
-        renderHTML: () => ({}),
-      },
+        renderHTML: () => ({})
+      }
     }
   },
 
   parseHTML() {
     return [
       {
-        tag: 'img',
-      },
+        tag: 'img'
+      }
     ]
   },
 
@@ -66,5 +66,5 @@ export default Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(TiptapInteractiveImageUpload)
-  },
+  }
 })
