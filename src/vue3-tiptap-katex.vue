@@ -36,23 +36,26 @@
 
 <script>
 import toolbar from 'vue-tiptap-katex-core/components/toolbar/toolbar.vue'
-import Focus from '@tiptap/extension-focus'
 import SlotBubbleMenu from 'vue-tiptap-katex-core/components/SlotBubbleMenu.vue'
 import SlotFloatingMenu from 'vue-tiptap-katex-core/components/SlotFloatingMenu.vue'
+import Focus from '@tiptap/extension-focus'
 import StarterKit from '@tiptap/starter-kit'
 import Table from '@tiptap/extension-table'
 import TableRow from '@tiptap/extension-table-row'
-import TableCell from 'vue-tiptap-katex-core/extension/table.js'
 import TextAlign from '@tiptap/extension-text-align'
-import TextDirection from 'vue-tiptap-katex-core/extension/tiptap-text-direction-extension/index.mjs'
 import Highlight from '@tiptap/extension-highlight'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
-import Shortkeys from 'vue-tiptap-katex-core/extension/Shortkeys/TiptapShortkeys.mjs'
+import {
+  MixinConvertToTiptap,
+  ExtensionTiptapShortkeys,
+  ExtensionThinSpace,
+  ExtensionTextDirection,
+  ExtensionTableCell
+} from 'vue-tiptap-katex-core'
 import { DOMParser } from 'prosemirror-model'
 // import Focus from '@tiptap/extension-focus'
-import ThinSpace from 'vue-tiptap-katex-core/extension/ThinSpace/ThinSpace.mjs'
 // import Paper from './Drawing/Paper.js'
 
 import {
@@ -62,7 +65,6 @@ import {
   FloatingMenu
 } from '@tiptap/vue-3'
 
-import mixinConvertToTiptap from 'vue-tiptap-katex-core/mixins/convertToTiptap.mjs'
 import mesra from './components/poem/mesra.mjs'
 import TiptapInteractiveReading from './components/reading/extension.mjs'
 import TiptapInteractivePoem from './components/poem/bait.mjs'
@@ -84,7 +86,7 @@ export default {
     SlotBubbleMenu,
     SlotFloatingMenu
   },
-  mixins: [mixinConvertToTiptap],
+  mixins: [MixinConvertToTiptap],
   props: {
     uploadServer: {
       type: Object,
@@ -170,7 +172,7 @@ export default {
         TextStyle,
         Document,
         Text,
-        TextDirection,
+        ExtensionTextDirection,
         Highlight.configure({
           multicolor: true
         }),
@@ -185,14 +187,14 @@ export default {
         TableRow.extend({
           content: 'tableCell*'
         }),
-        TableCell,
+        ExtensionTableCell,
         TiptapInteractiveKatexInline,
         TiptapInteractiveImageUploadInline,
         TiptapInteractivePoem,
         mesra,
         TiptapInteractiveReading,
-        Shortkeys,
-        ThinSpace
+        ExtensionTiptapShortkeys,
+        ExtensionThinSpace
       ],
       // triggered on every change
       onUpdate({ editor }) {
