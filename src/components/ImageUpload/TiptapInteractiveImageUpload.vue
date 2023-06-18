@@ -42,7 +42,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
-import MixinComponentImageUpload from 'vue-tiptap-katex-core/components/ImageUpload/mixin.js'
+import { MixinComponentImageUpload } from 'vue-tiptap-katex-core'
 
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import { defineAsyncComponent } from 'vue'
