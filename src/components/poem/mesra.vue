@@ -12,7 +12,7 @@
 
 <script>
 import { NodeViewWrapper, NodeViewContent, nodeViewProps } from '@tiptap/vue-3'
-import MixinComponentPoemMesra from 'vue-tiptap-katex-core/components/poem/mixin-mesra'
+import { MixinComponentPoemMesra } from 'vue-tiptap-katex-core'
 
 export default {
   name: 'Mesra',
