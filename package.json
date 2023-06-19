@@ -2,10 +2,7 @@
   "name": "vue3-tiptap-katex",
   "version": "1.1.1",
   "description": "tiptap editor using mathlive package to render katex in vue 3",
-  "exports": {
-    "import": "./index.mjs",
-    "require": "./index.cjs"
-  },
+  "main": "index.js",
   "keywords": [
     "vue",
     "vue3",
