@@ -65,7 +65,7 @@
     "tiptap-text-direction-extension": "^1.0.7",
     "vue": "^3.2.47",
     "vue-filepond": "^7.0.3",
-    "vue-tiptap-katex-core": "^2.0.5",
+    "vue-tiptap-katex-core": "^2.0.6",
     "vue3-drag-resize": "^2.0.5"
   },
   "devDependencies": {
