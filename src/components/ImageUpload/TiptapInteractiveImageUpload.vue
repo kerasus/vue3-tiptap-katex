@@ -21,16 +21,17 @@
          }">
       <span class="mdi mdi-drag"
             :style="{ top: node.attrs.vertical + 'px', height: node.attrs.height + 'px' }" />
-      <vue-drag-resize :w="naturalWidth"
-                       :h="naturalHeight"
-                       :aspect-ratio="true"
-                       :sticks="['br']"
-                       axis="y"
-                       :y="node.attrs.vertical"
-                       @resizestop="resizeEnd"
-                       @dragstop="dragEnd">
-        <img :src="node.attrs.url">
-      </vue-drag-resize>
+      <img :src="node.attrs.url">
+      <!--      <vue-drag-resize :w="naturalWidth"-->
+      <!--                       :h="naturalHeight"-->
+      <!--                       :aspect-ratio="true"-->
+      <!--                       :sticks="['br']"-->
+      <!--                       axis="y"-->
+      <!--                       :y="node.attrs.vertical"-->
+      <!--                       @resizestop="resizeEnd"-->
+      <!--                       @dragstop="dragEnd">-->
+      <!--        <img :src="node.attrs.url">-->
+      <!--      </vue-drag-resize>-->
     </div>
   </node-view-wrapper>
 </template>
