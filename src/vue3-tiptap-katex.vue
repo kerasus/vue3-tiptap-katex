@@ -47,8 +47,10 @@ import Highlight from '@tiptap/extension-highlight'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
+import * as VueTiptapKatexAssist from 'vue-tiptap-katex-core/assist.js'
+
 import {
-  MixinConvertToTiptap,
+  // MixinConvertToTiptap,
   ExtensionTiptapShortkeys,
   ExtensionThinSpace,
   ExtensionTextDirection,
@@ -142,8 +144,8 @@ export default {
     }
   },
   created() {
-    this.newModelValue = this.convertToTiptap(this.modelValue)
-    this.$emit('update:modelValue', this.convertToTiptap(this.modelValue))
+    this.newModelValue = VueTiptapKatexAssist.convertToTiptap(this.modelValue)
+    this.$emit('update:modelValue', VueTiptapKatexAssist.convertToTiptap(this.modelValue))
   },
   mounted() {
     const vueTiptapKatexInstance = this
@@ -199,8 +201,8 @@ export default {
       // triggered on every change
       onUpdate({ editor }) {
         vueTiptapKatexInstance.$emit('update:modelValue', editor.getHTML())
-        vueTiptapKatexInstance.newModelValue = vueTiptapKatexInstance
-          .convertToTiptap(editor.getHTML())
+        vueTiptapKatexInstance.newModelValue =
+            VueTiptapKatexAssist.convertToTiptap(editor.getHTML())
       },
       editorProps: {
         handleKeyDown: (view, event) => {
@@ -276,7 +278,7 @@ export default {
       view.dispatch(trx)
     },
     setContent(pureHTML) {
-      const string = this.convertToTiptap(pureHTML)
+      const string = VueTiptapKatexAssist.convertToTiptap(pureHTML)
       if (string.length) {
         this.editor.commands.setContent(string)
       }

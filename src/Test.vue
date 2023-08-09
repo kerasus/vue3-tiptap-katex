@@ -34,7 +34,8 @@
 
 <script>
 import 'katex/dist/katex.min.css'
-import { MixinConvertToTiptap } from 'vue-tiptap-katex-core'
+// import { MixinConvertToTiptap } from 'vue-tiptap-katex-core'
+import * as VueTiptapKatexAssist from 'vue-tiptap-katex-core/assist.js'
 import VueTiptapKatex from './vue3-tiptap-katex.vue'
 
 export default {
@@ -61,7 +62,7 @@ export default {
       if (string === null || typeof string === 'undefined') {
         return ''
       }
-      string = MixinConvertToTiptap.methods.renderKatexToHTML(string)
+      string = VueTiptapKatexAssist.renderKatexToHTML(string)
       return string
     },
   }
