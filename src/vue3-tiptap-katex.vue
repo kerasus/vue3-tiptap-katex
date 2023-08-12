@@ -50,7 +50,6 @@ import TextStyle from '@tiptap/extension-text-style'
 import * as VueTiptapKatexAssist from 'vue-tiptap-katex-core/assist.js'
 
 import {
-  // MixinConvertToTiptap,
   ExtensionTiptapShortkeys,
   ExtensionThinSpace,
   ExtensionTextDirection,
@@ -88,7 +87,6 @@ export default {
     SlotBubbleMenu,
     SlotFloatingMenu
   },
-  mixins: [MixinConvertToTiptap],
   props: {
     uploadServer: {
       type: Object,
