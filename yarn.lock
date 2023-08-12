@@ -2734,10 +2734,10 @@ vue-notification@^1.3.20:
   resolved "https://registry.yarnpkg.com/vue-notification/-/vue-notification-1.3.20.tgz#d85618127763b46f3e25b8962b857947d5a97cbe"
   integrity sha512-vPj67Ah72p8xvtyVE8emfadqVWguOScAjt6OJDEUdcW5hW189NsqvfkOrctxHUUO9UYl9cTbIkzAEcPnHu+zBQ==
 
-vue-tiptap-katex-core@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/vue-tiptap-katex-core/-/vue-tiptap-katex-core-2.0.7.tgz#6399278a89e891b75a7e1243561c0a6ca8bd32e2"
-  integrity sha512-og74vGU5RRdvtGkl44OLyWQnYP7qC/y/qRZUCyeEtlBj0gyEy2jCSMBJnz1Hb2F/NfhfsrpKgYwmE9QRZZ8Wrw==
+vue-tiptap-katex-core@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/vue-tiptap-katex-core/-/vue-tiptap-katex-core-2.0.8.tgz#8c724a7a1ffd7328cbeeec4e237d9ed7204647a0"
+  integrity sha512-Y52AeZADsccQCq5FZ12QeJWXzY8JKsZgiJP5YthXpSVlgYBUAXtrqf2wqXftb9x2/cAeAXTeGzVRUri+ZR+c2w==
   dependencies:
     "@mdi/font" "^6.9.96"
     "@tiptap/core" "^2.0.0-beta.209"
