@@ -141,11 +141,11 @@ export default {
       this.setContent(newContent)
     }
   },
-  created() {
+  beforeMount () {
     this.newModelValue = VueTiptapKatexAssist.convertToTiptap(this.modelValue)
     this.$emit('update:modelValue', VueTiptapKatexAssist.convertToTiptap(this.modelValue))
   },
-  mounted() {
+  mounted () {
     const vueTiptapKatexInstance = this
     const editorConfig = {
       content: this.modelValue,
