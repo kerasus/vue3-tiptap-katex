@@ -47,7 +47,7 @@ export default {
           .then((vue3TiptapKatex) => {
             setTimeout(() => {
               this.editorComponent = vue3TiptapKatex.default
-            }, 1000)
+            }, 500)
           })
           .catch()
     }, 500)
