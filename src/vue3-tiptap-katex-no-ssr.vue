@@ -42,15 +42,11 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      import('./vue3-tiptap-katex.vue')
-          .then((vue3TiptapKatex) => {
-            setTimeout(() => {
-              this.editorComponent = vue3TiptapKatex.default
-            }, 500)
-          })
-          .catch()
-    }, 500)
+    import('./vue3-tiptap-katex.vue')
+        .then((vue3TiptapKatex) => {
+          this.editorComponent = vue3TiptapKatex.default
+        })
+        .catch()
   },
   computed: {
     localModelValue: {
