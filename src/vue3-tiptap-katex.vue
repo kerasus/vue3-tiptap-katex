@@ -38,6 +38,7 @@
 import toolbar from 'vue-tiptap-katex-core/components/toolbar/toolbar.vue'
 import SlotBubbleMenu from 'vue-tiptap-katex-core/components/SlotBubbleMenu.vue'
 import SlotFloatingMenu from 'vue-tiptap-katex-core/components/SlotFloatingMenu.vue'
+import Link from '@tiptap/extension-link'
 import Focus from '@tiptap/extension-focus'
 import StarterKit from '@tiptap/starter-kit'
 import Table from '@tiptap/extension-table'
@@ -153,6 +154,7 @@ export default {
         preserveWhitespace: true
       },
       extensions: [
+        Link.configure({ openOnClick: false }),
         Focus.configure({
           className: 'has-focus',
           mode: 'all'

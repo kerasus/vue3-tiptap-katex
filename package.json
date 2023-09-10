@@ -46,6 +46,7 @@
     "@tiptap/extension-color": "^2.0.3",
     "@tiptap/extension-focus": "^2.0.3",
     "@tiptap/extension-highlight": "^2.0.3",
+    "@tiptap/extension-link": "^2.1.8",
     "@tiptap/extension-table": "^2.0.3",
     "@tiptap/extension-table-row": "^2.0.3",
     "@tiptap/extension-text-align": "^2.0.3",
