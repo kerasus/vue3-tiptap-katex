@@ -34,11 +34,11 @@
 
 <script>
 import 'katex/dist/katex.min.css'
-// import * as VueTiptapKatexAssist from 'vue-tiptap-katex-core/assist.js'
+import * as VueTiptapKatexAssist from 'vue-tiptap-katex-core/assist.js'
 // import VueTiptapKatex from './vue3-tiptap-katex.vue'
 import VueTiptapKatex from './vue3-tiptap-katex-no-ssr.vue'
 
-const VueTiptapKatexAssist = {}
+// const VueTiptapKatexAssist = {}
 
 export default {
   name: 'TestPage',
