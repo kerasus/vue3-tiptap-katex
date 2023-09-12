@@ -72,6 +72,7 @@ import TiptapInteractiveReading from './components/reading/extension.mjs'
 import TiptapInteractivePoem from './components/poem/bait.mjs'
 import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionImageInline.mjs'
 import TiptapInteractiveVideoUploadInline from './components/VideoUpload/extensionVideoInline.mjs'
+import TiptapInteractiveAudioUploadInline from './components/AudioUpload/extensionAudioUploadInline.mjs'
 import TiptapInteractiveKatexInline from './components/formula/extensionFormulaInline.mjs'
 import EditTableModal from './components/EditTableModal.vue'
 // import {EditorView} from "prosemirror-view";
@@ -198,6 +199,7 @@ export default {
         TiptapInteractiveKatexInline,
         TiptapInteractiveImageUploadInline,
         TiptapInteractiveVideoUploadInline,
+        TiptapInteractiveAudioUploadInline,
         TiptapInteractivePoem,
         mesra,
         TiptapInteractiveReading,
