@@ -4,6 +4,7 @@
                ref="tiptap"
                       v-model="localModelValue"
                       :upload-server="uploadServer"
+                      :upload-video="uploadVideo"
                       :loading="loading"
                       :options="options"
     />
@@ -17,6 +18,10 @@ export default {
     uploadServer: {
       type: Object,
       default: () => {}
+    },
+    uploadVideo: {
+      type: Function,
+      default: null
     },
     loading: {
       type: Boolean,

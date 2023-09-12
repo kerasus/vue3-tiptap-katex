@@ -1,9 +1,9 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import TiptapInteractiveVideoUpload from './TiptapInteractiveVideoUpload.vue'
+import TiptapInteractiveAudioUpload from './TiptapInteractiveAudioUpload.vue'
 
 export default Node.create({
-  name: 'TiptapInteractiveVideoUploadInline',
+  name: 'TiptapInteractiveAudioUploadInline',
 
   group: 'inline',
 
@@ -58,16 +58,16 @@ export default Node.create({
   parseHTML() {
     return [
       {
-        tag: 'video'
+        tag: 'audio'
       }
     ]
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['video', mergeAttributes(HTMLAttributes)]
+    return ['audio', mergeAttributes(HTMLAttributes)]
   },
 
   addNodeView() {
-    return VueNodeViewRenderer(TiptapInteractiveVideoUpload)
+    return VueNodeViewRenderer(TiptapInteractiveAudioUpload)
   }
 })

@@ -94,6 +94,10 @@ export default {
       type: Object,
       default: () => {}
     },
+    uploadVideo: {
+      type: Function,
+      default: null
+    },
     loading: {
       type: Boolean,
       required: false,

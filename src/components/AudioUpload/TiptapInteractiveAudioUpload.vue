@@ -12,7 +12,7 @@
     <!--               :files="files"-->
     <!--               @processfile="onFileUpload" />-->
     <div v-if="!node.attrs.url">
-      <input type="file" @change="previewFiles" accept="video/mp4,video/x-m4v,video/*">
+      <input type="file" @change="previewFiles" accept="audio/*">
       <button v-if="files.length > 0" @click="upload" :disabled="uploading">
         <template v-if="!uploading">
           upload
@@ -28,7 +28,7 @@
          }">
       <span class="mdi mdi-drag"
             :style="{ top: node.attrs.vertical + 'px', height: node.attrs.height + 'px' }" />
-      <video :src="node.attrs.url" />
+      <audio controls :src="node.attrs.url" />
     </div>
   </node-view-wrapper>
 </template>
@@ -87,20 +87,20 @@ export default {
       this.files = event.target.files
     },
     upload () {
-      if (typeof this.editor.editorOptions.uploadVideo !== 'function') {
+      if (typeof this.editor.editorOptions.uploadAudio !== 'function') {
         return
       }
 
       this.uploading = true
-      this.editor.editorOptions.uploadVideo(this.files, this.updateUploadingProgressBar, this.onFileUpload, this.onError)
+      this.editor.editorOptions.uploadAudio(this.files, this.updateUploadingProgressBar, this.onFileUpload, this.onError)
     },
     updateUploadingProgressBar (percent) {
       this.uploadPercent = percent
     },
-    onFileUpload (videoSrc) {
+    onFileUpload (audioSrc) {
       this.uploading = false
       this.updateAttributes({
-        url: videoSrc
+        url: audioSrc
       })
     },
     onError () {
