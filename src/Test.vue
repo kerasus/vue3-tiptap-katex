@@ -7,6 +7,7 @@
                         reading: true,
                         bubbleMenu: false,
                         floatingMenu: false,
+                        loadBareHtml: true,
                         onResizeEnd: onResizeEnd,
                         uploadServer: {
                           url: '/api/v1/question/upload/620e09bd2079aa7c1b00cf8d',

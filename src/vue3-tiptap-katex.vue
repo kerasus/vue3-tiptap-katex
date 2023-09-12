@@ -73,8 +73,10 @@ import TiptapInteractivePoem from './components/poem/bait.mjs'
 import TiptapInteractiveImageUploadInline from './components/ImageUpload/extensionImageInline.mjs'
 import TiptapInteractiveVideoUploadInline from './components/VideoUpload/extensionVideoInline.mjs'
 import TiptapInteractiveAudioUploadInline from './components/AudioUpload/extensionAudioUploadInline.mjs'
+import TiptapInteractiveInsertScriptInline from './components/InsertScript/extensionInsertScriptInline.mjs'
 import TiptapInteractiveKatexInline from './components/formula/extensionFormulaInline.mjs'
 import EditTableModal from './components/EditTableModal.vue'
+
 // import {EditorView} from "prosemirror-view";
 // import {EditorState} from "prosemirror-state";
 // import {posToDOMRect} from "@tiptap/core";
@@ -133,6 +135,7 @@ export default {
         poem: false,
         reading: false,
         persianKeyboard: false,
+        loadBareHtml: false,
         mathliveOptions: {},
         onResizeEnd: null
       }
@@ -200,6 +203,7 @@ export default {
         TiptapInteractiveImageUploadInline,
         TiptapInteractiveVideoUploadInline,
         TiptapInteractiveAudioUploadInline,
+        TiptapInteractiveInsertScriptInline,
         TiptapInteractivePoem,
         mesra,
         TiptapInteractiveReading,
@@ -208,9 +212,10 @@ export default {
       ],
       // triggered on every change
       onUpdate({ editor }) {
-        vueTiptapKatexInstance.$emit('update:modelValue', editor.getHTML())
+        const htmlContent = this.editorOptions.loadBareHtml ? VueTiptapKatexAssist.convertBareHtml(editor.getHTML()) : editor.getHTML()
+        vueTiptapKatexInstance.$emit('update:modelValue', htmlContent)
         vueTiptapKatexInstance.newModelValue =
-            VueTiptapKatexAssist.convertToTiptap(editor.getHTML())
+            VueTiptapKatexAssist.convertToTiptap(htmlContent)
       },
       editorProps: {
         handleKeyDown: (view, event) => {
