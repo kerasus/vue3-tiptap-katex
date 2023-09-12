@@ -1,16 +1,25 @@
 <template>
   <node-view-wrapper :class="{ 'vue-component': true, 'inline': true, 'uploading': !node.attrs.url }"
                      data-drag-handle>
-    <file-pond v-if="!node.attrs.url"
-               instant-upload="false"
-               :style="{ maxWidth: '600px', margin: '0 auto' }"
-               name="file"
-               label-idle="Drop files here..."
-               accepted-file-types="video/mp4,video/x-m4v,video/*"
-               chunk-uploads="true"
-               :server="editor.editorOptions.uploadServer"
-               :files="files"
-               @processfile="onFileUpload" />
+<!--    <div v-if="!node.attrs.url"-->
+<!--               instant-upload="false"-->
+<!--               :style="{ maxWidth: '600px', margin: '0 auto' }"-->
+<!--               name="file"-->
+<!--               label-idle="Drop files here..."-->
+<!--               accepted-file-types="video/mp4,video/x-m4v,video/*"-->
+<!--               chunk-uploads="true"-->
+<!--               :server="editor.editorOptions.uploadServer"-->
+<!--               :files="files"-->
+<!--               @processfile="onFileUpload" />-->
+    <div v-if="!node.attrs.url">
+      <input type="file" @change="previewFiles" accept="video/mp4,video/x-m4v,video/*">
+      <button v-if="files.length > 0" @click="upload" :disabled="uploading">
+        <template v-if="!uploading">
+          upload
+        </template>
+        <div v-else v-html="uploadPercent" />
+      </button>
+    </div>
     <div v-else
          class="resizer-container"
          :style="{
@@ -27,26 +36,33 @@
 </template>
 
 <script>
-import vueFilePond from 'vue-filepond'
-import 'filepond/dist/filepond.min.css'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+// import vueFilePond from 'vue-filepond'
+// import 'filepond/dist/filepond.min.css'
+// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+// import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 // import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
-import { MixinComponentImageUpload } from 'vue-tiptap-katex-core'
+// import { MixinComponentImageUpload } from 'vue-tiptap-katex-core'
 
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import { defineAsyncComponent } from 'vue'
 
-const FilePond = vueFilePond(
-  FilePondPluginFileValidateType,
-  // FilePondPluginImagePreview
-)
+// const FilePond = vueFilePond(
+//   FilePondPluginFileValidateType,
+//   // FilePondPluginImagePreview
+// )
 
 export default {
+  data() {
+    return {
+      files: [],
+      uploading: false,
+      uploadPercent: null
+    }
+  },
   components: {
     NodeViewWrapper,
-    FilePond,
+    // FilePond,
     VueDragResize: defineAsyncComponent(() => {
       return new Promise((resolve) => {
         import('vue3-drag-resize')
@@ -56,7 +72,7 @@ export default {
       })
     })
   },
-  mixins: [MixinComponentImageUpload],
+  // mixins: [MixinComponentImageUpload],
   props: {
     nodeViewProps,
     node: {
@@ -69,16 +85,28 @@ export default {
     }
   },
   methods: {
-    onFileUpload (err, file) {
-      if (err) {
+    previewFiles(event) {
+      this.files = event.target.files
+    },
+    upload () {
+      if (typeof this.editor.editorOptions.uploadVideo !== 'function') {
         return
       }
 
-      const imageUrl = this.getImageUrlFromResponse(JSON.parse(file.serverId))
+      this.uploading = true
+      this.editor.editorOptions.uploadVideo(this.files, this.updateUploadingProgressBar, this.onFileUpload, this.onError)
+    },
+    updateUploadingProgressBar (percent) {
+      this.uploadPercent = percent
+    },
+    onFileUpload (videoSrc) {
+      this.uploading = false
       this.updateAttributes({
-        url: imageUrl,
-        src: imageUrl
+        src: videoSrc
       })
+    },
+    onError () {
+      this.uploading = false
     }
   }
 }
