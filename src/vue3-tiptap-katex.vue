@@ -141,24 +141,27 @@ export default {
       }
       Object.assign(options, this.options)
       return options
-    }
-  },
-  watch: {
-    modelValue(newContent) {
-      if (this.newModelValue === newContent) {
-        return
+    },
+    localModelValue: {
+      get () {
+        return this.modelValue
+      },
+      set (newValue) {
+        if (this.newModelValue === newValue) {
+          return
+        }
+        this.$emit('update:modelValue', newValue)
       }
-      this.setContent(newContent)
     }
   },
   beforeMount () {
-    this.newModelValue = VueTiptapKatexAssist.convertToTiptap(this.modelValue)
-    this.$emit('update:modelValue', VueTiptapKatexAssist.convertToTiptap(this.modelValue))
+    this.newModelValue = VueTiptapKatexAssist.convertToTiptap(this.localModelValue)
+    this.localModelValue = VueTiptapKatexAssist.convertToTiptap(this.modelValue)
   },
   mounted () {
     const vueTiptapKatexInstance = this
     const editorConfig = {
-      content: this.modelValue,
+      content: this.localModelValue,
       parseOptions: {
         preserveWhitespace: true
       },
@@ -213,9 +216,8 @@ export default {
       // triggered on every change
       onUpdate({ editor }) {
         const htmlContent = this.editorOptions.loadBareHtml ? VueTiptapKatexAssist.convertBareHtml(editor.getHTML()) : editor.getHTML()
-        vueTiptapKatexInstance.$emit('update:modelValue', htmlContent)
-        vueTiptapKatexInstance.newModelValue =
-            VueTiptapKatexAssist.convertToTiptap(htmlContent)
+        vueTiptapKatexInstance.localModelValue = htmlContent
+        vueTiptapKatexInstance.newModelValue = VueTiptapKatexAssist.convertToTiptap(htmlContent)
       },
       editorProps: {
         handleKeyDown: (view, event) => {
@@ -232,6 +234,9 @@ export default {
     this.editor.editorOptions = this.editorOptions
   },
   beforeUnmount() {
+    if (!this.editor) {
+      return
+    }
     this.editor.destroy()
   },
   methods: {
@@ -292,9 +297,11 @@ export default {
     },
     setContent(pureHTML) {
       const string = VueTiptapKatexAssist.convertToTiptap(pureHTML)
+      // const oldanchor = this.editor.state.tr.selection.anchor
       if (string.length) {
         this.editor.commands.setContent(string)
       }
+      // this.editor.commands.focus(oldanchor)
     },
     getContent() {
       return this.editor.getHTML()
