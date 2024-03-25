@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { shallowRef } from 'vue'
+
 export default {
   name: 'VueTiptapKatexNoSsr',
   props: {
@@ -49,7 +51,7 @@ export default {
   mounted () {
     import('./vue3-tiptap-katex.vue')
         .then((vue3TiptapKatex) => {
-          this.editorComponent = vue3TiptapKatex.default
+          this.editorComponent = shallowRef(vue3TiptapKatex.default)
         })
         .catch()
   },
