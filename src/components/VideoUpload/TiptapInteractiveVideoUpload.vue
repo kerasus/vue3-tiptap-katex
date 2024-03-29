@@ -115,24 +115,16 @@ export default {
   display: inline-block;
 }
 
+video {
+  max-width: 100%;
+}
+
 .inline.uploading {
   width: 500px;
 }
 
 .inline .resizer-container {
   margin: 0 24px;
-}
-
-.filepond--credits {
-  display: none;
-}
-
-.filepond--action-revert-item-processing {
-  display: none;
-}
-
-.filepond--file-status-sub {
-  display: none;
 }
 
 .resizer-container {
